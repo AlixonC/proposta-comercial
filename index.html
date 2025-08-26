@@ -10,8 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     
     <!-- Chosen Palette: Dark Teal -->
-    <!-- Application Structure Plan: A single-page, vertical-scrolling application with a sticky top navigation. The structure follows a persuasive narrative: Hero (Promise), Problem, Solution (Interactive Tabs), Portfolio (Filterable), About Me, Process (Timeline), Deliverables (Carousel), Guarantee (Risk Mitigation), Testimonials (Social Proof), Packages (Interactive Comparison), and a strong CTA. This version is optimized for performance by removing external animation libraries. -->
-    <!-- Visualization & Content Choices: Report Info: Portfolio -> Goal: Showcase expertise -> Viz/Presentation: Filterable Grid -> Interaction: Click category to filter -> Justification: Better UX, allows user control. | Report Info: Icons -> Goal: Visual cues -> Viz/Presentation: Unicode characters styled with Tailwind -> Interaction: None -> Justification: Adheres to NO SVG constraint while maintaining visual consistency and fast loading. | Report Info: Process -> Goal: Demonstrate professionalism -> Viz/Presentation: Vertical Timeline -> Justification: Visually engaging storytelling. -->
+    <!-- Application Structure Plan: A single-page, vertical-scrolling application with a sticky top navigation. The structure follows a persuasive narrative: Hero (Promise), Problem (Agitate with "Pesadelos"), Solution (The Cure), Portfolio (Proof), About Me (Authority), Process (Clarity), Deliverables (Tangibility), Guarantee (Risk Reversal), Testimonials (Social Proof), Packages (The Offer), and a strong CTA. This structure is a classic sales funnel designed for maximum conversion. -->
+    <!-- Visualization & Content Choices: Report Info: Risks -> Goal: Create urgency -> Viz/Presentation: Icon-driven cards with persuasive copy -> Interaction: Subtle hover and scroll-reveal animations -> Justification: Transforms technical issues into tangible, emotional "nightmares" for the client, justifying the value of an integrated solution. | Report Info: Performance -> Goal: Impress client with speed -> Viz/Presentation: Lazy loading on images -> Justification: Drastically improves initial page load time, especially on mobile, conveying professionalism. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     
     <style>
@@ -19,6 +19,9 @@
             font-family: 'Inter', sans-serif;
             background-color: #f8fcfc;
             color: #1e293b;
+        }
+        header.scrolled {
+            box-shadow: 0 4px_6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
         .nav-link.active {
             color: #03989e;
@@ -37,11 +40,6 @@
         .filter-btn.active {
             background-color: #027a7e;
             color: white;
-        }
-        .deliverables-filter-btn {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #e2e8f0;
-            transition: background-color 0.3s;
         }
         .deliverables-filter-btn:hover {
             background-color: rgba(255, 255, 255, 0.2);
@@ -77,11 +75,45 @@
             min-width: 100%;
             box-sizing: border-box;
         }
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            transform: translateY(-10px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #mobile-menu.open {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(10px);
+            pointer-events: none;
+        }
+        #scrollTopBtn.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="text-slate-800">
 
-    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+    <header id="main-header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 transition-shadow duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-[#027a7e]">
                 Alison Carvalho
@@ -94,28 +126,29 @@
                 <a href="#pacotes" class="nav-link text-slate-600 hover:text-[#03989e] transition">Pacotes</a>
                 <a href="#contato" class="bg-[#03989e] hover:bg-[#027a7e] text-white font-medium py-2 px-4 rounded-full transition">Contato</a>
             </div>
-             <button id="mobile-menu-button" class="md:hidden text-slate-800">
-                <span class="text-3xl">≡</span>
+             <button id="mobile-menu-button" class="md:hidden text-slate-800 focus:outline-none">
+                <span id="menu-icon-open" class="text-3xl">≡</span>
+                <span id="menu-icon-close" class="text-3xl hidden">×</span>
             </button>
         </nav>
-        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
-             <a href="#solucoes" class="block py-2 nav-link text-slate-600 hover:text-[#03989e]">Soluções</a>
-             <a href="#portfolio" class="block py-2 nav-link text-slate-600 hover:text-[#03989e]">Portfólio</a>
-             <a href="#sobre" class="block py-2 nav-link text-slate-600 hover:text-[#03989e]">Sobre</a>
-             <a href="#processo" class="block py-2 nav-link text-slate-600 hover:text-[#03989e]">Processo</a>
-             <a href="#entregaveis" class="block py-2 nav-link text-slate-600 hover:text-[#03989e]">Entregáveis</a>
-             <a href="#pacotes" class="block py-2 nav-link text-slate-600 hover:text-[#03989e]">Pacotes</a>
-             <a href="#contato" class="block mt-2 text-center bg-[#03989e] text-white px-6 py-2 rounded-full">Contato</a>
+        <div id="mobile-menu" class="md:hidden px-6 pb-4 bg-white/80 backdrop-blur-lg">
+             <a href="#solucoes" class="mobile-nav-link block py-2 nav-link text-slate-600 hover:text-[#03989e]">Soluções</a>
+             <a href="#portfolio" class="mobile-nav-link block py-2 nav-link text-slate-600 hover:text-[#03989e]">Portfólio</a>
+             <a href="#sobre" class="mobile-nav-link block py-2 nav-link text-slate-600 hover:text-[#03989e]">Sobre</a>
+             <a href="#processo" class="mobile-nav-link block py-2 nav-link text-slate-600 hover:text-[#03989e]">Processo</a>
+             <a href="#entregaveis" class="mobile-nav-link block py-2 nav-link text-slate-600 hover:text-[#03989e]">Entregáveis</a>
+             <a href="#pacotes" class="mobile-nav-link block py-2 nav-link text-slate-600 hover:text-[#03989e]">Pacotes</a>
+             <a href="#contato" class="mobile-nav-link block mt-2 text-center bg-[#03989e] text-white px-6 py-2 rounded-full">Contato</a>
         </div>
     </header>
 
     <main>
         <section id="hero" class="bg-white pt-20 pb-16 text-center">
             <div class="container mx-auto px-6">
-                <h1 class="text-4xl md:text-6xl font-extrabold text-[#027a7e] leading-tight">Construindo Sonhos com Segurança e Precisão</h1>
-                <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">Garantimos que seu maior investimento seja também o seu porto seguro, projetado para durar gerações.</p>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-[#027a7e] leading-tight reveal-on-scroll">Construindo Sonhos com Segurança e Precisão</h1>
+                <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto reveal-on-scroll" style="transition-delay: 100ms;">Garantimos que seu maior investimento seja também o seu porto seguro, projetado para durar gerações.</p>
                 
-                <div class="mt-12 max-w-4xl mx-auto bg-white border-2 border-slate-200 rounded-xl shadow-lg p-6 grid md:grid-cols-3 gap-6 text-center">
+                <div class="mt-12 max-w-4xl mx-auto bg-white border-2 border-slate-200 rounded-xl shadow-lg p-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center reveal-on-scroll" style="transition-delay: 200ms;">
                     <div>
                         <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Proposta Para</h3>
                         <p id="client-name" class="text-xl font-semibold text-[#027a7e] mt-1">Prezado(a) Cliente</p>
@@ -130,38 +163,42 @@
                     </div>
                 </div>
                 
-                <a href="#pacotes" class="mt-12 bg-[#03989e] text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-[#027a7e] transition-transform hover:scale-105 inline-block">Conheça os Pacotes</a>
+                <a href="#pacotes" class="mt-12 bg-[#03989e] text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-[#027a7e] transition-transform hover:scale-105 inline-block reveal-on-scroll" style="transition-delay: 300ms;">Conheça os Pacotes</a>
             </div>
         </section>
 
         <section id="problema" class="py-20">
             <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold">O Risco do Projeto Desintegrado</h2>
-                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">A economia inicial em projetos isolados pode gerar custos maiores e dores de cabeça na obra.</p>
+                <div class="text-center mb-12 reveal-on-scroll">
+                    <h2 class="text-3xl md:text-4xl font-bold">O Barato que Sai Caro: Os 3 Pesadelos de um Projeto Desintegrado</h2>
+                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Economizar na fase de projeto é plantar a semente para uma colheita de problemas caros e estressantes na obra.</p>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
-                    <div class="bg-white p-8 rounded-lg shadow-md border-t-4 border-red-400">
-                        <h3 class="text-xl font-bold text-red-500">Incompatibilidades</h3>
-                        <p class="mt-2 text-slate-600">Vigas onde deveriam passar janelas, tubulações em locais errados e pontos elétricos sem infraestrutura.</p>
+                    <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-red-500 transform hover:-translate-y-2 transition-transform duration-300 reveal-on-scroll">
+                        <div class="text-4xl mb-4">💸</div>
+                        <h3 class="text-xl font-bold text-red-600">O Orçamento que Sangra</h3>
+                        <p class="mt-2 text-slate-600">Cada incompatibilidade descoberta na obra vira um remendo caro. É o desperdício de material, o pagamento de mão de obra extra e a certeza de que o custo final será muito maior que o planejado.</p>
                     </div>
-                    <div class="bg-white p-8 rounded-lg shadow-md border-t-4 border-yellow-500">
-                        <h3 class="text-xl font-bold text-yellow-600">Retrabalho na Obra</h3>
-                        <p class="mt-2 text-slate-600">A consequência direta: quebrar paredes, refazer instalações e desperdiçar tempo e material valioso.</p>
+                    <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-yellow-500 transform hover:-translate-y-2 transition-transform duration-300 reveal-on-scroll" style="transition-delay: 150ms;">
+                        <div class="text-4xl mb-4">⏳</div>
+                        <h3 class="text-xl font-bold text-yellow-600">O Cronograma Destruído</h3>
+                        <p class="mt-2 text-slate-600">A obra que se arrasta, os prazos estourados e a frustração de ver o sonho ser adiado. O retrabalho não consome apenas dinheiro, ele rouba seu tempo e sua paz.</p>
                     </div>
-                    <div class="bg-white p-8 rounded-lg shadow-md border-t-4 border-orange-500">
-                        <h3 class="text-xl font-bold text-orange-600">Custos Imprevistos</h3>
-                        <p class="mt-2 text-slate-600">O "barato" inicial se transforma em prejuízo. Cada ajuste na obra aumenta o orçamento final.</p>
+                    <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-orange-500 transform hover:-translate-y-2 transition-transform duration-300 reveal-on-scroll" style="transition-delay: 300ms;">
+                        <div class="text-4xl mb-4">🤯</div>
+                        <h3 class="text-xl font-bold text-orange-600">O Estresse que Não Acaba</h3>
+                        <p class="mt-2 text-slate-600">Conflitos com pedreiros, decisões tomadas sob pressão e a constante preocupação com a segurança da estrutura. Seu sonho não pode se transformar em um pesadelo de preocupações.</p>
                     </div>
                 </div>
+                <p class="text-center mt-12 text-lg text-slate-700 max-w-3xl mx-auto font-semibold reveal-on-scroll">Nossa metodologia de projetos integrados é a sua apólice de seguro contra esses pesadelos.</p>
             </div>
         </section>
 
         <section id="solucoes" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
+            <div class="container mx-auto px-6 reveal-on-scroll">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold">Nossas Soluções: Os Pilares do Seu Projeto</h2>
-                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Oferecemos um ecossistema completo de serviços para garantir uma construção coesa, segura e econômica.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold">Nossa Solução: A Engenharia da Tranquilidade</h2>
+                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Oferecemos um ecossistema completo de projetos 100% compatibilizados para uma construção coesa, segura e sem surpresas.</p>
                 </div>
                 <div class="max-w-5xl mx-auto">
                     <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8" id="tabs-container">
@@ -178,13 +215,13 @@
                             <span class="text-xl">⚡</span> Elétrico
                         </button>
                     </div>
-                    <div id="tabs-content" class="bg-slate-50 p-8 rounded-lg min-h-[300px]"></div>
+                    <div id="tabs-content" class="bg-slate-50 p-6 sm:p-8 rounded-lg min-h-[320px]"></div>
                 </div>
             </div>
         </section>
 
         <section id="portfolio" class="py-20 bg-[#e6f5f5]">
-            <div class="container mx-auto px-6">
+            <div class="container mx-auto px-6 reveal-on-scroll">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold">Nossos Projetos: Qualidade em Cada Detalhe</h2>
                     <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Veja na prática como transformamos ideias em realidade, com excelência em cada detalhe.</p>
@@ -199,9 +236,9 @@
         </section>
         
         <section id="sobre" class="py-20">
-            <div class="container mx-auto px-6 grid md:grid-cols-5 gap-12 items-center">
+            <div class="container mx-auto px-6 grid md:grid-cols-5 gap-12 items-center reveal-on-scroll">
                 <div class="md:col-span-2">
-                    <img src="https://placehold.co/400x400/03989e/white?text=AC" alt="Foto de Alison Carvalho" class="rounded-full mx-auto shadow-xl w-64 h-64 md:w-full md:h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cccccc/ffffff?text=Foto+Indisponível';">
+                    <img data-src="https://placehold.co/400x400/03989e/white?text=AC" alt="Foto de Alison Carvalho" class="lazyload rounded-full mx-auto shadow-xl w-64 h-64 md:w-full md:h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cccccc/ffffff?text=Foto+Indisponível';">
                 </div>
                 <div class="md:col-span-3 text-center md:text-left">
                     <h2 class="text-3xl md:text-4xl font-bold">Quem Você Está Contratando?</h2>
@@ -211,54 +248,23 @@
             </div>
         </section>
 
-        <section id="processo" class="py-20">
-            <div class="container mx-auto px-6">
+        <section id="processo" class="py-20 bg-white">
+            <div class="container mx-auto px-6 reveal-on-scroll">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-bold">Nosso Processo de Trabalho</h2>
                     <p class="text-lg text-slate-600 mt-4 max-w-2xl mx-auto">Um passo a passo claro e organizado para garantir que seu projeto flua sem complicações.</p>
                 </div>
                 <div class="relative max-w-3xl mx-auto">
                     <div class="border-l-2 border-dashed border-slate-300 absolute h-full top-0 left-4 md:left-1/2 md:-translate-x-1/2"></div>
-                    <div class="space-y-12">
-                        <div class="relative pl-12 md:pl-0">
-                            <div class="md:flex md:justify-end md:gap-8">
-                                <div class="md:w-1/2 md:text-right timeline-item">
-                                    <h3 class="text-xl font-bold text-[#027a7e]">Etapa 1: Briefing e Análise</h3>
-                                    <p class="text-slate-600">Entendemos suas necessidades, desejos e orçamento para criar a base do projeto.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="relative pl-12 md:pl-0">
-                            <div class="md:flex md:justify-start md:gap-8">
-                               <div class="md:w-1/2 md:text-left md:ml-auto timeline-item">
-                                    <h3 class="text-xl font-bold text-[#027a7e]">Etapa 2: Estudo Preliminar e 3D</h3>
-                                    <p class="text-slate-600">Desenvolvemos as primeiras ideias e modelos 3D para visualização e aprovação.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="relative pl-12 md:pl-0">
-                            <div class="md:flex md:justify-end md:gap-8">
-                                <div class="md:w-1/2 md:text-right timeline-item">
-                                    <h3 class="text-xl font-bold text-[#027a7e]">Etapa 3: Projeto Executivo</h3>
-                                    <p class="text-slate-600">Detalhamos todos os aspectos técnicos para a execução da obra sem erros.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="relative pl-12 md:pl-0">
-                           <div class="md:flex md:justify-start md:gap-8">
-                               <div class="md:w-1/2 md:text-left md:ml-auto timeline-item">
-                                    <h3 class="text-xl font-bold text-[#027a7e]">Etapa 4: Entrega e Suporte</h3>
-                                    <p class="text-slate-600">Entregamos todos os projetos e permanecemos disponíveis para esclarecer dúvidas.</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div id="timeline-container" class="space-y-12">
+                        <!-- Conteúdo do Timeline será injetado aqui -->
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="entregaveis" class="py-20 bg-slate-800 text-white">
-            <div class="container mx-auto px-6 text-center">
+            <div class="container mx-auto px-6 text-center reveal-on-scroll">
                 <h2 class="text-3xl md:text-4xl font-bold text-[#03989e]">O QUE VOCÊ RECEBE</h2>
                 <div class="flex flex-wrap justify-center gap-2 md:gap-4 my-8">
                     <button class="deliverables-filter-btn active px-4 py-2 rounded-full font-semibold shadow-sm" data-filter="all">Todos</button>
@@ -284,7 +290,7 @@
         </section>
 
         <section id="garantia" class="py-20">
-            <div class="container mx-auto px-6 text-center">
+            <div class="container mx-auto px-6 text-center reveal-on-scroll">
                 <h2 class="text-3xl md:text-4xl font-bold">Seu Investimento Seguro</h2>
                 <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Nosso compromisso vai além do projeto. É com a sua tranquilidade.</p>
                 <div class="mt-12 grid md:grid-cols-3 gap-8 text-left">
@@ -305,7 +311,7 @@
         </section>
 
         <section id="depoimentos" class="py-20 bg-white">
-             <div class="container mx-auto px-6">
+             <div class="container mx-auto px-6 reveal-on-scroll">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold">O Que Nossos Clientes Dizem</h2>
                 </div>
@@ -323,7 +329,7 @@
         </section>
 
         <section id="pacotes" class="py-20 bg-[#e6f5f5]">
-            <div class="container mx-auto px-6">
+            <div class="container mx-auto px-6 reveal-on-scroll">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold">Compare e Escolha o Plano Ideal</h2>
                     <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Criamos pacotes flexíveis para atender exatamente ao que você precisa. Clique para comparar.</p>
@@ -361,10 +367,15 @@
         </footer>
     </main>
 
+    <button id="scrollTopBtn" class="bg-[#03989e] hover:bg-[#027a7e] text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-2xl z-50">
+        ↑
+    </button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" xintegrity="sha512-q583ppKrCRc7N5O0n2nzUiJ+suUv7Et1JGels4bXOaMFQcamPk9HjdUknZuuFjBNs7tsMuadge5k9RzdmO+1GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Todos os dados são armazenados aqui para fácil gerenciamento
-            const appData = {
+        const App = {
+            data: {
                 services: {
                     arquitetonico: { title: '1. Projeto Arquitetônico', subtitle: 'A alma do seu espaço, onde seus sonhos tomam forma.', description: 'Criamos espaços que refletem sua personalidade e atendem às suas necessidades, garantindo o máximo de conforto, iluminação e ventilação natural para você e sua família.', deliverables: ['Plantas baixas humanizadas', 'Cortes e fachadas detalhadas', 'Layout de pontos elétricos e hidráulicos', 'Modelo 3D para visualização completa'] },
                     estrutural: { title: '2. Projeto Estrutural', subtitle: 'A base sólida que garante a segurança e a durabilidade.', description: 'Garantimos a segurança e a longevidade da sua construção, otimizando o uso de materiais para que você economize sem abrir mão da qualidade e da tranquilidade.', deliverables: ['Plantas de formas', 'Detalhamento de pilares, vigas, lajes e fundações', 'Lista de materiais (aço e concreto)'] },
@@ -393,220 +404,60 @@
                     { image: 'https://placehold.co/800x600/1e293b/white?text=Diagrama', title: 'Diagrama Unifilar', category: 'eletrico' },
                     { image: 'https://placehold.co/800x600/027a7e/white?text=Isométrico', title: 'Isométrico Hidráulico', category: 'hidrossanitario' },
                     { image: 'https://placehold.co/800x600/027a7e/white?text=Esgoto', title: 'Planta de Esgoto', category: 'hidrossanitario' }
+                ],
+                timeline: [
+                    { title: 'Etapa 1: Briefing e Análise', description: 'Entendemos suas necessidades, desejos e orçamento para criar a base do projeto.' },
+                    { title: 'Etapa 2: Estudo Preliminar e 3D', description: 'Desenvolvemos as primeiras ideias e modelos 3D para visualização e aprovação.' },
+                    { title: 'Etapa 3: Projeto Executivo', description: 'Detalhamos todos os aspectos técnicos para a execução da obra sem erros.' },
+                    { title: 'Etapa 4: Entrega e Suporte', description: 'Entregamos todos os projetos e permanecemos disponíveis para esclarecer dúvidas.' }
                 ]
-            };
+            },
 
-            // Função para inicializar as abas de serviços
-            function initTabs() {
-                const tabsContainer = document.getElementById('tabs-container');
-                const tabsContent = document.getElementById('tabs-content');
-                
-                function renderServiceContent(serviceKey) {
-                    const service = appData.services[serviceKey];
-                    tabsContent.innerHTML = `<h3 class="text-2xl font-bold text-[#027a7e]">${service.title}</h3><p class="mt-1 text-slate-500 italic">${service.subtitle}</p><p class="mt-4 text-slate-700">${service.description}</p><p class="mt-6 font-semibold">O que você recebe:</p><ul class="mt-2 space-y-2 list-disc list-inside text-slate-700">${service.deliverables.map(item => `<li>${item}</li>`).join('')}</ul>`;
+            init() {
+                this.initUI();
+                this.initTabs();
+                this.initPortfolio();
+                this.initTimeline();
+                this.initDeliverablesCarousel();
+                this.initPackages();
+                this.initScrollAnimations();
+            },
+
+            initUI() {
+                // Personalizar nome e data
+                document.getElementById('proposal-date').textContent = new Date().toLocaleDateString('pt-BR');
+                const clientName = new URLSearchParams(window.location.search).get('cliente');
+                if (clientName) {
+                    document.getElementById('client-name').textContent = decodeURIComponent(clientName.replace(/\+/g, ' '));
                 }
 
-                tabsContainer.addEventListener('click', (e) => {
-                    const button = e.target.closest('.tab-button');
-                    if (button) {
-                        tabsContainer.querySelector('.active').classList.remove('active');
-                        button.classList.add('active');
-                        renderServiceContent(button.dataset.tab);
-                    }
-                });
-
-                renderServiceContent('arquitetonico'); // Renderização inicial
-            }
-
-            // Função para inicializar o filtro do portfólio
-            function initPortfolio() {
-                const portfolioGrid = document.getElementById('portfolio-grid');
-                const filterBtns = document.querySelectorAll('.filter-btn');
-
-                function renderPortfolio(filter = 'all') {
-                    portfolioGrid.innerHTML = '';
-                    const filteredData = filter === 'all' ? appData.portfolio : appData.portfolio.filter(p => p.category === filter);
-                    filteredData.forEach(item => {
-                        const div = document.createElement('div');
-                        div.className = 'portfolio-item bg-white rounded-lg shadow-lg overflow-hidden group h-full';
-                        div.innerHTML = `<div class="overflow-hidden"><img src="${item.image}" alt="${item.title}" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Imagem+Indisponível';"></div><div class="p-6"><h3 class="text-xl font-bold">${item.title}</h3><p class="text-slate-600 mt-2">Categoria: ${item.category}</p></div>`;
-                        portfolioGrid.appendChild(div);
-                    });
-                }
-
-                filterBtns.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        document.querySelector('.filter-btn.active').classList.remove('active');
-                        btn.classList.add('active');
-                        renderPortfolio(btn.dataset.filter);
-                    });
-                });
-
-                renderPortfolio(); // Renderização inicial
-            }
-
-            // Função para inicializar a seleção de pacotes
-            function initPackages() {
-                const packagesContainer = document.getElementById('packages-container');
-
-                function updateSelection(selectedIndex) {
-                    document.querySelectorAll('.package-card').forEach((card, index) => {
-                        const isSelected = index === selectedIndex;
-                        card.classList.toggle('selected', isSelected);
-                        const button = card.querySelector('button');
-                        if (isSelected) {
-                            button.classList.remove('bg-slate-200', 'text-slate-800', 'hover:bg-slate-300');
-                            button.classList.add('bg-[#03989e]', 'text-white');
-                            button.textContent = 'Plano Selecionado';
-                        } else {
-                            button.classList.add('bg-slate-200', 'text-slate-800', 'hover:bg-slate-300');
-                            button.classList.remove('bg-[#03989e]', 'text-white');
-                            button.textContent = 'Selecionar Plano';
-                        }
-                    });
-                }
-
-                appData.packages.forEach((pkg, index) => {
-                    const card = document.createElement('div');
-                    card.className = `package-card cursor-pointer bg-white p-8 rounded-lg shadow-lg border-2 border-transparent transition-all duration-300 flex flex-col`;
-                    if(pkg.recommended) card.classList.add('relative');
-                    let featuresHtml = pkg.features.map(feature => `<li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✔</span><span>${feature}</span></li>`).join('');
-                    card.innerHTML = `
-                        ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[#03989e] text-white text-sm font-bold px-4 py-1 rounded-full">RECOMENDADO</div>' : ''}
-                        <div class="flex-grow">
-                            <h3 class="text-2xl font-bold">${pkg.name}</h3>
-                            <p class="mt-2 text-slate-500 h-12">${pkg.description}</p>
-                            <p class="text-4xl font-extrabold my-6">R$ ${pkg.price}</p>
-                            <ul class="space-y-3 text-slate-700 text-left">${featuresHtml}</ul>
-                        </div>
-                        <button class="w-full mt-8 py-3 px-6 rounded-lg font-semibold transition-colors duration-300">Selecionar Plano</button>
-                    `;
-                    card.addEventListener('click', () => updateSelection(index));
-                    packagesContainer.appendChild(card);
-                });
-
-                const recommendedIndex = appData.packages.findIndex(p => p.recommended);
-                updateSelection(recommendedIndex > -1 ? recommendedIndex : 0);
-            }
-
-            // Função para inicializar o carrossel de entregáveis
-            function initDeliverablesCarousel() {
-                const track = document.getElementById('deliverables-carousel-track');
-                const prevBtn = document.getElementById('deliverablePrevBtn');
-                const nextBtn = document.getElementById('deliverableNextBtn');
-                const filterBtns = document.querySelectorAll('.deliverables-filter-btn');
-                
-                let currentSlide = 0;
-                let totalSlides = 0;
-                let currentData = [];
-                let autoSlideInterval;
-                let touchStartX = 0;
-                let touchEndX = 0;
-
-                // --- Funções do Carrossel ---
-                function startAutoSlide() {
-                    stopAutoSlide();
-                    if (totalSlides > 1) {
-                        autoSlideInterval = setInterval(() => {
-                            goToSlide(currentSlide + 1);
-                        }, 5000); // Muda a cada 5 segundos
-                    }
-                }
-
-                function stopAutoSlide() {
-                    clearInterval(autoSlideInterval);
-                }
-
-                function resetAutoSlide() {
-                    stopAutoSlide();
-                    startAutoSlide();
-                }
-
-                function goToSlide(slideIndex) {
-                    currentSlide = (slideIndex + totalSlides) % totalSlides;
-                    updateCarousel();
-                }
-
-                function renderCarousel(filter = 'all') {
-                    currentData = filter === 'all' ? appData.deliverables : appData.deliverables.filter(p => p.category === filter);
-                    track.innerHTML = '';
-
-                    if (currentData.length === 0) {
-                        track.innerHTML = `<div class="carousel-slide p-2 w-full text-center"><p class="text-slate-400">Nenhum item para exibir.</p></div>`;
-                        totalSlides = 0;
-                    } else {
-                         currentData.forEach(item => {
-                            const slide = document.createElement('div');
-                            slide.className = 'carousel-slide p-2';
-                            slide.innerHTML = `<div class="bg-slate-700 rounded-lg p-4"><img src="${item.image}" alt="${item.title}" class="rounded-lg w-full h-auto aspect-[4/3] object-contain mb-4 bg-black" onerror="this.onerror=null;this.src='https://placehold.co/800x600/cccccc/ffffff?text=Imagem+Indisponível';"><h4 class="font-bold text-lg text-white">${item.title}</h4></div>`;
-                            track.appendChild(slide);
-                        });
-                        totalSlides = currentData.length;
-                    }
-                    
-                    goToSlide(0);
-                    startAutoSlide();
-                }
-
-                function updateCarousel() {
-                    track.style.transform = `translateX(-${currentSlide * 100}%)`;
-                    const showButtons = totalSlides > 1;
-                    prevBtn.style.visibility = showButtons ? 'visible' : 'hidden';
-                    nextBtn.style.visibility = showButtons ? 'visible' : 'hidden';
-                }
-
-                // --- Event Listeners ---
-                filterBtns.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        document.querySelector('.deliverables-filter-btn.active').classList.remove('active');
-                        btn.classList.add('active');
-                        renderCarousel(btn.dataset.filter);
-                    });
-                });
-
-                nextBtn.addEventListener('click', () => {
-                    goToSlide(currentSlide + 1);
-                    resetAutoSlide();
-                });
-
-                prevBtn.addEventListener('click', () => {
-                    goToSlide(currentSlide - 1);
-                    resetAutoSlide();
-                });
-
-                // --- Lógica de Swipe (Toque) ---
-                track.addEventListener('touchstart', e => {
-                    touchStartX = e.changedTouches[0].screenX;
-                    stopAutoSlide();
-                });
-
-                track.addEventListener('touchend', e => {
-                    touchEndX = e.changedTouches[0].screenX;
-                    handleSwipe();
-                    startAutoSlide();
-                });
-
-                function handleSwipe() {
-                    // Deslize para a esquerda (próximo)
-                    if (touchStartX - touchEndX > 50) {
-                        goToSlide(currentSlide + 1);
-                    }
-                    // Deslize para a direita (anterior)
-                    if (touchEndX - touchStartX > 50) {
-                        goToSlide(currentSlide - 1);
-                    }
-                }
-
-                renderCarousel(); // Renderização inicial
-            }
-
-            // Função para inicializar outros elementos da UI
-            function initUI() {
                 // Menu Mobile
                 const mobileMenuButton = document.getElementById('mobile-menu-button');
                 const mobileMenu = document.getElementById('mobile-menu');
-                mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+                const menuIconOpen = document.getElementById('menu-icon-open');
+                const menuIconClose = document.getElementById('menu-icon-close');
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('open');
+                    menuIconOpen.classList.toggle('hidden');
+                    menuIconClose.classList.toggle('hidden');
+                });
+                document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.remove('open');
+                        menuIconOpen.classList.remove('hidden');
+                        menuIconClose.classList.add('hidden');
+                    });
+                });
 
+                // Header com Sombra e Botão Voltar ao Topo
+                const header = document.getElementById('main-header');
+                const scrollTopBtn = document.getElementById('scrollTopBtn');
+                window.addEventListener('scroll', () => {
+                    header.classList.toggle('scrolled', window.scrollY > 10);
+                    scrollTopBtn.classList.toggle('visible', window.scrollY > 300);
+                });
+                scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+                
                 // Accordion
                 const accordionHeader = document.querySelector('.accordion-header');
                 accordionHeader.addEventListener('click', () => {
@@ -614,10 +465,10 @@
                     document.querySelector('.accordion-icon').classList.toggle('rotate-45');
                 });
 
-                // Link de Navegação Ativo ao Rolar
+                // Active Nav Link on Scroll
                 const navLinks = document.querySelectorAll('.nav-link');
                 const sections = document.querySelectorAll('main section');
-                const observer = new IntersectionObserver((entries) => {
+                const observer = new IntersectionObserver(entries => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             navLinks.forEach(link => {
@@ -627,25 +478,176 @@
                     });
                 }, { rootMargin: '-40% 0px -60% 0px' });
                 sections.forEach(section => observer.observe(section));
+            },
 
-                // Definir data da proposta
-                document.getElementById('proposal-date').textContent = new Date().toLocaleDateString('pt-BR');
-                
-                // Personalizar nome do cliente via URL
-                const params = new URLSearchParams(window.location.search);
-                const clientName = params.get('cliente');
-                if (clientName) {
-                    document.getElementById('client-name').textContent = decodeURIComponent(clientName.replace(/\+/g, ' '));
-                }
+            initTabs() {
+                const tabsContainer = document.getElementById('tabs-container');
+                const tabsContent = document.getElementById('tabs-content');
+                const render = (key) => {
+                    const service = this.data.services[key];
+                    tabsContent.innerHTML = `<h3 class="text-2xl font-bold text-[#027a7e]">${service.title}</h3><p class="mt-1 text-slate-500 italic">${service.subtitle}</p><p class="mt-4 text-slate-700">${service.description}</p><p class="mt-6 font-semibold">O que você recebe:</p><ul class="mt-2 space-y-2 list-disc list-inside text-slate-700">${service.deliverables.map(item => `<li>${item}</li>`).join('')}</ul>`;
+                };
+                tabsContainer.addEventListener('click', e => {
+                    const button = e.target.closest('.tab-button');
+                    if (button) {
+                        tabsContainer.querySelector('.active').classList.remove('active');
+                        button.classList.add('active');
+                        render(button.dataset.tab);
+                    }
+                });
+                render('arquitetonico');
+            },
+
+            initPortfolio() {
+                const grid = document.getElementById('portfolio-grid');
+                const filterBtns = document.querySelectorAll('.filter-btn');
+                const render = (filter = 'all') => {
+                    grid.innerHTML = '';
+                    const data = (filter === 'all') ? this.data.portfolio : this.data.portfolio.filter(p => p.category === filter);
+                    data.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'portfolio-item bg-white rounded-lg shadow-lg overflow-hidden group h-full transform transition-transform duration-300 hover:scale-105';
+                        div.innerHTML = `<div class="overflow-hidden"><img data-src="${item.image}" alt="${item.title}" class="lazyload w-full h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Imagem+Indisponível';"></div><div class="p-6"><h3 class="text-xl font-bold">${item.title}</h3><p class="text-slate-600 mt-2">Categoria: ${item.category}</p></div>`;
+                        grid.appendChild(div);
+                    });
+                };
+                filterBtns.forEach(btn => btn.addEventListener('click', () => {
+                    document.querySelector('.filter-btn.active').classList.remove('active');
+                    btn.classList.add('active');
+                    render(btn.dataset.filter);
+                }));
+                render();
+            },
+
+            initTimeline() {
+                const container = document.getElementById('timeline-container');
+                this.data.timeline.forEach((item, index) => {
+                    const isEven = index % 2 === 0;
+                    const alignmentClass = isEven ? 'md:justify-end' : 'md:justify-start';
+                    const textAlignClass = isEven ? 'md:text-right' : 'md:text-left';
+                    const marginLeftClass = isEven ? '' : 'md:ml-auto';
+                    const delay = index * 150;
+
+                    const div = document.createElement('div');
+                    div.className = `relative pl-12 md:pl-0 reveal-on-scroll`;
+                    div.style.transitionDelay = `${delay}ms`;
+                    div.innerHTML = `
+                        <div class="md:flex ${alignmentClass} md:gap-8">
+                            <div class="md:w-1/2 ${textAlignClass} ${marginLeftClass} timeline-item">
+                                <h3 class="text-xl font-bold text-[#027a7e]">${item.title}</h3>
+                                <p class="text-slate-600">${item.description}</p>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            },
+
+            initDeliverablesCarousel() {
+                const track = document.getElementById('deliverables-carousel-track');
+                const prevBtn = document.getElementById('deliverablePrevBtn');
+                const nextBtn = document.getElementById('deliverableNextBtn');
+                const filterBtns = document.querySelectorAll('.deliverables-filter-btn');
+                let state = { currentSlide: 0, totalSlides: 0, data: [], autoSlideInterval: null, touchStartX: 0 };
+
+                const startAutoSlide = () => {
+                    stopAutoSlide();
+                    if (state.totalSlides > 1) {
+                        state.autoSlideInterval = setInterval(() => goToSlide(state.currentSlide + 1), 5000);
+                    }
+                };
+                const stopAutoSlide = () => clearInterval(state.autoSlideInterval);
+                const resetAutoSlide = () => { stopAutoSlide(); startAutoSlide(); };
+                const updateCarousel = () => {
+                    track.style.transform = `translateX(-${state.currentSlide * 100}%)`;
+                    const showButtons = state.totalSlides > 1;
+                    prevBtn.style.visibility = showButtons ? 'visible' : 'hidden';
+                    nextBtn.style.visibility = showButtons ? 'visible' : 'hidden';
+                };
+                const goToSlide = (index) => {
+                    state.currentSlide = (index + state.totalSlides) % state.totalSlides;
+                    updateCarousel();
+                };
+                const render = (filter = 'all') => {
+                    state.data = (filter === 'all') ? this.data.deliverables : this.data.deliverables.filter(p => p.category === filter);
+                    track.innerHTML = '';
+                    if (state.data.length === 0) {
+                        track.innerHTML = `<div class="carousel-slide p-2 w-full text-center"><p class="text-slate-400">Nenhum item para exibir.</p></div>`;
+                        state.totalSlides = 0;
+                    } else {
+                        state.data.forEach(item => {
+                            const slide = document.createElement('div');
+                            slide.className = 'carousel-slide p-2';
+                            slide.innerHTML = `<div class="bg-slate-700 rounded-lg p-4"><img data-src="${item.image}" alt="${item.title}" class="lazyload rounded-lg w-full h-auto aspect-[4/3] object-contain mb-4 bg-black" onerror="this.onerror=null;this.src='https://placehold.co/800x600/cccccc/ffffff?text=Imagem+Indisponível';"><h4 class="font-bold text-lg text-white">${item.title}</h4></div>`;
+                            track.appendChild(slide);
+                        });
+                        state.totalSlides = state.data.length;
+                    }
+                    goToSlide(0);
+                    startAutoSlide();
+                };
+
+                filterBtns.forEach(btn => btn.addEventListener('click', () => {
+                    document.querySelector('.deliverables-filter-btn.active').classList.remove('active');
+                    btn.classList.add('active');
+                    render(btn.dataset.filter);
+                }));
+                nextBtn.addEventListener('click', () => { goToSlide(state.currentSlide + 1); resetAutoSlide(); });
+                prevBtn.addEventListener('click', () => { goToSlide(state.currentSlide - 1); resetAutoSlide(); });
+                track.addEventListener('touchstart', e => { state.touchStartX = e.changedTouches[0].screenX; stopAutoSlide(); });
+                track.addEventListener('touchend', e => {
+                    const touchEndX = e.changedTouches[0].screenX;
+                    if (state.touchStartX - touchEndX > 50) goToSlide(state.currentSlide + 1);
+                    if (touchEndX - state.touchStartX > 50) goToSlide(state.currentSlide - 1);
+                    startAutoSlide();
+                });
+                render();
+            },
+
+            initPackages() {
+                const container = document.getElementById('packages-container');
+                const updateSelection = (selectedIndex) => {
+                    document.querySelectorAll('.package-card').forEach((card, index) => {
+                        const isSelected = index === selectedIndex;
+                        card.classList.toggle('selected', isSelected);
+                        const button = card.querySelector('button');
+                        button.classList.toggle('bg-[#03989e]', isSelected);
+                        button.classList.toggle('text-white', isSelected);
+                        button.classList.toggle('bg-slate-200', !isSelected);
+                        button.classList.toggle('text-slate-800', !isSelected);
+                        button.textContent = isSelected ? 'Plano Selecionado' : 'Selecionar Plano';
+                    });
+                };
+                this.data.packages.forEach((pkg, index) => {
+                    const card = document.createElement('div');
+                    card.className = `package-card cursor-pointer bg-white p-8 rounded-lg shadow-lg border-2 border-transparent transition-all duration-300 flex flex-col`;
+                    if(pkg.recommended) card.classList.add('relative');
+                    let featuresHtml = pkg.features.map(feature => `<li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✔</span><span>${feature}</span></li>`).join('');
+                    card.innerHTML = `${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[#03989e] text-white text-sm font-bold px-4 py-1 rounded-full">RECOMENDADO</div>' : ''}<div class="flex-grow"><h3 class="text-2xl font-bold">${pkg.name}</h3><p class="mt-2 text-slate-500 h-12">${pkg.description}</p><p class="text-4xl font-extrabold my-6">R$ ${pkg.price}</p><ul class="space-y-3 text-slate-700 text-left">${featuresHtml}</ul></div><button class="w-full mt-8 py-3 px-6 rounded-lg font-semibold transition-colors duration-300 hover:bg-slate-300">Selecionar Plano</button>`;
+                    card.addEventListener('click', () => updateSelection(index));
+                    container.appendChild(card);
+                });
+                const recommendedIndex = this.data.packages.findIndex(p => p.recommended);
+                updateSelection(recommendedIndex > -1 ? recommendedIndex : 0);
+            },
+
+            initScrollAnimations() {
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+                    observer.observe(el);
+                });
             }
+        };
 
-            // Inicializar todas as funcionalidades
-            initTabs();
-            initPortfolio();
-            initPackages();
-            initDeliverablesCarousel();
-            initUI();
-        });
+        document.addEventListener('DOMContentLoaded', () => App.init());
     </script>
 </body>
 </html>
