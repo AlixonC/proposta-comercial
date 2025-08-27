@@ -11,7 +11,7 @@
     
     <!-- Chosen Palette: Dark Teal -->
     <!-- Application Structure Plan: A single-page, vertical-scrolling application with a sticky top navigation. The structure follows a persuasive narrative: Hero (Promise), Problem (Agitate with "Pesadelos"), Solution (The Cure), Portfolio (Proof), About Me (Authority), Process (Clarity), Deliverables (Tangibility), Guarantee (Risk Reversal), Testimonials (Social Proof), Packages (The Offer), and a strong CTA. This structure is a classic sales funnel designed for maximum conversion. -->
-    <!-- Visualization & Content Choices: Report Info: Risks -> Goal: Create urgency -> Viz/Presentation: Icon-driven cards with persuasive copy -> Interaction: Subtle hover and scroll-reveal animations -> Justification: Transforms technical issues into tangible, emotional "nightmares" for the client, justifying the value of an integrated solution. | Report Info: Performance -> Goal: Impress client with speed -> Viz/Presentation: Standard image loading (lazy loading removed per user feedback) -> Justification: Ensures all content is visible immediately after load, prioritizing a smoother scroll feel over initial load speed. -->
+    <!-- Visualization & Content Choices: Report Info: Risks -> Goal: Create urgency -> Viz/Presentation: Icon-driven cards with persuasive copy -> Interaction: Subtle hover -> Justification: Transforms technical issues into tangible, emotional "nightmares" for the client. | Report Info: Performance -> Goal: Ensure stability -> Viz/Presentation: Removed all scroll-triggered animations to prevent mobile rendering bugs. Header is now solid white. -> Justification: Guarantees a clean, bug-free scroll experience on all devices, prioritizing stability over animations. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     
     <style>
@@ -120,7 +120,7 @@
 </head>
 <body class="text-slate-800">
 
-    <header id="main-header" class="bg-white/95 sticky top-0 z-50 transition-shadow duration-300">
+    <header id="main-header" class="bg-white sticky top-0 z-50 transition-shadow duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-[#027a7e]">
                 Alison Carvalho
@@ -138,7 +138,7 @@
                 <span id="menu-icon-close" class="text-3xl hidden">×</span>
             </button>
         </nav>
-        <div id="mobile-menu" class="md:hidden px-6 pb-4 bg-white/95">
+        <div id="mobile-menu" class="md:hidden px-6 pb-4 bg-white">
              <a href="#solucoes" class="mobile-nav-link block py-2 nav-link text-slate-600 hover:text-[#03989e]">Soluções</a>
              <a href="#portfolio" class="mobile-nav-link block py-2 nav-link text-slate-600 hover:text-[#03989e]">Portfólio</a>
              <a href="#sobre" class="mobile-nav-link block py-2 nav-link text-slate-600 hover:text-[#03989e]">Sobre</a>
