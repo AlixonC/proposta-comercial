@@ -119,9 +119,16 @@ header.scrolled {
 }
 
 /* Filtros */
+.filter-btn {
+    transition: all 0.2s ease-in-out;
+}
 .filter-btn.active {
     background-color: var(--teal-700);
     color: white;
+    transform: scale(1.05);
+}
+.deliverables-filter-btn {
+     transition: all 0.2s ease-in-out;
 }
 .deliverables-filter-btn:hover {
     background-color: rgba(255, 255, 255, 0.2);
