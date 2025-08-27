@@ -70,7 +70,7 @@
                     <h2 class="text-3xl md:text-4xl font-bold">O Barato que Sai Caro: Os 3 Pesadelos de um Projeto Desintegrado</h2>
                     <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Economizar na fase de projeto é plantar a semente para uma colheita de problemas caros e estressantes na obra.</p>
                 </div>
-                <div class="grid md:grid-cols-3 gap-8">
+                <div id="problema-cards" class="grid md:grid-cols-3 gap-8">
                     </div>
                 <p class="text-center mt-12 text-lg text-slate-700 max-w-3xl mx-auto font-semibold">Nossa metodologia de projetos integrados é a sua apólice de seguro contra esses pesadelos.</p>
             </div>
@@ -98,7 +98,8 @@
                 </div>
                 <div id="portfolio-filters" class="flex justify-center space-x-2 md:space-x-4 mb-8">
                     </div>
-                <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+                <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    </div>
             </div>
         </section>
         
@@ -127,13 +128,45 @@
         </section>
 
         <section id="entregaveis" class="py-20 bg-slate-800 text-white">
-            </section>
+             <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-teal-500">O QUE VOCÊ RECEBE</h2>
+                <div id="deliverables-filters" class="flex flex-wrap justify-center gap-2 md:gap-4 my-8">
+                    </div>
+                <div class="max-w-4xl mx-auto relative">
+                     <div class="carousel-container rounded-lg overflow-hidden cursor-grab">
+                        <div id="deliverables-carousel-track" class="carousel-track flex transition-transform duration-300 ease-out">
+                            </div>
+                    </div>
+                    <button id="deliverablePrevBtn" class="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-2 shadow-md transition text-teal-600 hidden md:block">
+                        <span class="text-2xl font-bold">‹</span>
+                    </button>
+                    <button id="deliverableNextBtn" class="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-2 shadow-md transition text-teal-600 hidden md:block">
+                        <span class="text-2xl font-bold">›</span>
+                    </button>
+                    <div id="deliverables-dots" class="flex justify-center gap-2 mt-4"></div>
+                </div>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto mt-8 px-4 sm:px-0">Pranchas em tamanho ABNT com detalhes da instalação em planta baixa, em cortes e vistas 3D para facilitar a execução.</p>
+            </div>
+        </section>
         
         <section id="garantia" class="py-20">
-            </section>
+             <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold">Seu Investimento Seguro</h2>
+                <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Nosso compromisso vai além do projeto. É com a sua tranquilidade.</p>
+                <div id="garantia-cards" class="mt-12 grid md:grid-cols-3 gap-8 text-left">
+                    </div>
+            </div>
+        </section>
         
         <section id="depoimentos" class="py-20 bg-white">
-            </section>
+             <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">O Que Nossos Clientes Dizem</h2>
+                </div>
+                <div id="depoimentos-grid" class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    </div>
+            </div>
+        </section>
         
         <section id="pacotes" class="py-20 bg-teal-50/50">
             <div class="container mx-auto px-6">
@@ -141,7 +174,8 @@
                     <h2 class="text-3xl md:text-4xl font-bold">Compare e Escolha o Plano Ideal</h2>
                     <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Criamos pacotes flexíveis para atender exatamente ao que você precisa. Clique para comparar.</p>
                 </div>
-                <div class="grid lg:grid-cols-3 gap-8 items-start" id="packages-container"></div>
+                <div class="grid lg:grid-cols-3 gap-8 items-start" id="packages-container">
+                    </div>
                 <div class="max-w-3xl mx-auto mt-12">
                     <div class="bg-white rounded-lg shadow-md">
                         <button class="accordion-header w-full flex justify-between items-center p-5 font-semibold text-left">
@@ -157,7 +191,21 @@
         </section>
 
         <footer id="contato" class="bg-white">
-            </footer>
+            <div class="container mx-auto px-6 py-16 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold">Pronto para Começar?</h2>
+                <p class="mt-4 text-lg max-w-2xl mx-auto text-slate-600">Vamos conversar sobre como podemos transformar seu projeto em realidade. Esta proposta é válida por 15 dias.</p>
+                <div class="mt-8 flex flex-col md:flex-row justify-center items-center gap-6">
+                    <a href="https://wa.me/5575998014491" target="_blank" class="inline-flex items-center justify-center gap-3 bg-green-500 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.267.651 4.383 1.89 6.251l.244.442-1.123 4.105 4.226-1.109.431.252z"/></svg>
+                        <span>Entrar em contato no WhatsApp</span>
+                    </a>
+                     <a href="mailto:alison.karvalho@gmail.com" class="inline-flex items-center justify-center gap-3 bg-teal-600 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        <span>Enviar um E-mail</span>
+                    </a>
+                </div>
+            </div>
+        </footer>
     </main>
 
     <button id="scrollTopBtn" class="bg-teal-600 hover:bg-teal-700 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-2xl z-50">
