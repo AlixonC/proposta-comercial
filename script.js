@@ -58,12 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // =================================================================================
     // FUNÇÕES DE SETUP E RENDERIZAÇÃO
-    // Cada função é responsável por uma parte específica do site.
     // =================================================================================
 
-    /**
-     * Inicializa elementos básicos da UI como datas, header e botão de scroll.
-     */
     function initUI() {
         document.getElementById('proposal-date').textContent = new Date().toLocaleDateString('pt-BR');
         const clientName = new URLSearchParams(window.location.search).get('cliente');
@@ -99,9 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
         sections.forEach(section => observer.observe(section));
     }
 
-    /**
-     * Configura a funcionalidade do menu mobile (abrir/fechar).
-     */
     function setupMobileMenu() {
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -125,12 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /**
-     * Renderiza conteúdo dinâmico em um container específico.
-     * @param {string} containerId - O ID do elemento container.
-     * @param {Array} data - O array de dados a ser renderizado.
-     * @param {Function} renderer - A função que transforma um item de dado em HTML.
-     */
     function renderContent(containerId, data, renderer) {
         const container = document.getElementById(containerId);
         if (container) {
@@ -138,9 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    /**
-     * Configura o sistema de abas da seção "Soluções".
-     */
     function setupTabs() {
         const container = document.getElementById('tabs-container');
         const contentEl = document.getElementById('tabs-content');
@@ -176,28 +160,23 @@ document.addEventListener('DOMContentLoaded', () => {
         buttons[0].click();
     }
 
-    /**
-     * Configura a galeria e os filtros do Portfólio.
-     */
     function setupPortfolio() {
         const filtersContainer = document.getElementById('portfolio-filters');
-        const gridContainer = document.getElementById('portfolio-grid');
-        if (!filtersContainer || !gridContainer) return;
+        if (!filtersContainer) return;
 
         const categories = ['Todos', ...new Set(APP_DATA.portfolio.map(p => p.category))];
         filtersContainer.innerHTML = categories.map(cat => 
             `<button class="filter-btn bg-white px-4 py-2 rounded-full font-semibold shadow-sm" data-filter="${cat.toLowerCase()}">${cat}</button>`
         ).join('');
         
-        const filterBtns = filtersContainer.querySelectorAll('.filter-btn');
         const render = (filter = 'todos') => {
             const data = (filter === 'todos') ? APP_DATA.portfolio : APP_DATA.portfolio.filter(p => p.category === filter);
             renderContent('portfolio-grid', data, item => `
                 <div class="portfolio-item bg-white rounded-lg shadow-lg overflow-hidden group h-full transform transition-transform duration-300 hover:scale-105">
-                    <div class="overflow-hidden"><img src="${item.image}" alt="${item.title}" class="w-full h-64 object-cover" loading="lazy"></div>
+                    <div class="overflow-hidden"><img src="${item.image}" alt="${item.title}" class="w-full h-64 object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Imagem+Indisponível';"></div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold">${item.title}</h3>
-                        <p class="text-slate-600 mt-2">Categoria: ${item.category}</p>
+                        <p class="text-slate-600 mt-2 capitalize">Categoria: ${item.category}</p>
                     </div>
                 </div>
             `);
@@ -215,39 +194,30 @@ document.addEventListener('DOMContentLoaded', () => {
         filtersContainer.querySelector('[data-filter="todos"]').click();
     }
     
-    /**
-     * Configura e renderiza a timeline de Processo.
-     */
     function setupTimeline() {
         const container = document.getElementById('timeline-container');
         if(!container) return;
 
-        container.innerHTML += '<div class="border-l-2 border-dashed border-slate-300 absolute h-full top-0 left-4 md:left-1/2 md:-translate-x-1/2"></div>';
-        renderContent('timeline-container', APP_DATA.timeline, (item, index) => {
+        container.innerHTML = '<div class="border-l-2 border-dashed border-slate-300 absolute h-full top-0 left-4 md:left-1/2 md:-translate-x-1/2"></div>';
+        
+        const timelineContent = APP_DATA.timeline.map((item, index) => {
             const isEven = index % 2 === 0;
+            const alignmentClass = isEven ? 'md:justify-end' : 'md:justify-start';
+            const textAlignClass = isEven ? 'md:text-right' : 'md:text-left';
+            const marginLeftClass = isEven ? '' : 'md:ml-auto';
             return `
-            <div class="relative pl-12 md:pl-0">
-                <div class="md:flex ${isEven ? 'md:justify-end' : 'md:justify-start'} md:gap-8">
-                    <div class="md:w-1/2 ${isEven ? 'md:text-right' : 'md:text-left'} ${isEven ? '' : 'md:ml-auto'} timeline-item">
+            <div class="relative pl-12 md:pl-0 mb-12">
+                <div class="md:flex ${alignmentClass} md:gap-8 items-center">
+                    <div class="md:w-1/2 ${textAlignClass} ${marginLeftClass} timeline-item relative">
                         <h3 class="text-xl font-bold text-teal-800">${item.title}</h3>
                         <p class="text-slate-600">${item.description}</p>
                     </div>
                 </div>
-            </div>
-            `;
-        });
+            </div>`;
+        }).join('');
+        container.innerHTML += timelineContent;
     }
 
-    /**
-     * Configura o carrossel de Entregáveis.
-     */
-    function setupDeliverablesCarousel() {
-        // Implementação do carrossel aqui...
-    }
-
-    /**
-     * Configura a seleção de Pacotes.
-     */
     function setupPackages() {
         const container = document.getElementById('packages-container');
         if (!container) return;
@@ -266,8 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
         `);
 
         const updateSelection = (selectedIndex) => {
-            document.querySelectorAll('.package-card').forEach((card, index) => {
-                const isSelected = index === selectedIndex;
+            document.querySelectorAll('.package-card').forEach((card) => {
+                const isSelected = parseInt(card.dataset.index) === selectedIndex;
                 card.classList.toggle('selected', isSelected);
                 const button = card.querySelector('button');
                 button.classList.toggle('bg-teal-600', isSelected);
@@ -289,15 +259,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSelection(recommendedIndex > -1 ? recommendedIndex : 0);
     }
 
-
     // =================================================================================
     // INICIALIZAÇÃO DA APLICAÇÃO
-    // Chama todas as funções de setup para construir a página.
     // =================================================================================
     initUI();
     setupMobileMenu();
     
-    // Renderiza o conteúdo estático que vem dos dados
     renderContent('problema-cards', APP_DATA.problemas, item => `
         <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-${item.color}-500 transform hover:-translate-y-2 transition-transform duration-300">
             <div class="text-4xl mb-4">${item.emoji}</div>
@@ -318,10 +285,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     `);
 
-    // Configura os módulos interativos
     setupTabs();
     setupPortfolio();
     setupTimeline();
     setupPackages();
-    // setupDeliverablesCarousel(); // Ativaremos esta função quando o carrossel for implementado
 });
