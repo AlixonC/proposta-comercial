@@ -11,7 +11,7 @@
     
     <!-- Chosen Palette: Dark Teal -->
     <!-- Application Structure Plan: A single-page, vertical-scrolling application with a sticky top navigation. The structure follows a persuasive narrative: Hero (Promise), Problem (Agitate with "Pesadelos"), Solution (The Cure), Portfolio (Proof), About Me (Authority), Process (Clarity), Deliverables (Tangibility), Guarantee (Risk Reversal), Testimonials (Social Proof), Packages (The Offer), and a strong CTA. This structure is a classic sales funnel designed for maximum conversion. -->
-    <!-- Visualization & Content Choices: Report Info: Risks -> Goal: Create urgency -> Viz/Presentation: Icon-driven cards with persuasive copy -> Interaction: Subtle hover and scroll-reveal animations -> Justification: Transforms technical issues into tangible, emotional "nightmares" for the client, justifying the value of an integrated solution. | Report Info: Performance -> Goal: Impress client with speed -> Viz/Presentation: Lazy loading on images -> Justification: Drastically improves initial page load time, especially on mobile, conveying professionalism. -->
+    <!-- Visualization & Content Choices: Report Info: Risks -> Goal: Create urgency -> Viz/Presentation: Icon-driven cards with persuasive copy -> Interaction: Subtle hover and scroll-reveal animations -> Justification: Transforms technical issues into tangible, emotional "nightmares" for the client, justifying the value of an integrated solution. | Report Info: Performance -> Goal: Impress client with speed -> Viz/Presentation: Standard image loading (lazy loading removed per user feedback) -> Justification: Ensures all content is visible immediately after load, prioritizing a smoother scroll feel over initial load speed. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     
     <style>
@@ -74,6 +74,21 @@
         .carousel-slide {
             min-width: 100%;
             box-sizing: border-box;
+        }
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .carousel-dot:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        .carousel-dot.active {
+            background-color: white;
+            transform: scale(1.25);
         }
         #mobile-menu {
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
@@ -238,7 +253,7 @@
         <section id="sobre" class="py-20">
             <div class="container mx-auto px-6 grid md:grid-cols-5 gap-12 items-center reveal-on-scroll">
                 <div class="md:col-span-2">
-                    <img data-src="https://placehold.co/400x400/03989e/white?text=AC" alt="Foto de Alison Carvalho" class="lazyload rounded-full mx-auto shadow-xl w-64 h-64 md:w-full md:h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cccccc/ffffff?text=Foto+Indisponível';">
+                    <img src="https://placehold.co/400x400/03989e/white?text=AC" alt="Foto de Alison Carvalho" class="rounded-full mx-auto shadow-xl w-64 h-64 md:w-full md:h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cccccc/ffffff?text=Foto+Indisponível';">
                 </div>
                 <div class="md:col-span-3 text-center md:text-left">
                     <h2 class="text-3xl md:text-4xl font-bold">Quem Você Está Contratando?</h2>
@@ -257,7 +272,6 @@
                 <div class="relative max-w-3xl mx-auto">
                     <div class="border-l-2 border-dashed border-slate-300 absolute h-full top-0 left-4 md:left-1/2 md:-translate-x-1/2"></div>
                     <div id="timeline-container" class="space-y-12">
-                        <!-- Conteúdo do Timeline será injetado aqui -->
                     </div>
                 </div>
             </div>
@@ -284,6 +298,7 @@
                     <button id="deliverableNextBtn" class="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-2 shadow-md transition text-[#03989e] hidden md:block">
                         <span class="text-2xl font-bold">›</span>
                     </button>
+                    <div id="deliverables-dots" class="flex justify-center gap-2 mt-4"></div>
                 </div>
                 <p class="text-lg text-slate-300 max-w-3xl mx-auto mt-8">Pranchas em tamanho ABNT com detalhes da instalação em planta baixa, em cortes e vistas 3D para facilitar a execução.</p>
             </div>
@@ -370,8 +385,6 @@
     <button id="scrollTopBtn" class="bg-[#03989e] hover:bg-[#027a7e] text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-2xl z-50">
         ↑
     </button>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" xintegrity="sha512-q583ppKrCRc7N5O0n2nzUiJ+suUv7Et1JGels4bXOaMFQcamPk9HjdUknZuuFjBNs7tsMuadge5k9RzdmO+1GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
     <script>
         const App = {
@@ -424,14 +437,12 @@
             },
 
             initUI() {
-                // Personalizar nome e data
                 document.getElementById('proposal-date').textContent = new Date().toLocaleDateString('pt-BR');
                 const clientName = new URLSearchParams(window.location.search).get('cliente');
                 if (clientName) {
                     document.getElementById('client-name').textContent = decodeURIComponent(clientName.replace(/\+/g, ' '));
                 }
 
-                // Menu Mobile
                 const mobileMenuButton = document.getElementById('mobile-menu-button');
                 const mobileMenu = document.getElementById('mobile-menu');
                 const menuIconOpen = document.getElementById('menu-icon-open');
@@ -449,7 +460,6 @@
                     });
                 });
 
-                // Header com Sombra e Botão Voltar ao Topo
                 const header = document.getElementById('main-header');
                 const scrollTopBtn = document.getElementById('scrollTopBtn');
                 window.addEventListener('scroll', () => {
@@ -458,14 +468,12 @@
                 });
                 scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
                 
-                // Accordion
                 const accordionHeader = document.querySelector('.accordion-header');
                 accordionHeader.addEventListener('click', () => {
                     document.querySelector('.accordion-content').classList.toggle('hidden');
                     document.querySelector('.accordion-icon').classList.toggle('rotate-45');
                 });
 
-                // Active Nav Link on Scroll
                 const navLinks = document.querySelectorAll('.nav-link');
                 const sections = document.querySelectorAll('main section');
                 const observer = new IntersectionObserver(entries => {
@@ -507,7 +515,7 @@
                     data.forEach(item => {
                         const div = document.createElement('div');
                         div.className = 'portfolio-item bg-white rounded-lg shadow-lg overflow-hidden group h-full transform transition-transform duration-300 hover:scale-105';
-                        div.innerHTML = `<div class="overflow-hidden"><img data-src="${item.image}" alt="${item.title}" class="lazyload w-full h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Imagem+Indisponível';"></div><div class="p-6"><h3 class="text-xl font-bold">${item.title}</h3><p class="text-slate-600 mt-2">Categoria: ${item.category}</p></div>`;
+                        div.innerHTML = `<div class="overflow-hidden"><img src="${item.image}" alt="${item.title}" class="w-full h-64 object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Imagem+Indisponível';"></div><div class="p-6"><h3 class="text-xl font-bold">${item.title}</h3><p class="text-slate-600 mt-2">Categoria: ${item.category}</p></div>`;
                         grid.appendChild(div);
                     });
                 };
@@ -521,6 +529,7 @@
 
             initTimeline() {
                 const container = document.getElementById('timeline-container');
+                container.innerHTML = ''; 
                 this.data.timeline.forEach((item, index) => {
                     const isEven = index % 2 === 0;
                     const alignmentClass = isEven ? 'md:justify-end' : 'md:justify-start';
@@ -547,6 +556,7 @@
                 const track = document.getElementById('deliverables-carousel-track');
                 const prevBtn = document.getElementById('deliverablePrevBtn');
                 const nextBtn = document.getElementById('deliverableNextBtn');
+                const dotsContainer = document.getElementById('deliverables-dots');
                 const filterBtns = document.querySelectorAll('.deliverables-filter-btn');
                 let state = { currentSlide: 0, totalSlides: 0, data: [], autoSlideInterval: null, touchStartX: 0 };
 
@@ -563,23 +573,40 @@
                     const showButtons = state.totalSlides > 1;
                     prevBtn.style.visibility = showButtons ? 'visible' : 'hidden';
                     nextBtn.style.visibility = showButtons ? 'visible' : 'hidden';
+                    
+                    const dots = dotsContainer.children;
+                    if (dots.length > 0) {
+                        for (let i = 0; i < dots.length; i++) {
+                            dots[i].classList.toggle('active', i === state.currentSlide);
+                        }
+                    }
                 };
                 const goToSlide = (index) => {
+                    if (state.totalSlides === 0) return;
                     state.currentSlide = (index + state.totalSlides) % state.totalSlides;
                     updateCarousel();
                 };
                 const render = (filter = 'all') => {
                     state.data = (filter === 'all') ? this.data.deliverables : this.data.deliverables.filter(p => p.category === filter);
                     track.innerHTML = '';
+                    dotsContainer.innerHTML = '';
                     if (state.data.length === 0) {
                         track.innerHTML = `<div class="carousel-slide p-2 w-full text-center"><p class="text-slate-400">Nenhum item para exibir.</p></div>`;
                         state.totalSlides = 0;
                     } else {
-                        state.data.forEach(item => {
+                        state.data.forEach((item, index) => {
                             const slide = document.createElement('div');
                             slide.className = 'carousel-slide p-2';
-                            slide.innerHTML = `<div class="bg-slate-700 rounded-lg p-4"><img data-src="${item.image}" alt="${item.title}" class="lazyload rounded-lg w-full h-auto aspect-[4/3] object-contain mb-4 bg-black" onerror="this.onerror=null;this.src='https://placehold.co/800x600/cccccc/ffffff?text=Imagem+Indisponível';"><h4 class="font-bold text-lg text-white">${item.title}</h4></div>`;
+                            slide.innerHTML = `<div class="bg-slate-700 rounded-lg p-4"><img src="${item.image}" alt="${item.title}" class="rounded-lg w-full h-auto aspect-[4/3] object-contain mb-4 bg-black" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/800x600/cccccc/ffffff?text=Imagem+Indisponível';"><h4 class="font-bold text-lg text-white">${item.title}</h4></div>`;
                             track.appendChild(slide);
+
+                            const dot = document.createElement('button');
+                            dot.className = 'carousel-dot';
+                            dot.addEventListener('click', () => {
+                                goToSlide(index);
+                                resetAutoSlide();
+                            });
+                            dotsContainer.appendChild(dot);
                         });
                         state.totalSlides = state.data.length;
                     }
