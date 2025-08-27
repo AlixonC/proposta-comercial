@@ -70,7 +70,7 @@
         }
         .carousel-track {
             display: flex;
-            transition: transform 0.5s ease-in-out;
+            transition: transform 0.3s ease-out;
         }
         .carousel-slide {
             min-width: 100%;
@@ -116,13 +116,6 @@
             transform: translateY(0);
             pointer-events: auto;
         }
-        .reveal-on-scroll {
-            opacity: 0;
-            transition: opacity 0.6s ease-out;
-        }
-        .reveal-on-scroll.is-visible {
-            opacity: 1;
-        }
     </style>
 </head>
 <body class="text-slate-800">
@@ -159,10 +152,10 @@
     <main>
         <section id="hero" class="bg-white pt-20 pb-16 text-center">
             <div class="container mx-auto px-6">
-                <h1 class="text-4xl md:text-6xl font-extrabold text-[#027a7e] leading-tight reveal-on-scroll">Construindo Sonhos com Segurança e Precisão</h1>
-                <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto reveal-on-scroll" style="transition-delay: 100ms;">Garantimos que seu maior investimento seja também o seu porto seguro, projetado para durar gerações.</p>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-[#027a7e] leading-tight">Construindo Sonhos com Segurança e Precisão</h1>
+                <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">Garantimos que seu maior investimento seja também o seu porto seguro, projetado para durar gerações.</p>
                 
-                <div class="mt-12 max-w-4xl mx-auto bg-white border-2 border-slate-200 rounded-xl shadow-lg p-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center reveal-on-scroll" style="transition-delay: 200ms;">
+                <div class="mt-12 max-w-4xl mx-auto bg-white border-2 border-slate-200 rounded-xl shadow-lg p-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
                     <div>
                         <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Proposta Para</h3>
                         <p id="client-name" class="text-xl font-semibold text-[#027a7e] mt-1">Prezado(a) Cliente</p>
@@ -177,39 +170,39 @@
                     </div>
                 </div>
                 
-                <a href="#pacotes" class="mt-12 bg-[#03989e] text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-[#027a7e] transition-transform hover:scale-105 inline-block reveal-on-scroll" style="transition-delay: 300ms;">Conheça os Pacotes</a>
+                <a href="#pacotes" class="mt-12 bg-[#03989e] text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-[#027a7e] transition-transform hover:scale-105 inline-block">Conheça os Pacotes</a>
             </div>
         </section>
 
         <section id="problema" class="py-20">
             <div class="container mx-auto px-6">
-                <div class="text-center mb-12 reveal-on-scroll">
+                <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold">O Barato que Sai Caro: Os 3 Pesadelos de um Projeto Desintegrado</h2>
                     <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Economizar na fase de projeto é plantar a semente para uma colheita de problemas caros e estressantes na obra.</p>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
-                    <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-red-500 transform hover:-translate-y-2 transition-transform duration-300 reveal-on-scroll">
+                    <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-red-500 transform hover:-translate-y-2 transition-transform duration-300">
                         <div class="text-4xl mb-4">💸</div>
                         <h3 class="text-xl font-bold text-red-600">O Orçamento que Sangra</h3>
                         <p class="mt-2 text-slate-600">Cada incompatibilidade descoberta na obra vira um remendo caro. É o desperdício de material, o pagamento de mão de obra extra e a certeza de que o custo final será muito maior que o planejado.</p>
                     </div>
-                    <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-yellow-500 transform hover:-translate-y-2 transition-transform duration-300 reveal-on-scroll" style="transition-delay: 150ms;">
+                    <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-yellow-500 transform hover:-translate-y-2 transition-transform duration-300">
                         <div class="text-4xl mb-4">⏳</div>
                         <h3 class="text-xl font-bold text-yellow-600">O Cronograma Destruído</h3>
                         <p class="mt-2 text-slate-600">A obra que se arrasta, os prazos estourados e a frustração de ver o sonho ser adiado. O retrabalho não consome apenas dinheiro, ele rouba seu tempo e sua paz.</p>
                     </div>
-                    <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-orange-500 transform hover:-translate-y-2 transition-transform duration-300 reveal-on-scroll" style="transition-delay: 300ms;">
+                    <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-orange-500 transform hover:-translate-y-2 transition-transform duration-300">
                         <div class="text-4xl mb-4">🤯</div>
                         <h3 class="text-xl font-bold text-orange-600">O Estresse que Não Acaba</h3>
                         <p class="mt-2 text-slate-600">Conflitos com pedreiros, decisões tomadas sob pressão e a constante preocupação com a segurança da estrutura. Seu sonho não pode se transformar em um pesadelo de preocupações.</p>
                     </div>
                 </div>
-                <p class="text-center mt-12 text-lg text-slate-700 max-w-3xl mx-auto font-semibold reveal-on-scroll">Nossa metodologia de projetos integrados é a sua apólice de seguro contra esses pesadelos.</p>
+                <p class="text-center mt-12 text-lg text-slate-700 max-w-3xl mx-auto font-semibold">Nossa metodologia de projetos integrados é a sua apólice de seguro contra esses pesadelos.</p>
             </div>
         </section>
 
         <section id="solucoes" class="py-20 bg-white">
-            <div class="container mx-auto px-6 reveal-on-scroll">
+            <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold">Nossa Solução: A Engenharia da Tranquilidade</h2>
                     <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Oferecemos um ecossistema completo de projetos 100% compatibilizados para uma construção coesa, segura e sem surpresas.</p>
@@ -235,7 +228,7 @@
         </section>
 
         <section id="portfolio" class="py-20 bg-[#e6f5f5]">
-            <div class="container mx-auto px-6 reveal-on-scroll">
+            <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold">Nossos Projetos: Qualidade em Cada Detalhe</h2>
                     <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Veja na prática como transformamos ideias em realidade, com excelência em cada detalhe.</p>
@@ -250,7 +243,7 @@
         </section>
         
         <section id="sobre" class="py-20">
-            <div class="container mx-auto px-6 grid md:grid-cols-5 gap-12 items-center reveal-on-scroll">
+            <div class="container mx-auto px-6 grid md:grid-cols-5 gap-12 items-center">
                 <div class="md:col-span-2">
                     <img src="https://placehold.co/400x400/03989e/white?text=AC" alt="Foto de Alison Carvalho" class="rounded-full mx-auto shadow-xl w-64 h-64 md:w-full md:h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/cccccc/ffffff?text=Foto+Indisponível';">
                 </div>
@@ -263,7 +256,7 @@
         </section>
 
         <section id="processo" class="py-20 bg-white">
-            <div class="container mx-auto px-6 reveal-on-scroll">
+            <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-bold">Nosso Processo de Trabalho</h2>
                     <p class="text-lg text-slate-600 mt-4 max-w-2xl mx-auto">Um passo a passo claro e organizado para garantir que seu projeto flua sem complicações.</p>
@@ -277,7 +270,7 @@
         </section>
 
         <section id="entregaveis" class="py-20 bg-slate-800 text-white">
-            <div class="container mx-auto px-6 text-center reveal-on-scroll">
+            <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold text-[#03989e]">O QUE VOCÊ RECEBE</h2>
                 <div class="flex flex-wrap justify-center gap-2 md:gap-4 my-8">
                     <button class="deliverables-filter-btn active px-4 py-2 rounded-full font-semibold shadow-sm" data-filter="all">Todos</button>
@@ -304,7 +297,7 @@
         </section>
 
         <section id="garantia" class="py-20">
-            <div class="container mx-auto px-6 text-center reveal-on-scroll">
+            <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold">Seu Investimento Seguro</h2>
                 <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Nosso compromisso vai além do projeto. É com a sua tranquilidade.</p>
                 <div class="mt-12 grid md:grid-cols-3 gap-8 text-left">
@@ -325,7 +318,7 @@
         </section>
 
         <section id="depoimentos" class="py-20 bg-white">
-             <div class="container mx-auto px-6 reveal-on-scroll">
+             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold">O Que Nossos Clientes Dizem</h2>
                 </div>
@@ -343,7 +336,7 @@
         </section>
 
         <section id="pacotes" class="py-20 bg-[#e6f5f5]">
-            <div class="container mx-auto px-6 reveal-on-scroll">
+            <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold">Compare e Escolha o Plano Ideal</h2>
                     <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Criamos pacotes flexíveis para atender exatamente ao que você precisa. Clique para comparar.</p>
@@ -386,56 +379,47 @@
     </button>
     
     <script>
-        const App = {
-            data: {
-                services: {
-                    arquitetonico: { title: '1. Projeto Arquitetônico', subtitle: 'A alma do seu espaço, onde seus sonhos tomam forma.', description: 'Criamos espaços que refletem sua personalidade e atendem às suas necessidades, garantindo o máximo de conforto, iluminação e ventilação natural para você e sua família.', deliverables: ['Plantas baixas humanizadas', 'Cortes e fachadas detalhadas', 'Layout de pontos elétricos e hidráulicos', 'Modelo 3D para visualização completa'] },
-                    estrutural: { title: '2. Projeto Estrutural', subtitle: 'A base sólida que garante a segurança e a durabilidade.', description: 'Garantimos a segurança e a longevidade da sua construção, otimizando o uso de materiais para que você economize sem abrir mão da qualidade e da tranquilidade.', deliverables: ['Plantas de formas', 'Detalhamento de pilares, vigas, lajes e fundações', 'Lista de materiais (aço e concreto)'] },
-                    hidrossanitario: { title: '3. Projeto Hidrossanitário', subtitle: 'Saúde e conforto para o seu dia a dia.', description: 'Planejamos sistemas eficientes de água e esgoto para garantir o funcionamento perfeito da sua casa, evitando entupimentos, vazamentos e dores de cabeça futuras.', deliverables: ['Plantas de distribuição de água fria e quente', 'Isométricos para fácil execução', 'Detalhamento de caixas de inspeção e esgoto', 'Lista de materiais completa'] },
-                    eletrico: { title: '4. Projeto Elétrico', subtitle: 'A energia que dá vida ao seu lar, com total segurança.', description: 'Dimensionamos uma instalação elétrica segura e eficiente, prevendo o uso de todos os seus equipamentos para que você nunca se preocupe com sobrecargas ou falta de tomadas.', deliverables: ['Plantas de pontos de iluminação e tomadas', 'Diagramas dos quadros de distribuição', 'Detalhamento de eletrodutos e fiação', 'Lista de materiais'] }
-                },
-                packages: [
-                    { name: 'Pacote Essencial', description: 'O ponto de partida seguro para sua construção.', price: '4.500,00', features: ['Projeto Arquitetônico', 'Projeto Estrutural'], recommended: false },
-                    { name: 'Pacote Integrado', description: 'A solução completa para uma obra sem dor de cabeça.', price: '8.000,00', features: ['Todos os itens do Pacote Essencial', 'Projeto Hidrossanitário', 'Projeto Elétrico', 'Análise de Compatibilização 3D'], recommended: true },
-                    { name: 'Pacote Premium', description: 'A experiência definitiva em personalização e acompanhamento.', price: '12.500,00', features: ['Todos os itens do Pacote Integrado', 'Projeto de Luminotecnia', 'Detalhamento de Interiores', 'Visitas Técnicas de Acompanhamento'], recommended: false }
-                ],
-                portfolio: [
-                    { image: 'https://placehold.co/600x400/027a7e/white?text=Portfolio+1', title: 'Casa Contemporânea', category: 'residencial' },
-                    { image: 'https://placehold.co/600x400/1e293b/white?text=Portfolio+2', title: 'Escritório Moderno', category: 'comercial' },
-                    { image: 'https://placehold.co/600x400/027a7e/white?text=Portfolio+3', title: 'Reforma de Apartamento', category: 'residencial' },
-                    { image: 'https://placehold.co/600x400/1e293b/white?text=Portfolio+4', title: 'Galpão Industrial', category: 'comercial' },
-                    { image: 'https://placehold.co/600x400/027a7e/white?text=Portfolio+5', title: 'Casa de Campo', category: 'residencial' },
-                    { image: 'https://placehold.co/600x400/1e293b/white?text=Portfolio+6', title: 'Loja Conceito', category: 'comercial' }
-                ],
-                deliverables: [
-                    { image: 'https://placehold.co/800x600/1e293b/white?text=Sapatas', title: 'Detalhamento de Sapatas', category: 'estrutural' },
-                    { image: 'https://placehold.co/800x600/1e293b/white?text=Vigas', title: 'Detalhamento de Vigas', category: 'estrutural' },
-                    { image: 'https://placehold.co/800x600/027a7e/white?text=Planta+Humanizada', title: 'Planta Baixa Humanizada', category: 'arquitetonico' },
-                    { image: 'https://placehold.co/800x600/027a7e/white?text=Cortes+3D', title: 'Cortes e Vistas 3D', category: 'arquitetonico' },
-                    { image: 'https://placehold.co/800x600/1e293b/white?text=Elétrico', title: 'Projeto Elétrico', category: 'eletrico' },
-                    { image: 'https://placehold.co/800x600/1e293b/white?text=Diagrama', title: 'Diagrama Unifilar', category: 'eletrico' },
-                    { image: 'https://placehold.co/800x600/027a7e/white?text=Isométrico', title: 'Isométrico Hidráulico', category: 'hidrossanitario' },
-                    { image: 'https://placehold.co/800x600/027a7e/white?text=Esgoto', title: 'Planta de Esgoto', category: 'hidrossanitario' }
-                ],
-                timeline: [
-                    { title: 'Etapa 1: Briefing e Análise', description: 'Entendemos suas necessidades, desejos e orçamento para criar a base do projeto.' },
-                    { title: 'Etapa 2: Estudo Preliminar e 3D', description: 'Desenvolvemos as primeiras ideias e modelos 3D para visualização e aprovação.' },
-                    { title: 'Etapa 3: Projeto Executivo', description: 'Detalhamos todos os aspectos técnicos para a execução da obra sem erros.' },
-                    { title: 'Etapa 4: Entrega e Suporte', description: 'Entregamos todos os projetos e permanecemos disponíveis para esclarecer dúvidas.' }
-                ]
+        const APP_DATA = {
+            services: {
+                arquitetonico: { title: '1. Projeto Arquitetônico', subtitle: 'A alma do seu espaço, onde seus sonhos tomam forma.', description: 'Criamos espaços que refletem sua personalidade e atendem às suas necessidades, garantindo o máximo de conforto, iluminação e ventilação natural para você e sua família.', deliverables: ['Plantas baixas humanizadas', 'Cortes e fachadas detalhadas', 'Layout de pontos elétricos e hidráulicos', 'Modelo 3D para visualização completa'] },
+                estrutural: { title: '2. Projeto Estrutural', subtitle: 'A base sólida que garante a segurança e a durabilidade.', description: 'Garantimos a segurança e a longevidade da sua construção, otimizando o uso de materiais para que você economize sem abrir mão da qualidade e da tranquilidade.', deliverables: ['Plantas de formas', 'Detalhamento de pilares, vigas, lajes e fundações', 'Lista de materiais (aço e concreto)'] },
+                hidrossanitario: { title: '3. Projeto Hidrossanitário', subtitle: 'Saúde e conforto para o seu dia a dia.', description: 'Planejamos sistemas eficientes de água e esgoto para garantir o funcionamento perfeito da sua casa, evitando entupimentos, vazamentos e dores de cabeça futuras.', deliverables: ['Plantas de distribuição de água fria e quente', 'Isométricos para fácil execução', 'Detalhamento de caixas de inspeção e esgoto', 'Lista de materiais completa'] },
+                eletrico: { title: '4. Projeto Elétrico', subtitle: 'A energia que dá vida ao seu lar, com total segurança.', description: 'Dimensionamos uma instalação elétrica segura e eficiente, prevendo o uso de todos os seus equipamentos para que você nunca se preocupe com sobrecargas ou falta de tomadas.', deliverables: ['Plantas de pontos de iluminação e tomadas', 'Diagramas dos quadros de distribuição', 'Detalhamento de eletrodutos e fiação', 'Lista de materiais'] }
             },
+            packages: [
+                { name: 'Pacote Essencial', description: 'O ponto de partida seguro para sua construção.', price: '4.500,00', features: ['Projeto Arquitetônico', 'Projeto Estrutural'], recommended: false },
+                { name: 'Pacote Integrado', description: 'A solução completa para uma obra sem dor de cabeça.', price: '8.000,00', features: ['Todos os itens do Pacote Essencial', 'Projeto Hidrossanitário', 'Projeto Elétrico', 'Análise de Compatibilização 3D'], recommended: true },
+                { name: 'Pacote Premium', description: 'A experiência definitiva em personalização e acompanhamento.', price: '12.500,00', features: ['Todos os itens do Pacote Integrado', 'Projeto de Luminotecnia', 'Detalhamento de Interiores', 'Visitas Técnicas de Acompanhamento'], recommended: false }
+            ],
+            portfolio: [
+                { image: 'https://placehold.co/600x400/027a7e/white?text=Portfolio+1', title: 'Casa Contemporânea', category: 'residencial' },
+                { image: 'https://placehold.co/600x400/1e293b/white?text=Portfolio+2', title: 'Escritório Moderno', category: 'comercial' },
+                { image: 'https://placehold.co/600x400/027a7e/white?text=Portfolio+3', title: 'Reforma de Apartamento', category: 'residencial' },
+                { image: 'https://placehold.co/600x400/1e293b/white?text=Portfolio+4', title: 'Galpão Industrial', category: 'comercial' },
+                { image: 'https://placehold.co/600x400/027a7e/white?text=Portfolio+5', title: 'Casa de Campo', category: 'residencial' },
+                { image: 'https://placehold.co/600x400/1e293b/white?text=Portfolio+6', title: 'Loja Conceito', category: 'comercial' }
+            ],
+            deliverables: [
+                { image: 'https://placehold.co/800x600/1e293b/white?text=Sapatas', title: 'Detalhamento de Sapatas', category: 'estrutural' },
+                { image: 'https://placehold.co/800x600/1e293b/white?text=Vigas', title: 'Detalhamento de Vigas', category: 'estrutural' },
+                { image: 'https://placehold.co/800x600/027a7e/white?text=Planta+Humanizada', title: 'Planta Baixa Humanizada', category: 'arquitetonico' },
+                { image: 'https://placehold.co/800x600/027a7e/white?text=Cortes+3D', title: 'Cortes e Vistas 3D', category: 'arquitetonico' },
+                { image: 'https://placehold.co/800x600/1e293b/white?text=Elétrico', title: 'Projeto Elétrico', category: 'eletrico' },
+                { image: 'https://placehold.co/800x600/1e293b/white?text=Diagrama', title: 'Diagrama Unifilar', category: 'eletrico' },
+                { image: 'https://placehold.co/800x600/027a7e/white?text=Isométrico', title: 'Isométrico Hidráulico', category: 'hidrossanitario' },
+                { image: 'https://placehold.co/800x600/027a7e/white?text=Esgoto', title: 'Planta de Esgoto', category: 'hidrossanitario' }
+            ],
+            timeline: [
+                { title: 'Etapa 1: Briefing e Análise', description: 'Entendemos suas necessidades, desejos e orçamento para criar a base do projeto.' },
+                { title: 'Etapa 2: Estudo Preliminar e 3D', description: 'Desenvolvemos as primeiras ideias e modelos 3D para visualização e aprovação.' },
+                { title: 'Etapa 3: Projeto Executivo', description: 'Detalhamos todos os aspectos técnicos para a execução da obra sem erros.' },
+                { title: 'Etapa 4: Entrega e Suporte', description: 'Entregamos todos os projetos e permanecemos disponíveis para esclarecer dúvidas.' }
+            ]
+        };
 
-            init() {
-                this.initUI();
-                this.initTabs();
-                this.initPortfolio();
-                this.initTimeline();
-                this.initDeliverablesCarousel();
-                this.initPackages();
-                this.initScrollAnimations();
-            },
-
-            initUI() {
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            function initUI() {
                 document.getElementById('proposal-date').textContent = new Date().toLocaleDateString('pt-BR');
                 const clientName = new URLSearchParams(window.location.search).get('cliente');
                 if (clientName) {
@@ -485,13 +469,13 @@
                     });
                 }, { rootMargin: '-40% 0px -60% 0px' });
                 sections.forEach(section => observer.observe(section));
-            },
+            }
 
-            initTabs() {
+            function initTabs(services) {
                 const tabsContainer = document.getElementById('tabs-container');
                 const tabsContent = document.getElementById('tabs-content');
                 const render = (key) => {
-                    const service = this.data.services[key];
+                    const service = services[key];
                     tabsContent.innerHTML = `<h3 class="text-2xl font-bold text-[#027a7e]">${service.title}</h3><p class="mt-1 text-slate-500 italic">${service.subtitle}</p><p class="mt-4 text-slate-700">${service.description}</p><p class="mt-6 font-semibold">O que você recebe:</p><ul class="mt-2 space-y-2 list-disc list-inside text-slate-700">${service.deliverables.map(item => `<li>${item}</li>`).join('')}</ul>`;
                 };
                 tabsContainer.addEventListener('click', e => {
@@ -503,14 +487,14 @@
                     }
                 });
                 render('arquitetonico');
-            },
+            }
 
-            initPortfolio() {
+            function initPortfolio(portfolioData) {
                 const grid = document.getElementById('portfolio-grid');
                 const filterBtns = document.querySelectorAll('.filter-btn');
                 const render = (filter = 'all') => {
                     grid.innerHTML = '';
-                    const data = (filter === 'all') ? this.data.portfolio : this.data.portfolio.filter(p => p.category === filter);
+                    const data = (filter === 'all') ? portfolioData : portfolioData.filter(p => p.category === filter);
                     data.forEach(item => {
                         const div = document.createElement('div');
                         div.className = 'portfolio-item bg-white rounded-lg shadow-lg overflow-hidden group h-full transform transition-transform duration-300 hover:scale-105';
@@ -524,21 +508,19 @@
                     render(btn.dataset.filter);
                 }));
                 render();
-            },
+            }
 
-            initTimeline() {
+            function initTimeline(timelineData) {
                 const container = document.getElementById('timeline-container');
                 container.innerHTML = ''; 
-                this.data.timeline.forEach((item, index) => {
+                timelineData.forEach((item, index) => {
                     const isEven = index % 2 === 0;
                     const alignmentClass = isEven ? 'md:justify-end' : 'md:justify-start';
                     const textAlignClass = isEven ? 'md:text-right' : 'md:text-left';
                     const marginLeftClass = isEven ? '' : 'md:ml-auto';
-                    const delay = index * 150;
-
+                    
                     const div = document.createElement('div');
-                    div.className = `relative pl-12 md:pl-0 reveal-on-scroll`;
-                    div.style.transitionDelay = `${delay}ms`;
+                    div.className = `relative pl-12 md:pl-0`;
                     div.innerHTML = `
                         <div class="md:flex ${alignmentClass} md:gap-8">
                             <div class="md:w-1/2 ${textAlignClass} ${marginLeftClass} timeline-item">
@@ -549,15 +531,15 @@
                     `;
                     container.appendChild(div);
                 });
-            },
+            }
 
-            initDeliverablesCarousel() {
+            function initDeliverablesCarousel(deliverablesData) {
                 const track = document.getElementById('deliverables-carousel-track');
                 const prevBtn = document.getElementById('deliverablePrevBtn');
                 const nextBtn = document.getElementById('deliverableNextBtn');
                 const dotsContainer = document.getElementById('deliverables-dots');
                 const filterBtns = document.querySelectorAll('.deliverables-filter-btn');
-                let state = { currentSlide: 0, totalSlides: 0, data: [], autoSlideInterval: null, touchStartX: 0, touchStartY: 0 };
+                let state = { currentSlide: 0, totalSlides: 0, data: [], autoSlideInterval: null, touchStartX: 0 };
 
                 const startAutoSlide = () => {
                     stopAutoSlide();
@@ -586,7 +568,7 @@
                     updateCarousel();
                 };
                 const render = (filter = 'all') => {
-                    state.data = (filter === 'all') ? this.data.deliverables : this.data.deliverables.filter(p => p.category === filter);
+                    state.data = (filter === 'all') ? deliverablesData : deliverablesData.filter(p => p.category === filter);
                     track.innerHTML = '';
                     dotsContainer.innerHTML = '';
                     if (state.data.length === 0) {
@@ -623,17 +605,14 @@
                 
                 track.addEventListener('touchstart', e => {
                     state.touchStartX = e.touches[0].clientX;
-                    state.touchStartY = e.touches[0].clientY;
                     stopAutoSlide();
-                });
+                }, { passive: true });
 
                 track.addEventListener('touchend', e => {
                     const touchEndX = e.changedTouches[0].clientX;
-                    const touchEndY = e.changedTouches[0].clientY;
                     const deltaX = touchEndX - state.touchStartX;
-                    const deltaY = touchEndY - state.touchStartY;
 
-                    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30) {
+                    if (Math.abs(deltaX) > 50) {
                         if (deltaX < 0) {
                             goToSlide(state.currentSlide + 1);
                         } else {
@@ -644,9 +623,9 @@
                 });
 
                 render();
-            },
+            }
 
-            initPackages() {
+            function initPackages(packagesData) {
                 const container = document.getElementById('packages-container');
                 const updateSelection = (selectedIndex) => {
                     document.querySelectorAll('.package-card').forEach((card, index) => {
@@ -660,7 +639,7 @@
                         button.textContent = isSelected ? 'Plano Selecionado' : 'Selecionar Plano';
                     });
                 };
-                this.data.packages.forEach((pkg, index) => {
+                packagesData.forEach((pkg, index) => {
                     const card = document.createElement('div');
                     card.className = `package-card cursor-pointer bg-white p-8 rounded-lg shadow-lg border-2 border-transparent transition-all duration-300 flex flex-col`;
                     if(pkg.recommended) card.classList.add('relative');
@@ -669,27 +648,17 @@
                     card.addEventListener('click', () => updateSelection(index));
                     container.appendChild(card);
                 });
-                const recommendedIndex = this.data.packages.findIndex(p => p.recommended);
+                const recommendedIndex = packagesData.findIndex(p => p.recommended);
                 updateSelection(recommendedIndex > -1 ? recommendedIndex : 0);
-            },
-
-            initScrollAnimations() {
-                const observer = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-visible');
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.1 });
-
-                document.querySelectorAll('.reveal-on-scroll').forEach(el => {
-                    observer.observe(el);
-                });
             }
-        };
-
-        document.addEventListener('DOMContentLoaded', () => App.init());
+            
+            initUI();
+            initTabs(APP_DATA.services);
+            initPortfolio(APP_DATA.portfolio);
+            initTimeline(APP_DATA.timeline);
+            initDeliverablesCarousel(APP_DATA.deliverables);
+            initPackages(APP_DATA.packages);
+        });
     </script>
 </body>
 </html>
