@@ -118,12 +118,10 @@
         }
         .reveal-on-scroll {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition: opacity 0.6s ease-out;
         }
         .reveal-on-scroll.is-visible {
             opacity: 1;
-            transform: translateY(0);
         }
     </style>
 </head>
@@ -627,7 +625,7 @@
                     state.touchStartX = e.touches[0].clientX;
                     state.touchStartY = e.touches[0].clientY;
                     stopAutoSlide();
-                }, { passive: true });
+                });
 
                 track.addEventListener('touchend', e => {
                     const touchEndX = e.changedTouches[0].clientX;
@@ -635,10 +633,10 @@
                     const deltaX = touchEndX - state.touchStartX;
                     const deltaY = touchEndY - state.touchStartY;
 
-                    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                        if (deltaX < -50) {
+                    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30) {
+                        if (deltaX < 0) {
                             goToSlide(state.currentSlide + 1);
-                        } else if (deltaX > 50) {
+                        } else {
                             goToSlide(state.currentSlide - 1);
                         }
                     }
