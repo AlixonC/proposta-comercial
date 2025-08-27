@@ -19,9 +19,10 @@
             font-family: 'Inter', sans-serif;
             background-color: #f8fcfc;
             color: #1e293b;
+            -webkit-tap-highlight-color: transparent;
         }
         header.scrolled {
-            box-shadow: 0 4px_6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
         .nav-link.active {
             color: #03989e;
@@ -128,7 +129,7 @@
 </head>
 <body class="text-slate-800">
 
-    <header id="main-header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 transition-shadow duration-300">
+    <header id="main-header" class="bg-white/95 sticky top-0 z-50 transition-shadow duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-[#027a7e]">
                 Alison Carvalho
@@ -146,7 +147,7 @@
                 <span id="menu-icon-close" class="text-3xl hidden">×</span>
             </button>
         </nav>
-        <div id="mobile-menu" class="md:hidden px-6 pb-4 bg-white/80 backdrop-blur-lg">
+        <div id="mobile-menu" class="md:hidden px-6 pb-4 bg-white/95">
              <a href="#solucoes" class="mobile-nav-link block py-2 nav-link text-slate-600 hover:text-[#03989e]">Soluções</a>
              <a href="#portfolio" class="mobile-nav-link block py-2 nav-link text-slate-600 hover:text-[#03989e]">Portfólio</a>
              <a href="#sobre" class="mobile-nav-link block py-2 nav-link text-slate-600 hover:text-[#03989e]">Sobre</a>
@@ -300,7 +301,7 @@
                     </button>
                     <div id="deliverables-dots" class="flex justify-center gap-2 mt-4"></div>
                 </div>
-                <p class="text-lg text-slate-300 max-w-3xl mx-auto mt-8">Pranchas em tamanho ABNT com detalhes da instalação em planta baixa, em cortes e vistas 3D para facilitar a execução.</p>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto mt-8 px-4 sm:px-0">Pranchas em tamanho ABNT com detalhes da instalação em planta baixa, em cortes e vistas 3D para facilitar a execução.</p>
             </div>
         </section>
 
@@ -558,7 +559,7 @@
                 const nextBtn = document.getElementById('deliverableNextBtn');
                 const dotsContainer = document.getElementById('deliverables-dots');
                 const filterBtns = document.querySelectorAll('.deliverables-filter-btn');
-                let state = { currentSlide: 0, totalSlides: 0, data: [], autoSlideInterval: null, touchStartX: 0 };
+                let state = { currentSlide: 0, totalSlides: 0, data: [], autoSlideInterval: null, touchStartX: 0, touchStartY: 0 };
 
                 const startAutoSlide = () => {
                     stopAutoSlide();
@@ -621,13 +622,29 @@
                 }));
                 nextBtn.addEventListener('click', () => { goToSlide(state.currentSlide + 1); resetAutoSlide(); });
                 prevBtn.addEventListener('click', () => { goToSlide(state.currentSlide - 1); resetAutoSlide(); });
-                track.addEventListener('touchstart', e => { state.touchStartX = e.changedTouches[0].screenX; stopAutoSlide(); });
+                
+                track.addEventListener('touchstart', e => {
+                    state.touchStartX = e.touches[0].clientX;
+                    state.touchStartY = e.touches[0].clientY;
+                    stopAutoSlide();
+                }, { passive: true });
+
                 track.addEventListener('touchend', e => {
-                    const touchEndX = e.changedTouches[0].screenX;
-                    if (state.touchStartX - touchEndX > 50) goToSlide(state.currentSlide + 1);
-                    if (touchEndX - state.touchStartX > 50) goToSlide(state.currentSlide - 1);
+                    const touchEndX = e.changedTouches[0].clientX;
+                    const touchEndY = e.changedTouches[0].clientY;
+                    const deltaX = touchEndX - state.touchStartX;
+                    const deltaY = touchEndY - state.touchStartY;
+
+                    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                        if (deltaX < -50) {
+                            goToSlide(state.currentSlide + 1);
+                        } else if (deltaX > 50) {
+                            goToSlide(state.currentSlide - 1);
+                        }
+                    }
                     startAutoSlide();
                 });
+
                 render();
             },
 
