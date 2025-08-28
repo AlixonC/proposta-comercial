@@ -73,6 +73,7 @@
             background-color: rgba(0, 0, 0, 0.9);
             justify-content: center;
             align-items: center;
+            padding: 2rem;
         }
 
         .modal-content-wrapper {
@@ -106,6 +107,17 @@
             color: #bbb;
             text-decoration: none;
             cursor: pointer;
+        }
+        
+        /* Estilo para o novo modal de contato */
+        .contact-modal-content {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            animation: fadeInScale 0.3s ease-out forwards;
         }
 
         .modal-nav {
@@ -426,6 +438,26 @@
                 <button id="modalPrev" class="modal-nav modal-prev">❮</button>
                 <img class="modal-image" id="modalImage" src="" alt="">
                 <button id="modalNext" class="modal-nav modal-next">❯</button>
+            </div>
+        </div>
+        
+        <!-- Novo Modal de Contato para Planos -->
+        <div id="contactModal" class="modal">
+            <div class="contact-modal-content">
+                <span class="modal-close absolute top-2 right-4 text-slate-800 text-3xl cursor-pointer hover:text-red-500 transition-colors">&times;</span>
+                <h3 id="modalPlanTitle" class="text-2xl font-bold text-teal-800 mt-8 mb-4"></h3>
+                <p id="modalPlanDescription" class="text-slate-600 mb-6"></p>
+                <p class="text-lg font-semibold text-slate-800 mb-4">Escolha como entrar em contato:</p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4">
+                    <a id="modalWhatsappLink" href="#" target="_blank" class="inline-flex items-center justify-center gap-3 bg-green-500 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.267.651 4.383 1.89 6.251l.244.442-1.123 4.105 4.226-1.109.431.252z"/></svg>
+                        <span>WhatsApp</span>
+                    </a>
+                    <a id="modalEmailLink" href="#" class="inline-flex items-center justify-center gap-3 bg-teal-600 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        <span>E-mail</span>
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -942,7 +974,15 @@
 
             function setupPackages() {
                 const container = document.getElementById('packages-container');
+                const contactModal = document.getElementById('contactModal');
+                const modalCloseBtn = contactModal.querySelector('.modal-close');
+                const modalTitle = document.getElementById('modalPlanTitle');
+                const modalDescription = document.getElementById('modalPlanDescription');
+                const modalWhatsapp = document.getElementById('modalWhatsappLink');
+                const modalEmail = document.getElementById('modalEmailLink');
+                
                 if (!container) return;
+
                 renderContent('packages-container', APP_DATA.packages, (pkg, index) => `
                     <div class="package-card cursor-pointer bg-white p-8 rounded-lg shadow-lg border-2 border-transparent transition-all duration-300 flex flex-col ${pkg.recommended ? 'relative' : ''}" data-index="${index}">
                         ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-teal-600 text-white text-sm font-bold px-4 py-1 rounded-full">RECOMENDADO</div>' : ''}
@@ -952,9 +992,10 @@
                             <p class="text-4xl font-extrabold my-6">R$ ${pkg.price}</p>
                             <ul class="space-y-3 text-slate-700 text-left">${pkg.features.map(f => `<li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✔</span><span>${f}</span></li>`).join('')}</ul>
                         </div>
-                        <button class="w-full mt-8 py-3 px-6 rounded-lg font-semibold transition-colors duration-300">Selecionar Plano</button>
+                        <button class="w-full mt-8 py-3 px-6 rounded-lg font-semibold transition-colors duration-300" data-plan-name="${pkg.name}" data-plan-index="${index}">Selecionar Plano</button>
                     </div>
                 `);
+
                 const updateSelection = (selectedIndex) => {
                     document.querySelectorAll('.package-card').forEach((card) => {
                         const isSelected = parseInt(card.dataset.index) === selectedIndex;
@@ -967,12 +1008,55 @@
                         button.textContent = isSelected ? 'Plano Selecionado' : 'Selecionar Plano';
                     });
                 };
+                
+                // Nova função para abrir o modal de contato
+                const openContactModal = (planName) => {
+                    const planDetails = APP_DATA.packages.find(p => p.name === planName);
+                    
+                    if (planDetails) {
+                        modalTitle.textContent = `Plano Escolhido: ${planName}`;
+                        const featuresList = planDetails.features.map(f => `<li>✔ ${f}</li>`).join('');
+                        modalDescription.innerHTML = `O que você recebe: <ul class="list-disc list-inside mt-2 space-y-1">${featuresList}</ul>`;
+
+                        // Mensagens pré-preenchidas
+                        const whatsappMessage = encodeURIComponent(`Olá, gostaria de mais informações sobre o "${planName}" que vi em sua proposta.`);
+                        const emailSubject = encodeURIComponent(`Interesse no plano: ${planName}`);
+                        const emailBody = encodeURIComponent(`Olá, Alison. Meu nome é [Seu Nome] e gostaria de mais informações sobre o plano "${planName}" que vi em sua proposta. Pode me ajudar?`);
+                        
+                        modalWhatsapp.href = `https://wa.me/5575998014491?text=${whatsappMessage}`;
+                        modalEmail.href = `mailto:alison.karvalho@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+
+                        contactModal.style.display = 'flex';
+                    }
+                };
+                
+                // Evento de clique para o botão de selecionar plano
                 container.addEventListener('click', e => {
-                    const card = e.target.closest('.package-card');
-                    if (card) {
-                        updateSelection(parseInt(card.dataset.index));
+                    const button = e.target.closest('button');
+                    if (button && button.dataset.planName) {
+                        const planName = button.dataset.planName;
+                        const planIndex = parseInt(button.dataset.planIndex);
+                        updateSelection(planIndex);
+                        openContactModal(planName);
+                    } else {
+                        const card = e.target.closest('.package-card');
+                        if (card) {
+                            updateSelection(parseInt(card.dataset.index));
+                        }
                     }
                 });
+
+                // Lógica para fechar o modal de contato
+                modalCloseBtn.addEventListener('click', () => {
+                    contactModal.style.display = 'none';
+                });
+                
+                window.addEventListener('click', (e) => {
+                    if (e.target === contactModal) {
+                        contactModal.style.display = 'none';
+                    }
+                });
+
                 const recommendedIndex = APP_DATA.packages.findIndex(p => p.recommended);
                 updateSelection(recommendedIndex > -1 ? recommendedIndex : 0);
             }
