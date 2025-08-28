@@ -539,7 +539,7 @@
                 ],
                 depoimentos: [
                     { text: 'Estávamos com problemas de compatibilização entre a arquitetura e a estrutura. O Alison resolveu tudo de forma brilhante, nos poupando tempo e dinheiro na obra. O profissionalismo superou as expectativas!', author: '- Família Silva, Residência Jequitibá' },
-                    { text: 'Tínhamos medo de construir, mas o Alison nos deu total segurança. A comunicação foi clara do início ao fim e o resultado foi a casa dos nossos sonhos, sem estouro no orçamento. Serviço impecável.', author: '- João e Maria, Casa do Campo' }
+                    { text: 'Tínhamos medo de construir, mas o Alison nos deu total segurança. A comunicação foi clara do início ao fim e o resultado foi a casa dos seus sonhos, sem estouro no orçamento. Serviço impecável.', author: '- João e Maria, Casa do Campo' }
                 ],
                 packages: [
                     { name: 'Pacote Essencial', description: 'O ponto de partida seguro para sua construção.', price: '4.500,00', features: ['Projeto Arquitetônico', 'Projeto Estrutural'], recommended: false },
@@ -733,7 +733,7 @@
 
                 const renderCarousel = () => {
                     carouselTrack.innerHTML = filteredDeliverables.map(item => `
-                        <div class="carousel-item p-4" onclick="openModal(${filteredDeliverables.indexOf(item)})">
+                        <div class="carousel-item p-4">
                             <div class="bg-white rounded-lg p-4 shadow-lg flex flex-col items-center">
                                 <img src="${item.image}" alt="${item.title}" class="rounded-lg max-h-96 w-auto object-contain transition-transform duration-300 cursor-pointer" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/800x600/cccccc/ffffff?text=Imagem+Indisponível';">
                                 <h4 class="mt-4 font-bold text-lg text-slate-800">${item.title}</h4>
@@ -791,25 +791,37 @@
                 // Lógica de deslizar (swipe) usando eventos de ponteiro para melhor compatibilidade
                 let isDragging = false;
                 let startPos = 0;
+                let startY = 0; // Adicionado para lidar com a rolagem vertical
                 
                 carouselTrack.addEventListener('pointerdown', (e) => {
                     isDragging = true;
                     startPos = e.clientX;
+                    startY = e.clientY;
                     carouselTrack.style.transition = 'none';
                     document.body.style.cursor = 'grabbing';
                 });
 
                 carouselTrack.addEventListener('pointerup', (e) => {
+                    if (!isDragging) return;
                     isDragging = false;
                     document.body.style.cursor = 'grab';
-                    const movedBy = e.clientX - startPos;
-                    if (movedBy > 100) { // Deslize para a direita
-                        showPrevSlide();
-                    } else if (movedBy < -100) { // Deslize para a esquerda
-                        showNextSlide();
+                    const movedX = e.clientX - startPos;
+                    const movedY = e.clientY - startY;
+
+                    // Verifica se o movimento horizontal foi maior que o vertical para evitar conflito com a rolagem
+                    if (Math.abs(movedX) > Math.abs(movedY)) {
+                        if (movedX > 100) { // Deslize para a direita
+                            showPrevSlide();
+                        } else if (movedX < -100) { // Deslize para a esquerda
+                            showNextSlide();
+                        } else {
+                            updateCarousel(currentSlide);
+                        }
                     } else {
+                        // Se o movimento for vertical, restaura a posição sem alterar o slide
                         updateCarousel(currentSlide);
                     }
+
                     carouselTrack.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                     resetAutoSlide();
                 });
@@ -841,14 +853,12 @@
                 if (prevBtn) prevBtn.addEventListener('click', () => { showPrevSlide(); resetAutoSlide(); });
                 if (nextBtn) nextBtn.addEventListener('click', () => { showNextSlide(); resetAutoSlide(); });
 
-                // Atualizando a lógica de clique nos pontos
+                // Lógica de clique nos pontos refatorada
                 dotsContainer.addEventListener('click', e => {
                     const dot = e.target.closest('.dot');
                     if (dot) {
                         const index = parseInt(dot.dataset.index);
-                        // Atualiza o carrossel na página e abre o modal
                         updateCarousel(index);
-                        openModal(index);
                         resetAutoSlide();
                     }
                 });
@@ -864,6 +874,15 @@
                         renderCarousel();
                         updateCarousel(currentSlide);
                         resetAutoSlide();
+                    }
+                });
+                
+                // Lógica para abrir o modal
+                carouselTrack.addEventListener('click', e => {
+                    const carouselItem = e.target.closest('.carousel-item');
+                    if (carouselItem) {
+                        const index = Array.from(carouselTrack.children).indexOf(carouselItem);
+                        openModal(index);
                     }
                 });
 
