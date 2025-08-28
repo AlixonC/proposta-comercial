@@ -123,6 +123,62 @@
             position: relative;
             animation: fadeInScale 0.3s ease-out forwards;
         }
+        
+        /* Estilo para o formulário de contato */
+        #contact-form {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        #contact-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        #contact-form label {
+            display: block;
+            color: #475569; /* slate-600 */
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        #contact-form input,
+        #contact-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0; /* slate-200 */
+            border-radius: 0.5rem;
+            transition: border-color 0.2s;
+            background-color: #f8fafc;
+        }
+
+        #contact-form input:focus,
+        #contact-form textarea:focus {
+            outline: none;
+            border-color: #0d9488; /* teal-600 */
+            box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.2);
+        }
+
+        #contact-form button {
+            width: 100%;
+            display: inline-block;
+            background-color: var(--teal-600);
+            color: white;
+            padding: 12px 32px;
+            border-radius: 9999px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        #contact-form button:hover {
+            background-color: var(--teal-700);
+            transform: translateY(-2px);
+        }
+
 
         .modal-nav {
             position: absolute;
@@ -555,6 +611,38 @@
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                         <span>Enviar um E-mail</span>
                     </a>
+                </div>
+                
+                <!-- Adicionando o novo formulário de contato aqui -->
+                <div class="max-w-xl mx-auto mt-12" data-aos="fade-up">
+                    <div id="contact-form">
+                        <h3 class="text-2xl font-bold mb-6 text-teal-800">Envie uma Mensagem</h3>
+                        <!-- O atributo data-netlify é o que Netlify usa para ativar o formulário -->
+                        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                            <!-- Este campo hidden é importante para o Netlify Forms -->
+                            <input type="hidden" name="form-name" value="contact" />
+                            <div class="hidden">
+                                <label>Não preencha isto se você for um robô: <input name="bot-field" /></label>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name">Nome:</label>
+                                <input type="text" name="name" id="name" required class="rounded-lg">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">E-mail:</label>
+                                <input type="email" name="email" id="email" required class="rounded-lg">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Mensagem:</label>
+                                <textarea name="message" id="message" rows="5" required class="rounded-lg"></textarea>
+                            </div>
+                            
+                            <button type="submit">Enviar Mensagem</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </footer>
