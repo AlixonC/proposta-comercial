@@ -788,32 +788,67 @@
                     startAutoSlide();
                 };
 
-                // Lógica para Swipe
-                let startX;
-                let endX;
-                carouselTrack.addEventListener('touchstart', (e) => {
-                    startX = e.touches[0].clientX;
+                // Lógica de deslizar (swipe) usando eventos de ponteiro para melhor compatibilidade
+                let isDragging = false;
+                let startPos = 0;
+                
+                carouselTrack.addEventListener('pointerdown', (e) => {
+                    isDragging = true;
+                    startPos = e.clientX;
+                    carouselTrack.style.transition = 'none';
+                    document.body.style.cursor = 'grabbing';
                 });
-                carouselTrack.addEventListener('touchend', (e) => {
-                    endX = e.changedTouches[0].clientX;
-                    if (startX > endX + 50) { // Swipe para a esquerda
-                        showNextSlide();
-                    } else if (startX < endX - 50) { // Swipe para a direita
+
+                carouselTrack.addEventListener('pointerup', (e) => {
+                    isDragging = false;
+                    document.body.style.cursor = 'grab';
+                    const movedBy = e.clientX - startPos;
+                    if (movedBy > 100) { // Deslize para a direita
                         showPrevSlide();
+                    } else if (movedBy < -100) { // Deslize para a esquerda
+                        showNextSlide();
+                    } else {
+                        updateCarousel(currentSlide);
                     }
+                    carouselTrack.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                     resetAutoSlide();
                 });
+                
+                carouselTrack.addEventListener('pointerleave', () => {
+                    if (isDragging) {
+                        isDragging = false;
+                        document.body.style.cursor = 'grab';
+                        updateCarousel(currentSlide);
+                        carouselTrack.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        resetAutoSlide();
+                    }
+                });
+
+                carouselTrack.addEventListener('pointermove', (e) => {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    const currentPos = e.clientX;
+                    const diff = currentPos - startPos;
+                    carouselTrack.style.transform = `translateX(calc(-${currentSlide * 100}% + ${diff}px))`;
+                });
+                
+                window.addEventListener('resize', () => {
+                    updateCarousel(currentSlide);
+                });
 
 
-                // Eventos
+                // Eventos de clique para os botões e pontos
                 if (prevBtn) prevBtn.addEventListener('click', () => { showPrevSlide(); resetAutoSlide(); });
                 if (nextBtn) nextBtn.addEventListener('click', () => { showNextSlide(); resetAutoSlide(); });
 
+                // Atualizando a lógica de clique nos pontos
                 dotsContainer.addEventListener('click', e => {
                     const dot = e.target.closest('.dot');
                     if (dot) {
-                        currentSlide = parseInt(dot.dataset.index);
-                        updateCarousel(currentSlide);
+                        const index = parseInt(dot.dataset.index);
+                        // Atualiza o carrossel na página e abre o modal
+                        updateCarousel(index);
+                        openModal(index);
                         resetAutoSlide();
                     }
                 });
@@ -854,22 +889,30 @@
                     currentModalIndex = (currentModalIndex + 1) % filteredDeliverables.length;
                     document.getElementById('modalImage').src = filteredDeliverables[currentModalIndex].image;
                 };
-
-                let startModalX = 0;
-                let endModalX = 0;
+                
+                // Lógica de deslizar (swipe) no modal
+                let isModalDragging = false;
+                let startModalPos = 0;
                 const modalImage = document.getElementById('modalImage');
 
-                modalImage.addEventListener('touchstart', (e) => {
-                    startModalX = e.touches[0].clientX;
+                modalImage.addEventListener('pointerdown', (e) => {
+                    isModalDragging = true;
+                    startModalPos = e.clientX;
                 });
-
-                modalImage.addEventListener('touchend', (e) => {
-                    endModalX = e.changedTouches[0].clientX;
-                    if (startModalX > endModalX + 50) { // Swipe left
-                        document.getElementById('modalNext').click();
-                    } else if (startModalX < endModalX - 50) { // Swipe right
-                        document.getElementById('modalPrev').click();
+                
+                modalImage.addEventListener('pointerup', (e) => {
+                    if (!isModalDragging) return;
+                    isModalDragging = false;
+                    const movedBy = e.clientX - startModalPos;
+                    if (movedBy > 50) { // Swipe para a direita
+                         document.getElementById('modalPrev').click();
+                    } else if (movedBy < -50) { // Swipe para a esquerda
+                         document.getElementById('modalNext').click();
                     }
+                });
+                
+                modalImage.addEventListener('pointerleave', () => {
+                    isModalDragging = false;
                 });
                 
                 // Inicializa o carrossel na carga da página e com o filtro 'todos' ativo
