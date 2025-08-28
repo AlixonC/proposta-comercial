@@ -46,16 +46,91 @@
             background-color: rgba(255, 255, 255, 0.5);
             transition: background-color 0.3s;
         }
-
+        
+        /* Adicionando transição para a cor do dot */
         .carousel-dots .dot.active {
             background-color: var(--teal-600);
             width: 24px;
             border-radius: 9999px;
+            transition: width 0.3s, background-color 0.3s;
         }
 
         .mobile-dots {
             font-family: monospace;
             font-weight: bold;
+        }
+
+        /* Estilo do Modal (LightBox) */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content-wrapper {
+            position: relative;
+            width: 90%;
+            height: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .modal-close:hover,
+        .modal-close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            font-size: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            padding: 0 16px;
+            transition: 0.3s;
+        }
+
+        .modal-nav:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-prev {
+            left: 0;
+        }
+
+        .modal-next {
+            right: 0;
         }
 
         /* Animação para cards de garantia */
@@ -343,6 +418,16 @@
                 <p class="text-lg text-slate-300 max-w-3xl mx-auto mt-8 px-4 sm:px-0">Pranchas em tamanho ABNT com detalhes da instalação em planta baixa, em cortes e vistas 3D para facilitar a execução.</p>
             </div>
         </section>
+
+        <!-- Modal (LightBox) para visualização em tela cheia -->
+        <div id="imageModal" class="modal">
+            <span class="modal-close">&times;</span>
+            <div class="modal-content-wrapper">
+                <button id="modalPrev" class="modal-nav modal-prev">❮</button>
+                <img class="modal-image" id="modalImage" src="" alt="">
+                <button id="modalNext" class="modal-nav modal-next">❯</button>
+            </div>
+        </div>
 
         <!-- Seção Garantia (Estilizada) -->
         <section id="garantia" class="py-20 bg-slate-100">
@@ -648,9 +733,9 @@
 
                 const renderCarousel = () => {
                     carouselTrack.innerHTML = filteredDeliverables.map(item => `
-                        <div class="carousel-item p-4">
+                        <div class="carousel-item p-4" onclick="openModal(${filteredDeliverables.indexOf(item)})">
                             <div class="bg-white rounded-lg p-4 shadow-lg flex flex-col items-center">
-                                <img src="${item.image}" alt="${item.title}" class="rounded-lg max-h-96 w-auto object-contain transition-transform duration-300" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/800x600/cccccc/ffffff?text=Imagem+Indisponível';">
+                                <img src="${item.image}" alt="${item.title}" class="rounded-lg max-h-96 w-auto object-contain transition-transform duration-300 cursor-pointer" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/800x600/cccccc/ffffff?text=Imagem+Indisponível';">
                                 <h4 class="mt-4 font-bold text-lg text-slate-800">${item.title}</h4>
                             </div>
                         </div>
@@ -667,16 +752,18 @@
                 };
 
                 const updateCarousel = (slideIndex) => {
+                    if (filteredDeliverables.length === 0) return;
+                    currentSlide = slideIndex;
                     const trackWidth = carouselTrack.getBoundingClientRect().width;
-                    carouselTrack.style.transform = `translateX(-${slideIndex * trackWidth}px)`;
+                    carouselTrack.style.transform = `translateX(-${currentSlide * trackWidth}px)`;
                     
                     document.querySelectorAll('.dot').forEach((dot, index) => {
-                        dot.classList.toggle('active', index === slideIndex);
+                        dot.classList.toggle('active', index === currentSlide);
                     });
 
                     // Update mobile "..." indicator
                     if (filteredDeliverables.length > 1) {
-                        const dotsText = Array.from({ length: filteredDeliverables.length }, (_, i) => i === slideIndex ? '●' : '○').join('');
+                        const dotsText = Array.from({ length: filteredDeliverables.length }, (_, i) => i === currentSlide ? '●' : '○').join('');
                         mobileDots.textContent = dotsText;
                     }
                 };
@@ -700,6 +787,23 @@
                     clearInterval(autoSlideInterval);
                     startAutoSlide();
                 };
+
+                // Lógica para Swipe
+                let startX;
+                let endX;
+                carouselTrack.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                });
+                carouselTrack.addEventListener('touchend', (e) => {
+                    endX = e.changedTouches[0].clientX;
+                    if (startX > endX + 50) { // Swipe para a esquerda
+                        showNextSlide();
+                    } else if (startX < endX - 50) { // Swipe para a direita
+                        showPrevSlide();
+                    }
+                    resetAutoSlide();
+                });
+
 
                 // Eventos
                 if (prevBtn) prevBtn.addEventListener('click', () => { showPrevSlide(); resetAutoSlide(); });
@@ -725,6 +829,46 @@
                         renderCarousel();
                         updateCarousel(currentSlide);
                         resetAutoSlide();
+                    }
+                });
+
+                window.openModal = function(index) {
+                    const modal = document.getElementById('imageModal');
+                    const modalImage = document.getElementById('modalImage');
+                    
+                    currentModalIndex = index;
+                    modalImage.src = filteredDeliverables[currentModalIndex].image;
+                    modal.style.display = 'flex';
+                };
+
+                document.querySelector('.modal-close').onclick = function() {
+                    document.getElementById('imageModal').style.display = "none";
+                };
+
+                document.getElementById('modalPrev').onclick = function() {
+                    currentModalIndex = (currentModalIndex - 1 + filteredDeliverables.length) % filteredDeliverables.length;
+                    document.getElementById('modalImage').src = filteredDeliverables[currentModalIndex].image;
+                };
+
+                document.getElementById('modalNext').onclick = function() {
+                    currentModalIndex = (currentModalIndex + 1) % filteredDeliverables.length;
+                    document.getElementById('modalImage').src = filteredDeliverables[currentModalIndex].image;
+                };
+
+                let startModalX = 0;
+                let endModalX = 0;
+                const modalImage = document.getElementById('modalImage');
+
+                modalImage.addEventListener('touchstart', (e) => {
+                    startModalX = e.touches[0].clientX;
+                });
+
+                modalImage.addEventListener('touchend', (e) => {
+                    endModalX = e.changedTouches[0].clientX;
+                    if (startModalX > endModalX + 50) { // Swipe left
+                        document.getElementById('modalNext').click();
+                    } else if (startModalX < endModalX - 50) { // Swipe right
+                        document.getElementById('modalPrev').click();
                     }
                 });
                 
