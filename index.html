@@ -618,7 +618,8 @@
                     <div id="contact-form">
                         <h3 class="text-2xl font-bold mb-6 text-teal-800">Envie uma Mensagem</h3>
                         <!-- O atributo data-netlify é o que Netlify usa para ativar o formulário -->
-                        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                        <!-- A linha abaixo redireciona o usuário para a página success.html após o envio -->
+                        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/success">
                             <!-- Este campo hidden é importante para o Netlify Forms -->
                             <input type="hidden" name="form-name" value="contact" />
                             <div class="hidden">
