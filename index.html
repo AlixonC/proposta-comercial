@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Proposta de Soluções Integradas | Alison Carvalho</title>
+    <!-- Incluindo Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- AOS (Animate On Scroll) para animações de scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         /* Base e Fontes */
         body {
@@ -194,10 +198,11 @@
             font-weight: 500;
             padding: 8px 16px;
             border-radius: 9999px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
         }
         .cta-button:hover {
             background-color: var(--teal-800);
+            transform: translateY(-2px);
         }
         .cta-button-secondary {
             display: inline-block;
@@ -281,6 +286,27 @@
             transform: translateY(0);
             pointer-events: auto;
         }
+
+        /* Estilo para a nova seção de FAQ */
+        .faq-item .faq-header {
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .faq-item .faq-header:hover {
+            background-color: #f0f9ff;
+        }
+        
+        /* Adicionando microinterações aos cards */
+        .interactive-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
     </style>
 </head>
 <body class="text-slate-800">
@@ -297,6 +323,7 @@
                 <a href="#processo" class="nav-link">Processo</a>
                 <a href="#entregaveis" class="nav-link">Entregáveis</a>
                 <a href="#pacotes" class="nav-link">Pacotes</a>
+                <a href="#faq" class="nav-link">FAQ</a>
                 <a href="#contato" class="cta-button">Contato</a>
             </div>
             <button id="mobile-menu-button" class="md:hidden text-slate-800 focus:outline-none z-50">
@@ -311,6 +338,7 @@
             <a href="#processo" class="mobile-nav-link">Processo</a>
             <a href="#entregaveis" class="mobile-nav-link">Entregáveis</a>
             <a href="#pacotes" class="mobile-nav-link">Pacotes</a>
+            <a href="#faq" class="mobile-nav-link">FAQ</a>
             <a href="#contato" class="mobile-nav-link cta-button mt-4 mx-6">Contato</a>
         </div>
     </header>
@@ -319,9 +347,9 @@
         <!-- Seção Hero -->
         <section id="hero" class="bg-white pt-20 pb-16 text-center">
             <div class="container mx-auto px-6">
-                <h1 class="text-4xl md:text-6xl font-extrabold text-teal-800 leading-tight">Construindo Sonhos com Segurança e Precisão</h1>
-                <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">Garantimos que seu maior investimento seja também o seu porto seguro, projetado para durar gerações.</p>
-                <div class="mt-12 max-w-4xl mx-auto bg-white border border-slate-200 rounded-xl shadow-md p-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-teal-800 leading-tight" data-aos="fade-up">Construindo Sonhos com Segurança e Precisão</h1>
+                <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">Garantimos que seu maior investimento seja também o seu porto seguro, projetado para durar gerações.</p>
+                <div class="mt-12 max-w-4xl mx-auto bg-white border border-slate-200 rounded-xl shadow-md p-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center" data-aos="fade-up" data-aos-delay="200">
                     <div>
                         <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Proposta Para</h3>
                         <p id="client-name" class="text-xl font-semibold text-teal-700 mt-1">Prezado(a) Cliente</p>
@@ -335,7 +363,7 @@
                         <p class="text-xl font-semibold text-teal-700 mt-1">15 dias</p>
                     </div>
                 </div>
-                <a href="#pacotes" class="mt-12 cta-button-secondary">Conheça os Pacotes</a>
+                <a href="#pacotes" class="mt-12 cta-button-secondary" data-aos="fade-up" data-aos-delay="300">Conheça os Pacotes</a>
             </div>
         </section>
 
@@ -343,22 +371,22 @@
         <section id="problema" class="py-20">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold">O Barato que Sai Caro: Os 3 Pesadelos de um Projeto Desintegrado</h2>
-                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Economizar na fase de projeto é plantar a semente para uma colheita de problemas caros e estressantes na obra.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold" data-aos="fade-up">O Barato que Sai Caro: Os 3 Pesadelos de um Projeto Desintegrado</h2>
+                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">Economizar na fase de projeto é plantar a semente para uma colheita de problemas caros e estressantes na obra.</p>
                 </div>
                 <div id="problema-cards" class="grid md:grid-cols-3 gap-8"></div>
-                <p class="text-center mt-12 text-lg text-slate-700 max-w-3xl mx-auto font-semibold">Nossa metodologia de projetos integrados é a sua apólice de seguro contra esses pesadelos.</p>
+                <p class="text-center mt-12 text-lg text-slate-700 max-w-3xl mx-auto font-semibold" data-aos="fade-up">Nossa metodologia de projetos integrados é a sua apólice de seguro contra esses pesadelos.</p>
             </div>
         </section>
 
         <!-- Seção Soluções -->
         <section id="solucoes" class="py-20 bg-white">
             <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
+                <div class="text-center mb-12" data-aos="fade-up">
                     <h2 class="text-3xl md:text-4xl font-bold">Nossa Solução: A Engenharia da Tranquilidade</h2>
                     <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Oferecemos um ecossistema completo de projetos 100% compatibilizados para uma construção coesa, segura e sem surpresas.</p>
                 </div>
-                <div class="max-w-5xl mx-auto">
+                <div class="max-w-5xl mx-auto" data-aos="fade-up" data-aos-delay="150">
                     <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8" id="tabs-container"></div>
                     <div id="tabs-content" class="bg-slate-50 p-6 sm:p-8 rounded-lg min-h-[320px]"></div>
                 </div>
@@ -368,11 +396,11 @@
         <!-- Seção Portfólio -->
         <section id="portfolio" class="py-20 bg-teal-50/50">
             <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
+                <div class="text-center mb-12" data-aos="fade-up">
                     <h2 class="text-3xl md:text-4xl font-bold">Nossos Projetos: Qualidade em Cada Detalhe</h2>
                     <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Veja na prática como transformamos ideias em realidade, com excelência em cada detalhe.</p>
                 </div>
-                <div id="portfolio-filters" class="flex justify-center space-x-2 md:space-x-4 mb-8"></div>
+                <div id="portfolio-filters" class="flex justify-center space-x-2 md:space-x-4 mb-8" data-aos="fade-up" data-aos-delay="150"></div>
                 <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
             </div>
         </section>
@@ -380,10 +408,10 @@
         <!-- Seção Sobre -->
         <section id="sobre" class="py-20">
             <div class="container mx-auto px-6 grid md:grid-cols-5 gap-12 items-center">
-                <div class="md:col-span-2">
+                <div class="md:col-span-2" data-aos="fade-right">
                     <img src="imagens/foto-perfil.jpg" alt="Foto de Alison Carvalho" class="rounded-full mx-auto shadow-xl w-64 h-64 md:w-full md:h-auto object-cover">
                 </div>
-                <div class="md:col-span-3 text-center md:text-left">
+                <div class="md:col-span-3 text-center md:text-left" data-aos="fade-left">
                     <h2 class="text-3xl md:text-4xl font-bold">Quem Você Está Contratando?</h2>
                     <p class="text-xl font-semibold text-teal-600 mt-2">Alison Carvalho, Engenheiro Civil</p>
                     <p class="text-lg text-slate-600 mt-4">Com vasta experiência no mercado, minha missão é transformar seus sonhos em realidade através de um trabalho pautado pela excelência, transparência e dedicação total ao seu projeto. Minha autoridade é construída em cada projeto entregue com sucesso e na satisfação de cada cliente.</p>
@@ -394,7 +422,7 @@
         <!-- Seção Processo (Estilizada) -->
         <section id="processo" class="py-20 bg-white">
             <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
+                <div class="text-center mb-16" data-aos="fade-up">
                     <h2 class="text-3xl md:text-4xl font-bold">Nosso Processo de Trabalho</h2>
                     <p class="text-lg text-slate-600 mt-4 max-w-2xl mx-auto">Um passo a passo claro e organizado para garantir que seu projeto flua sem complicações.</p>
                 </div>
@@ -409,9 +437,9 @@
         <!-- Seção Entregáveis com carrossel dinâmico -->
         <section id="entregaveis" class="py-20 bg-slate-800 text-white">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold text-teal-500">O QUE VOCÊ RECEBE</h2>
-                <div id="deliverables-filters" class="flex flex-wrap justify-center gap-2 md:gap-4 my-8"></div>
-                <div class="max-w-4xl mx-auto relative">
+                <h2 class="text-3xl md:text-4xl font-bold text-teal-500" data-aos="fade-up">O QUE VOCÊ RECEBE</h2>
+                <div id="deliverables-filters" class="flex flex-wrap justify-center gap-2 md:gap-4 my-8" data-aos="fade-up" data-aos-delay="150"></div>
+                <div class="max-w-4xl mx-auto relative" data-aos="fade-up" data-aos-delay="200">
                     <div class="carousel-container rounded-lg overflow-hidden cursor-grab shadow-2xl">
                         <div id="deliverables-carousel-track" class="carousel-track"></div>
                     </div>
@@ -427,7 +455,7 @@
                     <!-- Indicador "..." para mobile -->
                     <div id="mobile-dots-indicator" class="flex justify-center text-slate-400 mt-2 text-2xl mobile-dots"></div>
                 </div>
-                <p class="text-lg text-slate-300 max-w-3xl mx-auto mt-8 px-4 sm:px-0">Pranchas em tamanho ABNT com detalhes da instalação em planta baixa, em cortes e vistas 3D para facilitar a execução.</p>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto mt-8 px-4 sm:px-0" data-aos="fade-up" data-aos-delay="250">Pranchas em tamanho ABNT com detalhes da instalação em planta baixa, em cortes e vistas 3D para facilitar a execução.</p>
             </div>
         </section>
 
@@ -464,8 +492,8 @@
         <!-- Seção Garantia (Estilizada) -->
         <section id="garantia" class="py-20 bg-slate-100">
              <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Seu Investimento Seguro</h2>
-                <p class="text-lg text-slate-600 max-w-3xl mx-auto">Nosso compromisso vai além do projeto. É com a sua tranquilidade.</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-up">Seu Investimento Seguro</h2>
+                <p class="text-lg text-slate-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">Nosso compromisso vai além do projeto. É com a sua tranquilidade.</p>
                 <div id="garantia-cards" class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-left"></div>
             </div>
         </section>
@@ -473,22 +501,33 @@
         <!-- Seção Depoimentos -->
         <section id="depoimentos" class="py-20 bg-white">
              <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
+                <div class="text-center mb-12" data-aos="fade-up">
                     <h2 class="text-3xl md:text-4xl font-bold">O Que Nossos Clientes Dizem</h2>
                 </div>
                 <div id="depoimentos-grid" class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto"></div>
             </div>
         </section>
 
-        <!-- Seção Pacotes -->
-        <section id="pacotes" class="py-20 bg-teal-50/50">
+        <!-- Seção FAQ -->
+        <section id="faq" class="py-20 bg-teal-50/50">
             <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold">Perguntas Frequentes</h2>
+                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Respostas para as dúvidas mais comuns. Se a sua não estiver aqui, é só nos contatar!</p>
+                </div>
+                <div id="faq-container" class="max-w-3xl mx-auto space-y-4" data-aos="fade-up" data-aos-delay="150"></div>
+            </div>
+        </section>
+
+        <!-- Seção Pacotes -->
+        <section id="pacotes" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
                     <h2 class="text-3xl md:text-4xl font-bold">Compare e Escolha o Plano Ideal</h2>
                     <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Criamos pacotes flexíveis para atender exatamente ao que você precisa. Clique para comparar.</p>
                 </div>
                 <div class="grid lg:grid-cols-3 gap-8 items-start" id="packages-container"></div>
-                <div class="max-w-3xl mx-auto mt-12">
+                <div class="max-w-3xl mx-auto mt-12" data-aos="fade-up" data-aos-delay="200">
                     <div class="bg-white rounded-lg shadow-md">
                         <button class="accordion-header w-full flex justify-between items-center p-5 font-semibold text-left">
                             <span>Escopo e Condições de Pagamento</span>
@@ -504,7 +543,7 @@
 
         <!-- Seção Contato -->
         <footer id="contato" class="bg-white">
-            <div class="container mx-auto px-6 py-16 text-center">
+            <div class="container mx-auto px-6 py-16 text-center" data-aos="fade-up">
                 <h2 class="text-3xl md:text-4xl font-bold">Pronto para Começar?</h2>
                 <p class="mt-4 text-lg max-w-2xl mx-auto text-slate-600">Vamos conversar sobre como podemos transformar seu projeto em realidade. Esta proposta é válida por 15 dias.</p>
                 <div class="mt-8 flex flex-col md:flex-row justify-center items-center gap-6">
@@ -525,8 +564,17 @@
         ↑
     </button>
     
+    <!-- Incluindo o JS da biblioteca AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+
+            // Inicializando o AOS
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 50
+            });
 
             const APP_DATA = {
                 problemas: [
@@ -577,6 +625,12 @@
                     { name: 'Pacote Essencial', description: 'O ponto de partida seguro para sua construção.', price: '4.500,00', features: ['Projeto Arquitetônico', 'Projeto Estrutural'], recommended: false },
                     { name: 'Pacote Integrado', description: 'A solução completa para uma obra sem dor de cabeça.', price: '8.000,00', features: ['Todos os itens do Pacote Essencial', 'Projeto Hidrossanitário', 'Projeto Elétrico', 'Análise de Compatibilização 3D'], recommended: true },
                     { name: 'Pacote Premium', description: 'A experiência definitiva em personalização e acompanhamento.', price: '12.500,00', features: ['Todos os itens do Pacote Integrado', 'Projeto de Luminotecnia', 'Detalhamento de Interiores', 'Visitas Técnicas de Acompanhamento'], recommended: false }
+                ],
+                faq: [
+                    { question: 'O que é um projeto compatibilizado?', answer: 'É a união de todos os projetos (arquitetônico, estrutural, elétrico e hidráulico) em um único modelo 3D. Isso nos permite identificar e corrigir possíveis conflitos e erros antes mesmo do início da obra, economizando tempo e dinheiro.' },
+                    { question: 'Quanto tempo leva para um projeto ser entregue?', answer: 'O prazo de entrega varia de acordo com a complexidade do projeto e o pacote contratado. Após o briefing inicial, fornecemos um cronograma detalhado com todas as etapas e prazos previstos.' },
+                    { question: 'Vocês realizam o acompanhamento da obra?', answer: 'Sim, o Pacote Premium inclui visitas técnicas para garantir que a execução do projeto esteja alinhada com o que foi planejado. Para os demais pacotes, este serviço pode ser contratado à parte.' },
+                    { question: 'O que acontece se eu precisar fazer alterações no projeto?', answer: 'Qualquer alteração solicitada que modifique o escopo original será tratada como um aditivo ao contrato, com novo orçamento e ajuste de prazo. Nosso objetivo é garantir que o projeto final atenda perfeitamente às suas expectativas.' }
                 ]
             };
 
@@ -612,11 +666,13 @@
 
                 // Acordeão
                 const accordionHeader = document.querySelector('.accordion-header');
-                accordionHeader.addEventListener('click', () => {
-                    document.querySelector('.accordion-content').classList.toggle('hidden');
-                    document.querySelector('.accordion-icon').classList.toggle('rotate-45');
-                });
-
+                if (accordionHeader) {
+                    accordionHeader.addEventListener('click', () => {
+                        document.querySelector('.accordion-content').classList.toggle('hidden');
+                        document.querySelector('.accordion-icon').classList.toggle('rotate-45');
+                    });
+                }
+                
                 // Navegação por seções com IntersectionObserver
                 const navLinks = document.querySelectorAll('.nav-link');
                 const sections = document.querySelectorAll('main section');
@@ -694,7 +750,7 @@
                 const render = (filter = 'todos') => {
                     const data = (filter === 'todos') ? APP_DATA.portfolio : APP_DATA.portfolio.filter(p => p.category === filter);
                     renderContent('portfolio-grid', data, item => `
-                        <div class="portfolio-item bg-white rounded-lg shadow-lg overflow-hidden group h-full transform transition-transform duration-300 hover:scale-105">
+                        <div class="portfolio-item bg-white rounded-lg shadow-lg overflow-hidden group h-full transform transition-transform duration-300 hover:scale-105" data-aos="zoom-in" data-aos-duration="600">
                             <div class="overflow-hidden"><img src="${item.image}" alt="${item.title}" class="w-full h-64 object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Imagem+Indisponível';"></div>
                             <div class="p-6">
                                 <h3 class="text-xl font-bold">${item.title}</h3>
@@ -725,9 +781,11 @@
                     // Classes para posicionar o item na linha do tempo
                     const flexClasses = isEven ? 'md:flex-row' : 'md:flex-row-reverse';
                     const positionClasses = isEven ? 'justify-start' : 'justify-end';
+                    
+                    const aosEffect = isEven ? 'fade-right' : 'fade-left';
 
                     return `
-                    <div class="relative mb-12 group flex items-center ${flexClasses}">
+                    <div class="relative mb-12 group flex items-center ${flexClasses}" data-aos="${aosEffect}" data-aos-offset="200">
                         <!-- Círculo e Número -->
                         <div class="absolute left-4 top-0 w-10 h-10 flex items-center justify-center rounded-full text-white font-bold text-xl shadow-lg transform transition-transform duration-300 group-hover:scale-125 z-10
                                     md:relative md:left-0 md:top-auto md:-translate-x-1/2 md:w-12 md:h-12 md:flex-shrink-0">
@@ -971,6 +1029,29 @@
                 startAutoSlide();
             }
 
+            function setupFAQ() {
+                renderContent('faq-container', APP_DATA.faq, item => `
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden" data-aos="fade-up">
+                        <div class="faq-header p-5 flex justify-between items-center">
+                            <h4 class="font-semibold text-lg">${item.question}</h4>
+                            <span class="faq-icon text-2xl font-light transform transition-transform">＋</span>
+                        </div>
+                        <div class="faq-content hidden p-5 border-t border-slate-200 text-slate-600">
+                            <p>${item.answer}</p>
+                        </div>
+                    </div>
+                `);
+
+                document.querySelectorAll('.faq-header').forEach(header => {
+                    header.addEventListener('click', (e) => {
+                        const item = e.target.closest('.faq-item');
+                        const content = item.querySelector('.faq-content');
+                        const icon = item.querySelector('.faq-icon');
+                        content.classList.toggle('hidden');
+                        icon.classList.toggle('rotate-45');
+                    });
+                });
+            }
 
             function setupPackages() {
                 const container = document.getElementById('packages-container');
@@ -984,7 +1065,7 @@
                 if (!container) return;
 
                 renderContent('packages-container', APP_DATA.packages, (pkg, index) => `
-                    <div class="package-card cursor-pointer bg-white p-8 rounded-lg shadow-lg border-2 border-transparent transition-all duration-300 flex flex-col ${pkg.recommended ? 'relative' : ''}" data-index="${index}">
+                    <div class="package-card cursor-pointer bg-white p-8 rounded-lg shadow-lg border-2 border-transparent transition-all duration-300 flex flex-col interactive-card" data-index="${index}" data-aos="fade-up" data-aos-delay="${index * 100}">
                         ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-teal-600 text-white text-sm font-bold px-4 py-1 rounded-full">RECOMENDADO</div>' : ''}
                         <div class="flex-grow">
                             <h3 class="text-2xl font-bold">${pkg.name}</h3>
@@ -1064,22 +1145,22 @@
             // Chamada de todas as funções de setup
             initUI();
             setupMobileMenu();
-            renderContent('problema-cards', APP_DATA.problemas, item => `
-                <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-${item.color}-500 transform hover:-translate-y-2 transition-transform duration-300">
+            renderContent('problema-cards', APP_DATA.problemas, (item, index) => `
+                <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-${item.color}-500 interactive-card" data-aos="fade-up" data-aos-delay="${index * 100}">
                     <div class="text-4xl mb-4">${item.emoji}</div>
                     <h3 class="text-xl font-bold text-${item.color}-600">${item.title}</h3>
                     <p class="mt-2 text-slate-600">${item.description}</p>
                 </div>
             `);
-            renderContent('garantia-cards', APP_DATA.garantias, item => `
-                <div class="garantia-card bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
+            renderContent('garantia-cards', APP_DATA.garantias, (item, index) => `
+                <div class="garantia-card bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center interactive-card" data-aos="fade-up" data-aos-delay="${index * 100}">
                     <span class="text-5xl mb-4">${item.icon}</span>
                     <h3 class="font-bold text-xl text-teal-800">${item.title}</h3>
                     <p class="mt-2 text-slate-600">${item.description}</p>
                 </div>
             `);
-            renderContent('depoimentos-grid', APP_DATA.depoimentos, item => `
-                <div class="bg-slate-50 p-8 rounded-lg shadow-sm">
+            renderContent('depoimentos-grid', APP_DATA.depoimentos, (item, index) => `
+                <div class="bg-slate-50 p-8 rounded-lg shadow-sm interactive-card" data-aos="fade-up" data-aos-delay="${index * 100}">
                     <p class="text-slate-600 italic">"${item.text}"</p>
                     <p class="font-bold text-slate-800 mt-4">${item.author}</p>
                 </div>
@@ -1088,6 +1169,7 @@
             setupPortfolio();
             setupTimeline();
             setupDeliverables();
+            setupFAQ();
             setupPackages();
         });
     </script>
