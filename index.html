@@ -12,6 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <!-- AOS (Animate On Scroll) para animações de scroll -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
         /* Base e Fontes */
         body {
@@ -31,37 +33,11 @@
             --red-500: #ef4444;
             --yellow-500: #f59e0b;
         }
-
-        /* Animações e Efeitos de Carrossel */
-        .carousel-track {
-            display: flex;
-            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .carousel-item {
-            flex-shrink: 0;
-            width: 100%;
-        }
-
-        .carousel-dots .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.5);
-            transition: background-color 0.3s;
-        }
         
-        /* Adicionando transição para a cor do dot */
-        .carousel-dots .dot.active {
-            background-color: var(--teal-600);
-            width: 24px;
-            border-radius: 9999px;
-            transition: width 0.3s, background-color 0.3s;
-        }
-
-        .mobile-dots {
-            font-family: monospace;
-            font-weight: bold;
+        /* Estilos do Swiper.js para o tema do seu site */
+        .swiper-button-next:after, .swiper-button-prev:after {
+            color: var(--teal-600);
+            font-size: 20px;
         }
 
         /* Estilo do Modal (LightBox) */
@@ -517,21 +493,13 @@
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold text-teal-500" data-aos="fade-up">O QUE VOCÊ RECEBE</h2>
                 <div id="deliverables-filters" class="flex flex-wrap justify-center gap-2 md:gap-4 my-8" data-aos="fade-up" data-aos-delay="150"></div>
-                <div class="max-w-4xl mx-auto relative" data-aos="fade-up" data-aos-delay="200">
-                    <div class="carousel-container rounded-lg overflow-hidden cursor-grab shadow-2xl">
-                        <div id="deliverables-carousel-track" class="carousel-track"></div>
-                    </div>
-                    <!-- Botões de navegação para desktop -->
-                    <button id="deliverablePrevBtn" class="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-2 shadow-md transition text-teal-600 hidden md:block">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-                    </button>
-                    <button id="deliverableNextBtn" class="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-2 shadow-md transition text-teal-600 hidden md:block">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-                    </button>
-                    <!-- Indicadores de slide para mobile e desktop -->
-                    <div id="deliverables-dots" class="flex justify-center gap-2 mt-4"></div>
-                    <!-- Indicador "..." para mobile -->
-                    <div id="mobile-dots-indicator" class="flex justify-center text-slate-400 mt-2 text-2xl mobile-dots"></div>
+                <div class="swiper max-w-4xl mx-auto relative rounded-lg shadow-2xl" data-aos="fade-up" data-aos-delay="200">
+                    <div id="deliverables-carousel-track" class="swiper-wrapper"></div>
+                    <!-- Botões de navegação -->
+                    <div class="swiper-button-prev absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-2 shadow-md transition text-teal-600 hidden md:block"></div>
+                    <div class="swiper-button-next absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-2 shadow-md transition text-teal-600 hidden md:block"></div>
+                    <!-- Paginação -->
+                    <div class="swiper-pagination mt-4"></div>
                 </div>
                 <p class="text-lg text-slate-300 max-w-3xl mx-auto mt-8 px-4 sm:px-0" data-aos="fade-up" data-aos-delay="250">Pranchas em tamanho ABNT com detalhes da instalação em planta baixa, em cortes e vistas 3D para facilitar a execução.</p>
             </div>
@@ -712,6 +680,8 @@
     
     <!-- Incluindo o JS da biblioteca AOS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Incluindo o JS da biblioteca Swiper.js -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
@@ -951,228 +921,123 @@
             }
 
             function setupDeliverables() {
-                const carouselTrack = document.getElementById('deliverables-carousel-track');
-                const prevBtn = document.getElementById('deliverablePrevBtn');
-                const nextBtn = document.getElementById('deliverableNextBtn');
-                const dotsContainer = document.getElementById('deliverables-dots');
                 const filtersContainer = document.getElementById('deliverables-filters');
-                const mobileDots = document.getElementById('mobile-dots-indicator');
+                const swiperContainer = document.querySelector('.swiper');
                 
-                let currentSlide = 0;
-                let autoSlideInterval;
-                let filteredDeliverables = APP_DATA.deliverables;
+                let swiperInstance = null;
 
                 const categories = ['Todos', ...new Set(APP_DATA.deliverables.map(d => d.category))];
                 filtersContainer.innerHTML = categories.map(cat =>
                     `<button class="deliverables-filter-btn px-4 py-2 rounded-full font-semibold" data-filter="${cat.toLowerCase()}">${cat}</button>`
                 ).join('');
 
-                const renderCarousel = () => {
-                    carouselTrack.innerHTML = filteredDeliverables.map(item => `
-                        <div class="carousel-item p-4">
+                const renderCarousel = (filter = 'todos') => {
+                    const filteredDeliverables = (filter === 'todos') ? APP_DATA.deliverables : APP_DATA.deliverables.filter(d => d.category === filter);
+                    
+                    const swiperWrapper = document.getElementById('deliverables-carousel-track');
+                    swiperWrapper.innerHTML = filteredDeliverables.map(item => `
+                        <div class="swiper-slide p-4">
                             <div class="bg-white rounded-lg p-4 shadow-lg flex flex-col items-center">
-                                <img src="${item.image}" alt="${item.title}" class="rounded-lg max-h-96 w-auto object-contain transition-transform duration-300 cursor-pointer" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/800x600/cccccc/ffffff?text=Imagem+Indisponível';">
+                                <img src="${item.image}" alt="${item.title}" class="rounded-lg max-h-96 w-auto object-contain transition-transform duration-300 cursor-pointer" loading="lazy" onclick="openModal(${filteredDeliverables.indexOf(item)}, '${filter}')" onerror="this.onerror=null;this.src='https://placehold.co/800x600/cccccc/ffffff?text=Imagem+Indisponível';">
                                 <h4 class="mt-4 font-bold text-lg text-slate-800">${item.title}</h4>
                             </div>
                         </div>
                     `).join('');
-                    
-                    dotsContainer.innerHTML = '';
-                    if (filteredDeliverables.length > 1) {
-                         for (let i = 0; i < filteredDeliverables.length; i++) {
-                             dotsContainer.innerHTML += `<span class="dot cursor-pointer" data-index="${i}"></span>`;
-                         }
+
+                    if (swiperInstance) {
+                        swiperInstance.destroy(true, true);
                     }
 
-                    mobileDots.textContent = '';
-                };
-
-                const updateCarousel = (slideIndex) => {
-                    if (filteredDeliverables.length === 0) return;
-                    currentSlide = slideIndex;
-                    const trackWidth = carouselTrack.getBoundingClientRect().width;
-                    carouselTrack.style.transform = `translateX(-${currentSlide * trackWidth}px)`;
-                    
-                    document.querySelectorAll('.dot').forEach((dot, index) => {
-                        dot.classList.toggle('active', index === currentSlide);
-                    });
-
-                    // Update mobile "..." indicator
-                    if (filteredDeliverables.length > 1) {
-                        const dotsText = Array.from({ length: filteredDeliverables.length }, (_, i) => i === currentSlide ? '●' : '○').join('');
-                        mobileDots.textContent = dotsText;
-                    }
-                };
-                
-                const showNextSlide = () => {
-                    currentSlide = (currentSlide + 1) % filteredDeliverables.length;
-                    updateCarousel(currentSlide);
-                };
-
-                const showPrevSlide = () => {
-                    currentSlide = (currentSlide - 1 + filteredDeliverables.length) % filteredDeliverables.length;
-                    updateCarousel(currentSlide);
-                };
-
-                const startAutoSlide = () => {
-                    clearInterval(autoSlideInterval);
-                    autoSlideInterval = setInterval(showNextSlide, 5000); // 5 segundos
-                };
-
-                const resetAutoSlide = () => {
-                    clearInterval(autoSlideInterval);
-                    startAutoSlide();
-                };
-
-                // Lógica de deslizar (swipe) usando eventos de ponteiro para melhor compatibilidade
-                let isDragging = false;
-                let startPos = 0;
-                let startY = 0; // Adicionado para lidar com a rolagem vertical
-                
-                carouselTrack.addEventListener('pointerdown', (e) => {
-                    isDragging = true;
-                    startPos = e.clientX;
-                    startY = e.clientY;
-                    carouselTrack.style.transition = 'none';
-                    document.body.style.cursor = 'grabbing';
-                });
-
-                carouselTrack.addEventListener('pointerup', (e) => {
-                    if (!isDragging) return;
-                    isDragging = false;
-                    document.body.style.cursor = 'grab';
-                    const movedX = e.clientX - startPos;
-                    const movedY = e.clientY - startY;
-
-                    // Verifica se o movimento horizontal foi maior que o vertical para evitar conflito com a rolagem
-                    if (Math.abs(movedX) > Math.abs(movedY)) {
-                        if (movedX > 100) { // Deslize para a direita
-                            showPrevSlide();
-                        } else if (movedX < -100) { // Deslize para a esquerda
-                            showNextSlide();
-                        } else {
-                            updateCarousel(currentSlide);
+                    swiperInstance = new Swiper(swiperContainer, {
+                        slidesPerView: 1,
+                        spaceBetween: 10,
+                        loop: true,
+                        autoplay: {
+                            delay: 5000,
+                            disableOnInteraction: false,
+                        },
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true,
+                            renderBullet: function (index, className) {
+                                return '<span class="' + className + ' dot"></span>';
+                            },
+                        },
+                        on: {
+                            init: function() {
+                                // Força a atualização após a inicialização
+                                this.update();
+                            }
                         }
-                    } else {
-                        // Se o movimento for vertical, restaura a posição sem alterar o slide
-                        updateCarousel(currentSlide);
-                    }
-
-                    carouselTrack.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                    resetAutoSlide();
-                });
+                    });
+                };
                 
-                carouselTrack.addEventListener('pointerleave', () => {
-                    if (isDragging) {
-                        isDragging = false;
-                        document.body.style.cursor = 'grab';
-                        updateCarousel(currentSlide);
-                        carouselTrack.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                        resetAutoSlide();
-                    }
-                });
-
-                carouselTrack.addEventListener('pointermove', (e) => {
-                    if (!isDragging) return;
-                    e.preventDefault();
-                    const currentPos = e.clientX;
-                    const diff = currentPos - startPos;
-                    carouselTrack.style.transform = `translateX(calc(-${currentSlide * 100}% + ${diff}px))`;
-                });
-                
-                window.addEventListener('resize', () => {
-                    updateCarousel(currentSlide);
-                });
-
-
-                // Eventos de clique para os botões e pontos
-                if (prevBtn) prevBtn.addEventListener('click', () => { showPrevSlide(); resetAutoSlide(); });
-                if (nextBtn) nextBtn.addEventListener('click', () => { showNextSlide(); resetAutoSlide(); });
-
-                // Lógica de clique nos pontos refatorada
-                dotsContainer.addEventListener('click', e => {
-                    const dot = e.target.closest('.dot');
-                    if (dot) {
-                        const index = parseInt(dot.dataset.index);
-                        updateCarousel(index);
-                        resetAutoSlide();
-                    }
-                });
-
                 filtersContainer.addEventListener('click', e => {
                     const button = e.target.closest('.deliverables-filter-btn');
                     if (button) {
                         filtersContainer.querySelector('.active')?.classList.remove('active');
                         button.classList.add('active');
-                        const filter = button.dataset.filter;
-                        filteredDeliverables = (filter === 'todos') ? APP_DATA.deliverables : APP_DATA.deliverables.filter(d => d.category === filter);
-                        currentSlide = 0;
-                        renderCarousel();
-                        updateCarousel(currentSlide);
-                        resetAutoSlide();
+                        renderCarousel(button.dataset.filter);
                     }
-                });
-                
-                // Lógica para abrir o modal
-                carouselTrack.addEventListener('click', e => {
-                    const carouselItem = e.target.closest('.carousel-item');
-                    if (carouselItem) {
-                        const index = Array.from(carouselTrack.children).indexOf(carouselItem);
-                        openModal(index);
-                    }
-                });
-
-                window.openModal = function(index) {
-                    const modal = document.getElementById('imageModal');
-                    const modalImage = document.getElementById('modalImage');
-                    
-                    currentModalIndex = index;
-                    modalImage.src = filteredDeliverables[currentModalIndex].image;
-                    modal.style.display = 'flex';
-                };
-
-                document.querySelector('.modal-close').onclick = function() {
-                    document.getElementById('imageModal').style.display = "none";
-                };
-
-                document.getElementById('modalPrev').onclick = function() {
-                    currentModalIndex = (currentModalIndex - 1 + filteredDeliverables.length) % filteredDeliverables.length;
-                    document.getElementById('modalImage').src = filteredDeliverables[currentModalIndex].image;
-                };
-
-                document.getElementById('modalNext').onclick = function() {
-                    currentModalIndex = (currentModalIndex + 1) % filteredDeliverables.length;
-                    document.getElementById('modalImage').src = filteredDeliverables[currentModalIndex].image;
-                };
-                
-                // Lógica de deslizar (swipe) no modal
-                let isModalDragging = false;
-                let startModalPos = 0;
-                const modalImage = document.getElementById('modalImage');
-
-                modalImage.addEventListener('pointerdown', (e) => {
-                    isModalDragging = true;
-                    startModalPos = e.clientX;
-                });
-                
-                modalImage.addEventListener('pointerup', (e) => {
-                    if (!isModalDragging) return;
-                    isModalDragging = false;
-                    const movedBy = e.clientX - startModalPos;
-                    if (movedBy > 50) { // Swipe para a direita
-                         document.getElementById('modalPrev').click();
-                    } else if (movedBy < -50) { // Swipe para a esquerda
-                         document.getElementById('modalNext').click();
-                    }
-                });
-                
-                modalImage.addEventListener('pointerleave', () => {
-                    isModalDragging = false;
                 });
                 
                 // Inicializa o carrossel na carga da página e com o filtro 'todos' ativo
                 filtersContainer.querySelector('[data-filter="todos"]').click();
-                startAutoSlide();
+
+                // Lógica para abrir o modal
+                window.openModal = function(index, filter) {
+                    const modal = document.getElementById('imageModal');
+                    const modalImage = document.getElementById('modalImage');
+                    const filteredDeliverables = (filter === 'todos') ? APP_DATA.deliverables : APP_DATA.deliverables.filter(d => d.category === filter);
+                    let currentModalIndex = index;
+                    
+                    modalImage.src = filteredDeliverables[currentModalIndex].image;
+                    modal.style.display = 'flex';
+
+                    document.getElementById('modalPrev').onclick = function() {
+                        currentModalIndex = (currentModalIndex - 1 + filteredDeliverables.length) % filteredDeliverables.length;
+                        document.getElementById('modalImage').src = filteredDeliverables[currentModalIndex].image;
+                    };
+
+                    document.getElementById('modalNext').onclick = function() {
+                        currentModalIndex = (currentModalIndex + 1) % filteredDeliverables.length;
+                        document.getElementById('modalImage').src = filteredDeliverables[currentModalIndex].image;
+                    };
+                    
+                    document.getElementById('imageModal').onclick = function(e) {
+                         if (e.target.id === 'imageModal' || e.target.classList.contains('modal-close')) {
+                            modal.style.display = 'none';
+                        }
+                    };
+
+                    // Lógica de deslizar (swipe) no modal
+                    let isModalDragging = false;
+                    let startModalPos = 0;
+
+                    modalImage.addEventListener('pointerdown', (e) => {
+                        isModalDragging = true;
+                        startModalPos = e.clientX;
+                    });
+                    
+                    modalImage.addEventListener('pointerup', (e) => {
+                        if (!isModalDragging) return;
+                        isModalDragging = false;
+                        const movedBy = e.clientX - startModalPos;
+                        if (movedBy > 50) { // Swipe para a direita
+                            document.getElementById('modalPrev').click();
+                        } else if (movedBy < -50) { // Swipe para a esquerda
+                            document.getElementById('modalNext').click();
+                        }
+                    });
+                    
+                    modalImage.addEventListener('pointerleave', () => {
+                        isModalDragging = false;
+                    });
+                };
             }
 
             function setupFAQ() {
