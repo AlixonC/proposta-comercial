@@ -35,9 +35,21 @@
         }
         
         /* Estilos do Swiper.js para o tema do seu site */
-        .swiper-button-next:after, .swiper-button-prev:after {
+        .swiper-button-next, .swiper-button-prev {
             color: var(--teal-600);
-            font-size: 20px;
+            width: 3rem; /* Ajuste para melhor visualização */
+            height: 3rem; /* Ajuste para melhor visualização */
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .swiper-button-next:hover, .swiper-button-prev:hover {
+            background-color: #fff;
+        }
+        
+        .swiper-button-next:after, .swiper-button-prev:after {
+            font-size: 1.25rem; /* Ajuste para melhor visualização */
         }
 
         /* Estilo do Modal (LightBox) */
@@ -529,7 +541,7 @@
                     </a>
                     <a id="modalEmailLink" href="#" class="inline-flex items-center justify-center gap-3 bg-teal-600 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                        <span>E-mail</span>
+                        <span>Enviar um E-mail</span>
                     </a>
                 </div>
             </div>
@@ -635,38 +647,6 @@
                             </div>
                             
                             <button type="submit">Enviar Mensagem</button>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Novo Formulário de Contato via AJAX -->
-                <div class="max-w-xl mx-auto mt-12" data-aos="fade-up">
-                    <div id="ajax-form">
-                        <h3 class="text-2xl font-bold mb-6 text-teal-800">Ou envie a mensagem via AJAX</h3>
-                        <form name="contact-ajax" id="ajax-contact-form" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-                            <input type="hidden" name="form-name" value="contact-ajax" />
-                            <div class="hidden">
-                                <label>Não preencha isto se você for um robô: <input name="bot-field" /></label>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="name-ajax">Nome:</label>
-                                <input type="text" name="name" id="name-ajax" required class="rounded-lg">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email-ajax">E-mail:</label>
-                                <input type="email" name="email" id="email-ajax" required class="rounded-lg">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="message-ajax">Mensagem:</label>
-                                <textarea name="message" id="message-ajax" rows="5" required class="rounded-lg"></textarea>
-                            </div>
-                            
-                            <button type="submit">Enviar Mensagem (AJAX)</button>
-                            <!-- Mensagem de status para o feedback do usuário -->
-                            <p id="ajax-status-message" class="status-message hidden"></p>
                         </form>
                     </div>
                 </div>
@@ -948,32 +928,34 @@
                         swiperInstance.destroy(true, true);
                     }
 
-                    swiperInstance = new Swiper(swiperContainer, {
-                        slidesPerView: 1,
-                        spaceBetween: 10,
-                        loop: true,
-                        autoplay: {
-                            delay: 5000,
-                            disableOnInteraction: false,
-                        },
-                        navigation: {
-                            nextEl: '.swiper-button-next',
-                            prevEl: '.swiper-button-prev',
-                        },
-                        pagination: {
-                            el: '.swiper-pagination',
-                            clickable: true,
-                            renderBullet: function (index, className) {
-                                return '<span class="' + className + ' dot"></span>';
+                    if (filteredDeliverables.length > 0) {
+                        swiperInstance = new Swiper(swiperContainer, {
+                            slidesPerView: 1,
+                            spaceBetween: 10,
+                            loop: true,
+                            autoplay: {
+                                delay: 5000,
+                                disableOnInteraction: false,
                             },
-                        },
-                        on: {
-                            init: function() {
-                                // Força a atualização após a inicialização
-                                this.update();
+                            navigation: {
+                                nextEl: '.swiper-button-next',
+                                prevEl: '.swiper-button-prev',
+                            },
+                            pagination: {
+                                el: '.swiper-pagination',
+                                clickable: true,
+                                renderBullet: function (index, className) {
+                                    return '<span class="' + className + ' dot"></span>';
+                                },
+                            },
+                            on: {
+                                init: function() {
+                                    // Força a atualização após a inicialização
+                                    this.update();
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 };
                 
                 filtersContainer.addEventListener('click', e => {
@@ -1153,44 +1135,6 @@
                 updateSelection(recommendedIndex > -1 ? recommendedIndex : 0);
             }
 
-            // Início da lógica para o formulário AJAX
-            const ajaxForm = document.getElementById('ajax-contact-form');
-            if (ajaxForm) {
-                const statusMessage = document.getElementById('ajax-status-message');
-
-                ajaxForm.addEventListener('submit', async (event) => {
-                    event.preventDefault();
-                    
-                    const form = event.target;
-                    const formData = new FormData(form);
-                    
-                    // Exibe a mensagem de carregamento
-                    statusMessage.textContent = 'Enviando...';
-                    statusMessage.classList.remove('hidden', 'status-success', 'status-error');
-
-                    try {
-                        const response = await fetch("/", {
-                            method: "POST",
-                            body: formData
-                        });
-
-                        if (response.ok) {
-                            statusMessage.textContent = 'Mensagem enviada com sucesso! Em breve entraremos em contato.';
-                            statusMessage.classList.add('status-success');
-                            form.reset(); // Limpa o formulário
-                        } else {
-                            throw new Error(`Erro: ${response.status} ${response.statusText}`);
-                        }
-                    } catch (error) {
-                        console.error('Erro ao enviar o formulário:', error);
-                        statusMessage.textContent = `Falha no envio: ${error.message}. Por favor, tente novamente.`;
-                        statusMessage.classList.add('status-error');
-                    }
-                });
-            }
-            // Fim da lógica para o formulário AJAX
-
-            // Chamada de todas as funções de setup
             initUI();
             setupMobileMenu();
             renderContent('problema-cards', APP_DATA.problemas, (item, index) => `
