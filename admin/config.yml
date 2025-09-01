@@ -5,8 +5,10 @@ backend:
 media_folder: "imagens"
 public_folder: "/imagens"
 media_library:
+  name: "cloudinary"
   config:
-    max_file_size: 512000 # Limita o tamanho do upload da imagem para 500KB
+    cloud_name: "seu_cloud_name"
+    api_key: "sua_api_key"
 
 collections:
   - name: "pages"
@@ -30,20 +32,19 @@ collections:
               - {label: "Preço", name: "price", widget: "string"}
               - name: "features"
                 label: "Funcionalidades"
-                widget: "list"
                 label_singular: "Funcionalidade"
+                widget: "list"
                 field: { label: "Funcionalidade", name: "feature", widget: "string"}
               - {label: "Recomendado?", name: "recommended", widget: "boolean", default: false}
           - {label: "Foto de Perfil (Sobre)", name: "about_photo", widget: "image"}
 
   - name: "portfolio"
     label: "Portfólio"
-    folder: "_portfolio_items" # Pasta para arquivos individuais do portfólio
+    folder: "_data/portfolio"
     create: true
     slug: "{{slug}}"
     fields:
       - {label: "Título", name: "title", widget: "string"}
       - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
       - {label: "Imagem", name: "image", widget: "image"}
-
 
