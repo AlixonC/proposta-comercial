@@ -12,17 +12,22 @@ collections:
       - name: "general"
         label: "Textos e Configurações Principais"
         file: "_data/site_content.json"
-        description: "Edite os principais textos, imagens e pacotes do site aqui."
+        description: "Edite os principais textos, imagens e seções do site aqui."
         fields:
-          - { name: "header", label: "Cabeçalho", widget: "object", fields: [ { name: "logo_type", label: "Tipo de Logo", widget: "select", options: ["text", "image"], default: "text" }, { label: "Texto do Logo (se tipo for 'text')", name: "logo_text", widget: "string", required: false }, { label: "Imagem do Logo (se tipo for 'image')", name: "logo_image", widget: "image", required: false } ] }
-          - { name: "hero", label: "Secção Principal (Topo)", widget: "object", fields: [ { label: "Título", name: "title", widget: "string" }, { label: "Subtítulo", name: "subtitle", widget: "text" } ] }
-          - { name: "problemas", label: "Cartões 'Pesadelos de um Projeto'", label_singular: "Cartão de Problema", widget: "list", fields: [ { label: "Emoji", name: "emoji", widget: "string" }, { label: "Título", name: "title", widget: "string" }, { label: "Cor (red, yellow, orange)", name: "color", widget: "string" }, { label: "Descrição", name: "description", widget: "text" } ] }
-          - { name: "sobre", label: "Secção Sobre", widget: "object", fields: [ { label: "Título", name: "title", widget: "string" }, { label: "Nome e Cargo", name: "name", widget: "string" }, { label: "Biografia", name: "bio", widget: "text" }, { label: "Foto de Perfil", name: "photo", widget: "image" } ] }
-          - { name: "packages", label: "Pacotes de Serviços", label_singular: "Pacote", widget: "list", fields: [ { label: "Nome do Pacote", name: "name", widget: "string" }, { label: "Descrição", name: "description", widget: "string" }, { label: "Preço", name: "price", widget: "string" }, { name: "features", label: "Funcionalidades do Pacote", label_singular: "Funcionalidade", widget: "list", field: { label: "Item da lista", name: "feature", widget: "string" } }, { label: "É Recomendado?", name: "recommended", widget: "boolean", default: false } ] }
+          - { name: "header", label: "Cabeçalho", widget: "object", fields: [ { name: "logo_type", label: "Tipo de Logo", widget: "select", options: ["text", "image"], default: "text" }, { label: "Texto do Logo", name: "logo_text", widget: "string", required: false }, { label: "Imagem do Logo", name: "logo_image", widget: "image", required: false } ] }
+          - { name: "hero", label: "Seção Principal (Topo)", widget: "object", fields: [ { label: "Título", name: "title", widget: "string" }, { label: "Subtítulo", name: "subtitle", widget: "text" } ] }
+          - { name: "problemas", label: "Cartões 'Pesadelos de um Projeto'", widget: "list", fields: [ { label: "Emoji", name: "emoji", widget: "string" }, { label: "Título", name: "title", widget: "string" }, { label: "Cor (red, yellow, orange)", name: "color", widget: "string" }, { label: "Descrição", name: "description", widget: "text" } ] }
+          - { name: "solutions", label: "Soluções (Abas)", widget: "object", fields: [ { name: "arquitetonico", label: "Projeto Arquitetônico", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Emoji", name: "emoji", widget: "string"}, {label: "Subtítulo", name: "subtitle", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] }, { name: "estrutural", label: "Projeto Estrutural", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Emoji", name: "emoji", widget: "string"}, {label: "Subtítulo", name: "subtitle", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] }, { name: "hidrossanitario", label: "Projeto Hidrossanitário", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Emoji", name: "emoji", widget: "string"}, {label: "Subtítulo", name: "subtitle", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] }, { name: "eletrico", label: "Projeto Elétrico", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Emoji", name: "emoji", widget: "string"}, {label: "Subtítulo", name: "subtitle", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] } ] }
+          - { name: "sobre", label: "Seção Sobre", widget: "object", fields: [ { label: "Título", name: "title", widget: "string" }, { label: "Nome e Cargo", name: "name", widget: "string" }, { label: "Biografia", name: "bio", widget: "text" }, { label: "Foto de Perfil", name: "photo", widget: "image" } ] }
+          - { name: "timeline", label: "Processo de Trabalho (Linha do Tempo)", widget: "list", fields: [ {label: "Título da Etapa", name: "title", widget: "string"}, {label: "Descrição da Etapa", name: "description", widget: "text"} ] }
+          - { name: "guarantees", label: "Garantias", widget: "list", fields: [ {label: "Ícone (Emoji)", name: "icon", widget: "string"}, {label: "Título", name: "title", widget: "string"}, {label: "Descrição", name: "description", widget: "text"} ] }
+          - { name: "testimonials", label: "Depoimentos", widget: "list", fields: [ {label: "Texto do Depoimento", name: "text", widget: "text"}, {label: "Autor", name: "author", widget: "string"} ] }
+          - { name: "packages", label: "Pacotes de Serviços", widget: "list", fields: [ { label: "Nome do Pacote", name: "name", widget: "string" }, { label: "Descrição", name: "description", widget: "string" }, { label: "Preço", name: "price", widget: "string" }, { name: "features", label: "Funcionalidades", widget: "list", field: { label: "Item", name: "feature", widget: "string" } }, { label: "É Recomendado?", name: "recommended", widget: "boolean", default: false } ] }
+          - { name: "faq", label: "Perguntas Frequentes (FAQ)", widget: "list", fields: [ {label: "Pergunta", name: "question", widget: "string"}, {label: "Resposta", name: "answer", widget: "text"} ] }
 
   - name: "portfolio"
     label: "Portfólio"
-    files: # Correção: Usar "files" para definir a lista de arquivos a editar
+    files:
       - name: "portfolio_items"
         label: "Projetos do Portfólio"
         file: "_data/portfolio.json"
@@ -30,7 +35,6 @@ collections:
         fields:
           - name: "items"
             label: "Projetos"
-            label_singular: "Projeto"
             widget: "list"
             fields:
               - {label: "Título", name: "title", widget: "string"}
@@ -39,15 +43,14 @@ collections:
 
   - name: "carousel"
     label: "Carrossel de Entregáveis"
-    files: # Correção: Usar "files" aqui também
+    files:
       - name: "carousel_slides"
         label: "Slides do Carrossel"
         file: "_data/carousel.json"
-        description: "Gerencie os slides que aparecem no carrossel da seção 'O que você recebe'."
+        description: "Gerencie os slides do carrossel da seção 'O que você recebe'."
         fields:
           - name: "slides"
             label: "Slides"
-            label_singular: "Slide"
             widget: "list"
             fields:
               - {label: "Imagem do Slide", name: "image", widget: "image"}
