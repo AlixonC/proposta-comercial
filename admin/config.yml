@@ -65,12 +65,16 @@ collections:
 
   - name: "portfolio"
     label: "Portfólio"
-    label_singular: "Projeto"
-    folder: "_portfolio"
-    create: true
-    slug: "{{slug}}"
+    label_singular: "Projeto do Portfólio"
+    file: "_data/portfolio.json" # Aponta para o arquivo de dados
+    description: "Gerencie os itens que aparecem na galeria do portfólio."
+    widget: "object" # Usamos 'object' porque estamos editando a estrutura de um único arquivo
     fields:
-      - {label: "Título", name: "title", widget: "string"}
-      - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
-      - {label: "Imagem", name: "image", widget: "image"}
-
+      - name: "items"
+        label: "Projetos"
+        label_singular: "Projeto"
+        widget: "list"
+        fields:
+          - {label: "Título", name: "title", widget: "string"}
+          - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
+          - {label: "Imagem", name: "image", widget: "image"}
