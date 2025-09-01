@@ -68,7 +68,7 @@ collections:
     label_singular: "Projeto do Portfólio"
     file: "_data/portfolio.json" # Aponta para o arquivo de dados
     description: "Gerencie os itens que aparecem na galeria do portfólio."
-    widget: "object" # Usamos 'object' porque estamos editando a estrutura de um único arquivo
+    widget: "object"
     fields:
       - name: "items"
         label: "Projetos"
@@ -78,3 +78,19 @@ collections:
           - {label: "Título", name: "title", widget: "string"}
           - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
           - {label: "Imagem", name: "image", widget: "image"}
+
+  - name: "carousel"
+    label: "Carrossel de Entregáveis"
+    label_singular: "Slide do Carrossel"
+    file: "_data/carousel.json" # Aponta para o novo arquivo de dados
+    description: "Gerencie os slides que aparecem no carrossel da seção 'O que você recebe'."
+    widget: "object"
+    fields:
+      - name: "slides"
+        label: "Slides"
+        label_singular: "Slide"
+        widget: "list"
+        fields:
+          - {label: "Imagem do Slide", name: "image", widget: "image"}
+          - {label: "Título", name: "title", widget: "string"}
+          - {label: "Categoria", name: "category", widget: "string"}
