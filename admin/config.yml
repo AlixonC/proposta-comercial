@@ -1,30 +1,34 @@
 backend:
-  name: git-gateway
-  branch: main
+name: git-gateway
+branch: main
 
-# Local onde as imagens serão salvas
+Local onde as imagens serão salvas
 media_folder: "imagens"
 
-# Como as imagens serão acessadas no site
+Como as imagens serão acessadas no site
 public_folder: "/imagens"
 
-# Coleções de conteúdo gerenciáveis
+Coleções de conteúdo gerenciáveis
 collections:
-  - name: "site_data"
-    label: "Dados do Site"
-    files:
-      - name: "portfolio"
-        label: "Portfólio"
-        file: "_data/portfolio.json"
-        description: "Gerencie os itens que aparecem na seção de portfólio."
-        fields:
-          - name: "items"
-            label: "Itens do Portfólio" 
-            label_singular: "Item do Portfólio"
-            widget: "list"
-            fields:
 
+name: "site_data"
+label: "Dados do Site"
+files:
 
-**Validating Configuration Syntax**
+name: "portfolio"
+label: "Portfólio"
+file: "_data/portfolio.json"
+description: "Gerencie os itens que aparecem na seção de portfólio."
+fields:
 
-I'm verifying the configuration syntax again, but this time with a focus on indentation and list formatting. The user's provided code had crucial issues with the YAML structure, specifically incorrect use of asterisks instead of hyphens for lists and missing indentation. I'm re-assessing the revised code to ensure its alignment with the user's intended setup.
+name: "items"
+label: "Itens do Portfólio"
+label_singular: "Item do Portfólio"
+widget: "list"
+fields:
+
+{label: "Título", name: "title", widget: "string", required: true}
+
+{label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
+
+{label: "Imagem", name: "image", widget: "image", required: true}
