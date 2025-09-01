@@ -8,6 +8,32 @@
     "title": "Construindo Sonhos com Segurança e Precisão",
     "subtitle": "Garantimos que seu maior investimento seja também o seu porto seguro, projetado para durar gerações."
   },
+  "problemas": [
+    {
+      "emoji": "💸",
+      "title": "O Orçamento que Sangra",
+      "color": "red",
+      "description": "Cada incompatibilidade descoberta na obra vira um remendo caro. É o desperdício de material, o pagamento de mão de obra extra e a certeza de que o custo final será muito maior que o planejado."
+    },
+    {
+      "emoji": "⏳",
+      "title": "O Cronograma Destruído",
+      "color": "yellow",
+      "description": "A obra que se arrasta, os prazos estourados e a frustração de ver o sonho ser adiado. O retrabalho não consome apenas dinheiro, ele rouba seu tempo e sua paz."
+    },
+    {
+      "emoji": "🤯",
+      "title": "O Estresse que Não Acaba",
+      "color": "orange",
+      "description": "Conflitos com pedreiros, decisões tomadas sob pressão e a constante preocupação com a segurança da estrutura. Seu sonho não pode se transformar em um pesadelo."
+    }
+  ],
+  "sobre": {
+    "title": "Quem Você Está Contratando?",
+    "name": "Alison Carvalho, Engenheiro Civil",
+    "bio": "Com vasta experiência no mercado, minha missão é transformar seus sonhos em realidade através de um trabalho pautado pela excelência, transparência e dedicação total ao seu projeto. Minha autoridade é construída em cada projeto entregue com sucesso e na satisfação de cada cliente.",
+    "photo": "imagens/foto-perfil.jpg"
+  },
   "packages": [
     {
       "name": "Pacote Essencial",
@@ -43,12 +69,6 @@
       ],
       "recommended": false
     }
-  ],
-  "about": {
-    "title": "Quem Você Está Contratando?",
-    "name": "Alison Carvalho, Engenheiro Civil",
-    "bio": "Com vasta experiência no mercado, minha missão é transformar seus sonhos em realidade através de um trabalho pautado pela excelência, transparência e dedicação total ao seu projeto. Minha autoridade é construída em cada projeto entregue com sucesso e na satisfação de cada cliente.",
-    "photo": "/imagens/foto-perfil.jpg"
-  }
+  ]
 }
 
