@@ -636,7 +636,7 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
 
             // Inicializando o AOS
             AOS.init({
@@ -644,6 +644,24 @@
                 once: true,
                 offset: 50
             });
+            
+            // Função para buscar dados dinâmicos
+            async function fetchPortfolioData() {
+                try {
+                    const response = await fetch('_data/portfolio.json');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    return data.items;
+                } catch (error) {
+                    console.error("Não foi possível carregar os dados do portfólio:", error);
+                    // Retorna um array vazio ou dados padrão em caso de erro
+                    return [];
+                }
+            }
+            
+            const portfolioItems = await fetchPortfolioData();
 
             const APP_DATA = {
                 problemas: [
@@ -657,14 +675,7 @@
                     hidrossanitario: { title: '3. Projeto Hidrossanitário', emoji: '💧', subtitle: 'Saúde e conforto para o seu dia a dia.', description: 'Planejamos sistemas eficientes de água e esgoto para garantir o funcionamento perfeito da sua casa, evitando entupimentos e vazamentos futuros.', deliverables: ['Plantas de distribuição de água fria e quente', 'Isométricos para fácil execução', 'Detalhamento de caixas e esgoto', 'Lista de materiais'] },
                     eletrico: { title: '4. Projeto Elétrico', emoji: '⚡', subtitle: 'A energia que dá vida ao seu lar, com total segurança.', description: 'Dimensionamos uma instalação elétrica segura e eficiente, prevendo o uso de todos os seus equipamentos para evitar sobrecargas ou falta de tomadas.', deliverables: ['Plantas de pontos de iluminação e tomadas', 'Diagramas dos quadros de distribuição', 'Detalhamento de eletrodutos e fiação', 'Lista de materiais'] }
                 },
-                portfolio: [
-                    { image: 'https://placehold.co/600x400/0d9488/white?text=Portfolio+1', title: 'Casa Contemporânea', category: 'residencial' },
-                    { image: 'https://placehold.co/600x400/1e293b/white?text=Portfolio+2', title: 'Escritório Moderno', category: 'comercial' },
-                    { image: 'https://placehold.co/600x400/0d9488/white?text=Portfolio+3', title: 'Reforma de Apartamento', category: 'residencial' },
-                    { image: 'https://placehold.co/600x400/1e293b/white?text=Portfolio+4', title: 'Galpão Industrial', category: 'comercial' },
-                    { image: 'https://placehold.co/600x400/0d9488/white?text=Portfolio+5', title: 'Casa de Campo', category: 'residencial' },
-                    { image: 'https://placehold.co/600x400/1e293b/white?text=Portfolio+6', title: 'Loja Conceito', category: 'comercial' }
-                ],
+                portfolio: portfolioItems, // Usando os dados carregados dinamicamente
                 timeline: [
                     { title: 'Briefing e Análise', description: 'Entendemos suas necessidades, desejos e orçamento para criar a base do projeto.' },
                     { title: 'Estudo Preliminar e 3D', description: 'Desenvolvemos as primeiras ideias e modelos 3D para visualização e aprovação.' },
@@ -1144,3 +1155,4 @@
     </script>
 </body>
 </html>
+
