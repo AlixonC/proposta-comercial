@@ -4,21 +4,46 @@ backend:
 
 media_folder: "imagens"
 public_folder: "/imagens"
+media_library:
+  config:
+    max_file_size: 512000 # Limita o tamanho do upload da imagem para 500KB
 
 collections:
-  - name: "site_data"
-    label: "Dados do Site"
+  - name: "pages"
+    label: "Páginas"
     files:
-      - name: "portfolio"
-        label: "Portfólio"
-        file: "_data/portfolio.json"
-        description: "Gerencie os itens que aparecem na seção de portfólio."
+      - name: "main_content"
+        label: "Conteúdo Principal"
+        file: "_data/site_content.json"
+        description: "Edite os principais textos, imagens e pacotes do site aqui."
         fields:
-          - name: "items"
-            label: "Itens do Portfólio"
-            label_singular: "Item do Portfólio"
+          - {label: "Texto do Logo", name: "logo_text", widget: "string", hint: "O nome que aparece no canto superior esquerdo."}
+          - {label: "Título Principal", name: "hero_title", widget: "string", hint: "O título grande no topo da página."}
+          - {label: "Subtítulo Principal", name: "hero_subtitle", widget: "text", hint: "O texto de apoio abaixo do título principal."}
+          - name: "packages"
+            label: "Pacotes de Serviços"
+            label_singular: "Pacote"
             widget: "list"
             fields:
-              - {label: "Título", name: "title", widget: "string"}
-              - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
-              - {label: "Imagem", name: "image", widget: "image"}
+              - {label: "Nome do Pacote", name: "name", widget: "string"}
+              - {label: "Descrição", name: "description", widget: "string"}
+              - {label: "Preço", name: "price", widget: "string"}
+              - name: "features"
+                label: "Funcionalidades"
+                widget: "list"
+                label_singular: "Funcionalidade"
+                field: { label: "Funcionalidade", name: "feature", widget: "string"}
+              - {label: "Recomendado?", name: "recommended", widget: "boolean", default: false}
+          - {label: "Foto de Perfil (Sobre)", name: "about_photo", widget: "image"}
+
+  - name: "portfolio"
+    label: "Portfólio"
+    folder: "_portfolio_items" # Pasta para arquivos individuais do portfólio
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
+      - {label: "Imagem", name: "image", widget: "image"}
+
+
