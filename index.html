@@ -12,45 +12,25 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; -webkit-tap-highlight-color: transparent; padding-bottom: env(safe-area-inset-bottom); }
-        :root { --teal-600: #0d9488; --teal-700: #0f766e; --teal-800: #115e59; --green-500: #22c55e; --red-500: #ef4444; --yellow-500: #f59e0b; }
-        
-        /* Estilos para o Swiper */
-        .swiper { width: 100%; height: 100%; cursor: grab; }
-        .swiper-slide { display: flex; justify-content: center; align-items: center; padding: 1rem; }
-        .swiper-button-next, .swiper-button-prev { color: var(--teal-600); background-color: rgba(255, 255, 255, 0.7); border-radius: 9999px; width: 48px; height: 48px; display: flex; justify-content: center; align-items: center; transition: all 0.3s ease-in-out; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
-        .swiper-button-next::after, .swiper-button-prev::after { font-size: 20px; font-weight: bold; }
-        .swiper-button-next:hover, .swiper-button-prev:hover { background-color: white; transform: scale(1.1); }
-        .swiper-pagination-bullet { background-color: rgba(255, 255, 255, 0.5); width: 12px; height: 12px; transition: all 0.3s; }
-        .swiper-pagination-bullet-active { background-color: var(--teal-600); width: 24px; border-radius: 9999px; }
-
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.9); justify-content: center; align-items: center; padding: 2rem; }
-        .modal-content-wrapper { position: relative; width: 90%; height: 90%; display: flex; justify-content: center; align-items: center; }
-        .modal-image { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .modal-close { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; }
-        .modal-close:hover, .modal-close:focus { color: #bbb; text-decoration: none; cursor: pointer; }
-        .contact-modal-content { background-color: #fff; padding: 2rem; border-radius: 0.5rem; max-width: 500px; text-align: center; position: relative; animation: fadeInScale 0.3s ease-out forwards; }
-        @keyframes fadeInScale { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        header.scrolled { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07); }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        :root { --teal-600: #0d9488; --teal-700: #0f766e; --teal-800: #115e59; }
+        header.scrolled { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07); }
         .nav-link { color: #475569; font-weight: 500; transition: color 0.3s; position: relative; padding-bottom: 4px; }
         .nav-link:hover { color: var(--teal-600); }
-        .nav-link.active { color: var(--teal-700); font-weight: 700; }
         .nav-link.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background-color: var(--teal-700); }
-        .cta-button { background-color: var(--teal-700); color: white; font-weight: 500; padding: 8px 16px; border-radius: 9999px; transition: background-color 0.3s, transform 0.2s; }
+        .cta-button { background-color: var(--teal-700); color: white; border-radius: 9999px; transition: all 0.3s; }
         .cta-button:hover { background-color: var(--teal-800); transform: translateY(-2px); }
-        .cta-button-secondary { display: inline-block; background-color: var(--teal-600); color: white; padding: 12px 32px; border-radius: 9999px; font-size: 1.125rem; font-weight: 600; transition: all 0.3s; }
-        .cta-button-secondary:hover { background-color: var(--teal-700); transform: scale(1.05); }
-        .package-card.selected { transform: translateY(-10px) scale(1.03); box-shadow: 0 20px 25px -5px rgba(13, 148, 136, 0.15), 0 10px 10px -5px rgba(13, 148, 136, 0.08); border-color: var(--teal-600); }
-        #scrollTopBtn { position: fixed; bottom: 20px; right: 20px; opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateY(10px); pointer-events: none; }
-        #scrollTopBtn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .tab-button.active { border-color: var(--teal-600); background-color: #f0fdfa; color: var(--teal-800); font-weight: 600; }
+        .timeline-item::before { content: ''; position: absolute; left: -31px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; border-radius: 50%; background-color: #f0fdfa; border: 4px solid var(--teal-600); }
+        .faq-header { cursor: pointer; }
         .interactive-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); }
         .portfolio-grid-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
-        .portfolio-item-gallery { position: relative; overflow: hidden; border-radius: 0.5rem; cursor: pointer; transition: transform 0.3s ease-in-out; }
-        .portfolio-item-gallery:hover { transform: scale(1.03); }
-        .portfolio-item-gallery img { width: 100%; height: 250px; object-fit: cover; transition: transform 0.3s ease-in-out; }
+        .portfolio-item-gallery { position: relative; overflow: hidden; border-radius: 0.5rem; cursor: pointer; transition: transform 0.3s; }
         .portfolio-item-gallery:hover img { transform: scale(1.1); }
-        .portfolio-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 1rem; background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)); color: white; transform: translateY(100%); transition: transform 0.3s ease-in-out; }
+        .portfolio-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 1rem; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); color: white; transform: translateY(100%); transition: transform 0.3s; }
         .portfolio-item-gallery:hover .portfolio-info { transform: translateY(0); }
+        .swiper-button-next, .swiper-button-prev { color: var(--teal-600); background-color: rgba(255, 255, 255, 0.7); border-radius: 9999px; }
+        .swiper-pagination-bullet-active { background-color: var(--teal-600); }
     </style>
 </head>
 <body class="text-slate-800">
@@ -62,39 +42,39 @@
                 <a href="#solucoes" class="nav-link">Soluções</a>
                 <a href="#portfolio" class="nav-link">Portfólio</a>
                 <a href="#sobre" class="nav-link">Sobre</a>
+                <a href="#processo" class="nav-link">Processo</a>
                 <a href="#entregaveis" class="nav-link">Entregáveis</a>
                 <a href="#pacotes" class="nav-link">Pacotes</a>
                 <a href="#faq" class="nav-link">FAQ</a>
-                <a href="#contato" class="cta-button">Contato</a>
+                <a href="#contato" class="cta-button font-medium py-2 px-4">Contato</a>
             </div>
             <button id="mobile-menu-button" class="md:hidden text-slate-800 focus:outline-none z-50">
                 <span id="menu-icon-open" class="text-3xl">☰</span>
                 <span id="menu-icon-close" class="text-3xl hidden">✕</span>
             </button>
         </nav>
-        <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-white/95 backdrop-blur-sm flex flex-col justify-center items-center gap-4 z-40 transition-opacity duration-300"></div>
+        <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-white/95 backdrop-blur-sm flex flex-col justify-center items-center gap-4 z-40"></div>
     </header>
 
     <main>
         <section id="hero" class="bg-white pt-20 pb-16 text-center">
             <div class="container mx-auto px-6">
-                <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold text-teal-800 leading-tight" data-aos="fade-up"></h1>
+                <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold text-teal-800" data-aos="fade-up"></h1>
                 <p id="hero-subtitle" class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100"></p>
-                <div class="mt-12 max-w-4xl mx-auto bg-white border border-slate-200 rounded-xl shadow-md p-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="mt-12 max-w-4xl mx-auto bg-white border rounded-xl shadow-md p-6 grid grid-cols-1 sm:grid-cols-3 gap-6" data-aos="fade-up" data-aos-delay="200">
                     <div>
-                        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Proposta Para</h3>
+                        <h3 class="text-sm font-bold text-slate-500 uppercase">Proposta Para</h3>
                         <p id="client-name" class="text-xl font-semibold text-teal-700 mt-1">Prezado(a) Cliente</p>
                     </div>
                     <div>
-                        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Data de Emissão</h3>
+                        <h3 class="text-sm font-bold text-slate-500 uppercase">Data de Emissão</h3>
                         <p id="proposal-date" class="text-xl font-semibold text-teal-700 mt-1"></p>
                     </div>
                     <div>
-                        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Validade</h3>
+                        <h3 class="text-sm font-bold text-slate-500 uppercase">Validade</h3>
                         <p class="text-xl font-semibold text-teal-700 mt-1">15 dias</p>
                     </div>
                 </div>
-                <a href="#pacotes" class="mt-12 cta-button-secondary" data-aos="fade-up" data-aos-delay="300">Conheça os Pacotes</a>
             </div>
         </section>
 
@@ -102,9 +82,29 @@
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold" data-aos="fade-up">O Barato que Sai Caro: Os 3 Pesadelos de um Projeto Desintegrado</h2>
-                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">Economizar na fase de projeto é plantar a semente para uma colheita de problemas caros e estressantes na obra.</p>
                 </div>
                 <div id="problema-cards" class="grid md:grid-cols-3 gap-8"></div>
+            </div>
+        </section>
+
+        <section id="solucoes" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold">Nossa Solução: A Engenharia da Tranquilidade</h2>
+                </div>
+                <div class="max-w-5xl mx-auto" data-aos="fade-up" data-aos-delay="150">
+                    <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8" id="tabs-container"></div>
+                    <div id="tabs-content" class="bg-slate-50 p-6 sm:p-8 rounded-lg min-h-[320px]"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="py-20 bg-teal-50/50">
+             <div class="container mx-auto px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold">Nossos Projetos: Qualidade em Cada Detalhe</h2>
+                </div>
+                <div id="portfolio-grid" class="portfolio-grid-gallery"></div>
             </div>
         </section>
 
@@ -120,55 +120,74 @@
                 </div>
             </div>
         </section>
+        
+        <section id="processo" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold">Nosso Processo de Trabalho</h2>
+                </div>
+                <div class="relative max-w-3xl mx-auto">
+                    <div class="border-l-2 border-dashed border-slate-300 absolute h-full top-0 left-4 md:left-1/2 md:-translate-x-1/2"></div>
+                    <div id="timeline-content"></div>
+                </div>
+            </div>
+        </section>
 
         <section id="entregaveis" class="py-20 bg-slate-800 text-white">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold text-teal-500" data-aos="fade-up">O que Você Recebe</h2>
-                <p class="text-lg text-slate-300 max-w-3xl mx-auto mt-4 mb-8 px-4 sm:px-0" data-aos="fade-up" data-aos-delay="150">
-                    Pranchas em tamanho ABNT, detalhamentos em planta baixa, cortes e vistas 3D para facilitar a execução na obra.
-                </p>
-                <div class="swiper entregaveis-swiper max-w-4xl mx-auto rounded-lg shadow-2xl" data-aos="fade-up" data-aos-delay="200">
-                    <div class="swiper-wrapper" id="carousel-slides-container">
-                        </div>
+                <div class="swiper entregaveis-swiper max-w-4xl mx-auto rounded-lg shadow-2xl mt-8" data-aos="fade-up" data-aos-delay="200">
+                    <div class="swiper-wrapper" id="carousel-slides-container"></div>
                     <div class="swiper-pagination"></div>
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
                 </div>
             </div>
         </section>
-        
+
+        <section id="garantia" class="py-20 bg-slate-100">
+             <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-up">Seu Investimento Seguro</h2>
+                <div id="garantia-cards" class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-left"></div>
+            </div>
+        </section>
+
+        <section id="depoimentos" class="py-20 bg-white">
+             <div class="container mx-auto px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold">O Que Nossos Clientes Dizem</h2>
+                </div>
+                <div id="depoimentos-grid" class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto"></div>
+            </div>
+        </section>
+
         <section id="pacotes" class="py-20">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12" data-aos="fade-up">
                     <h2 class="text-3xl md:text-4xl font-bold">Compare e Escolha o Plano Ideal</h2>
-                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Criamos pacotes flexíveis para atender exatamente ao que você precisa. Clique para comparar.</p>
                 </div>
                 <div class="grid lg:grid-cols-3 gap-8 items-start" id="packages-container"></div>
             </div>
         </section>
 
-        <section id="portfolio" class="py-20 bg-teal-50/50">
-             <div class="container mx-auto px-6">
+        <section id="faq" class="py-20 bg-teal-50/50">
+            <div class="container mx-auto px-6">
                 <div class="text-center mb-12" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-4xl font-bold">Nossos Projetos: Qualidade em Cada Detalhe</h2>
-                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Veja na prática como transformamos ideias em realidade, com excelência em cada detalhe.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold">Perguntas Frequentes</h2>
                 </div>
-                <div id="portfolio-grid" class="portfolio-grid-gallery"></div>
+                <div id="faq-container" class="max-w-3xl mx-auto space-y-4" data-aos="fade-up" data-aos-delay="150"></div>
             </div>
         </section>
-
     </main>
+
     <footer id="contato" class="bg-white">
         <div class="container mx-auto px-6 py-16 text-center" data-aos="fade-up">
             <h2 class="text-3xl md:text-4xl font-bold">Pronto para Começar?</h2>
-            <p class="mt-4 text-lg max-w-2xl mx-auto text-slate-600">Vamos conversar sobre como podemos transformar seu projeto em realidade. Esta proposta é válida por 15 dias.</p>
             <div class="mt-8 flex flex-col md:flex-row justify-center items-center gap-6">
-                <a href="https://wa.me/5575998014491" target="_blank" class="inline-flex items-center justify-center gap-3 bg-green-500 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.267.651 4.383 1.89 6.251l.244.442-1.123 4.105 4.226-1.109.431.252z"/></svg>
+                <a href="https://wa.me/5575998014491" target="_blank" class="inline-flex items-center gap-3 bg-green-500 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
                     <span>Entrar em contato no WhatsApp</span>
                 </a>
-                <a href="mailto:alison.karvalho@gmail.com" class="inline-flex items-center justify-center gap-3 bg-teal-600 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <a href="mailto:alison.karvalho@gmail.com" class="inline-flex items-center gap-3 bg-teal-600 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
                     <span>Enviar um E-mail</span>
                 </a>
             </div>
@@ -183,135 +202,161 @@
 
             async function fetchData(url) {
                 try {
-                    const response = await fetch(`${url}?v=${new Date().getTime()}`);
-                    if (!response.ok) { console.error(`Erro: ${response.statusText}`); return null; }
-                    return await response.json();
-                } catch (error) {
-                    console.error(`Falha na requisição para ${url}:`, error);
-                    return null;
-                }
+                    const r = await fetch(`${url}?v=${new Date().getTime()}`);
+                    if (!r.ok) { console.error(`Error: ${r.statusText}`); return null; }
+                    return await r.json();
+                } catch (e) { console.error(`Fetch failed for ${url}:`, e); return null; }
             }
 
-            // ATUALIZAÇÃO: Adicionado 'carouselFiles' para buscar os dados do novo carrossel
-            const [siteContent, portfolioFiles, carouselFiles] = await Promise.all([
+            const [content, portfolioData, carouselData] = await Promise.all([
                 fetchData('_data/site_content.json'),
                 fetchData('_data/portfolio.json'),
-                fetchData('_data/carousel.json') // Nova busca de dados
+                fetchData('_data/carousel.json')
             ]);
-            
-            const portfolioItems = portfolioFiles ? portfolioFiles.items : [];
-            // ATUALIZAÇÃO: Variável para os slides do carrossel
-            const carouselSlides = carouselFiles ? carouselFiles.slides : [];
 
-            if (siteContent) {
-                // ... (código existente para Header, Hero, Problemas, Sobre, Pacotes)
-                // Header e Logo
-                const logoContainer = document.getElementById('logo-container');
-                if (siteContent.header.logo_type === 'image' && siteContent.header.logo_image) {
-                    logoContainer.innerHTML = `<img src="${siteContent.header.logo_image}" alt="Logo" class="h-10 w-auto">`;
-                } else {
-                    logoContainer.textContent = siteContent.header.logo_text;
-                }
-                // Hero
-                document.getElementById('hero-title').textContent = siteContent.hero.title;
-                document.getElementById('hero-subtitle').textContent = siteContent.hero.subtitle;
-                // Problemas
-                const problemaCards = document.getElementById('problema-cards');
-                if(problemaCards && siteContent.problemas) {
-                    problemaCards.innerHTML = siteContent.problemas.map((item, index) => `
-                        <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-${item.color}-500 interactive-card" data-aos="fade-up" data-aos-delay="${index * 100}">
-                            <div class="text-4xl mb-4">${item.emoji}</div>
-                            <h3 class="text-xl font-bold text-${item.color}-600">${item.title}</h3>
-                            <p class="mt-2 text-slate-600">${item.description}</p>
-                        </div>
-                    `).join('');
-                }
-                // Sobre
-                document.getElementById('about-title').textContent = siteContent.sobre.title;
-                document.getElementById('about-name').textContent = siteContent.sobre.name;
-                document.getElementById('about-bio').textContent = siteContent.sobre.bio;
-                document.getElementById('about-photo').src = siteContent.sobre.photo;
-                // Pacotes
-                const packagesContainer = document.getElementById('packages-container');
-                 if (packagesContainer && siteContent.packages) {
-                    packagesContainer.innerHTML = siteContent.packages.map((pkg, index) => `
-                        <div class="package-card relative bg-white p-8 rounded-lg shadow-lg border-2 border-transparent transition-all duration-300 flex flex-col" data-aos="fade-up" data-aos-delay="${index * 100}">
-                            ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-teal-600 text-white text-sm font-bold px-4 py-1 rounded-full">RECOMENDADO</div>' : ''}
-                            <div class="flex-grow">
-                                <h3 class="text-2xl font-bold">${pkg.name || 'Pacote'}</h3>
-                                <p class="mt-2 text-slate-500 h-12">${pkg.description || ''}</p>
-                                <p class="text-4xl font-extrabold my-6">R$ ${pkg.price || '0,00'}</p>
-                                <ul class="space-y-3 text-slate-700 text-left">
-                                    ${(pkg.features || []).map(f => `<li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✔</span><span>${f}</span></li>`).join('')}
-                                </ul>
-                            </div>
-                            <button class="w-full mt-8 py-3 px-6 rounded-lg font-semibold transition-colors duration-300 bg-slate-200 text-slate-800 hover:bg-teal-100">Selecionar Plano</button>
-                        </div>
-                    `).join('');
-                }
+            if (!content) { console.error("Falha ao carregar o conteúdo principal do site."); return; }
+
+            // Render Functions
+            const render = (elId, data, template) => {
+                const el = document.getElementById(elId);
+                if (el && data) el.innerHTML = Array.isArray(data) ? data.map(template).join('') : template(data);
+            };
+
+            const setText = (elId, text) => {
+                const el = document.getElementById(elId);
+                if (el && text) el.textContent = text;
+            };
+
+            const setSrc = (elId, src) => {
+                const el = document.getElementById(elId);
+                if (el && src) el.src = src;
+            };
+
+            // Populate Content
+            const logoContainer = document.getElementById('logo-container');
+            if(content.header.logo_type === 'image' && content.header.logo_image) {
+                logoContainer.innerHTML = `<img src="${content.header.logo_image}" alt="Logo" class="h-10">`;
+            } else {
+                logoContainer.textContent = content.header.logo_text;
             }
 
-            // ATUALIZAÇÃO: Lógica para popular e iniciar o carrossel Swiper
-            const carouselContainer = document.getElementById('carousel-slides-container');
-            if (carouselContainer && carouselSlides.length > 0) {
-                carouselContainer.innerHTML = carouselSlides.map(slide => `
+            setText('hero-title', content.hero.title);
+            setText('hero-subtitle', content.hero.subtitle);
+            setText('proposal-date', new Date().toLocaleDateString('pt-BR'));
+            const client = new URLSearchParams(window.location.search).get('cliente');
+            if (client) setText('client-name', decodeURIComponent(client.replace(/\+/g, ' ')));
+
+            render('problema-cards', content.problemas, (item, i) => `
+                <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-${item.color}-500 interactive-card transition-all" data-aos="fade-up" data-aos-delay="${i*100}">
+                    <div class="text-4xl mb-4">${item.emoji}</div>
+                    <h3 class="text-xl font-bold text-${item.color}-600">${item.title}</h3>
+                    <p class="mt-2 text-slate-600">${item.description}</p>
+                </div>`);
+            
+            setText('about-title', content.sobre.title);
+            setText('about-name', content.sobre.name);
+            setText('about-bio', content.sobre.bio);
+            setSrc('about-photo', content.sobre.photo);
+            
+            render('packages-container', content.packages, (pkg, i) => `
+                <div class="relative bg-white p-8 rounded-lg shadow-lg border-2 border-transparent transition-all flex flex-col" data-aos="fade-up" data-aos-delay="${i*100}">
+                    ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-teal-600 text-white text-sm font-bold px-4 py-1 rounded-full">RECOMENDADO</div>' : ''}
+                    <div class="flex-grow">
+                        <h3 class="text-2xl font-bold">${pkg.name}</h3>
+                        <p class="mt-2 text-slate-500 h-12">${pkg.description}</p>
+                        <p class="text-4xl font-extrabold my-6">R$ ${pkg.price}</p>
+                        <ul class="space-y-3 text-slate-700 text-left">${(pkg.features || []).map(f => `<li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✔</span><span>${f}</span></li>`).join('')}</ul>
+                    </div>
+                    <button class="w-full mt-8 py-3 px-6 rounded-lg font-semibold transition-colors bg-slate-200 text-slate-800 hover:bg-teal-100">Selecionar Plano</button>
+                </div>`);
+
+            render('garantia-cards', content.guarantees, (item, i) => `
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center interactive-card transition-all" data-aos="fade-up" data-aos-delay="${i*100}">
+                    <span class="text-5xl mb-4">${item.icon}</span>
+                    <h3 class="font-bold text-xl text-teal-800">${item.title}</h3>
+                    <p class="mt-2 text-slate-600">${item.description}</p>
+                </div>`);
+
+            render('depoimentos-grid', content.testimonials, (item, i) => `
+                <div class="bg-slate-50 p-8 rounded-lg shadow-sm interactive-card transition-all" data-aos="fade-up" data-aos-delay="${i * 100}">
+                    <p class="text-slate-600 italic">"${item.text}"</p>
+                    <p class="font-bold text-slate-800 mt-4">${item.author}</p>
+                </div>`);
+            
+            render('timeline-content', content.timeline, (item, i) => `
+                <div class="relative mb-12" data-aos="${i % 2 === 0 ? 'fade-right' : 'fade-left'}">
+                    <div class="md:flex items-center ${i % 2 === 0 ? '' : 'flex-row-reverse'}">
+                        <div class="md:w-1/2">
+                            <div class="bg-white p-6 rounded-lg shadow-lg border">
+                                <h3 class="text-xl font-bold text-teal-800">${item.title}</h3>
+                                <p class="text-slate-600 mt-2">${item.description}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>`);
+            
+            render('faq-container', content.faq, (item, i) => `
+                <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden" data-aos="fade-up">
+                    <div class="faq-header p-5 flex justify-between items-center">
+                        <h4 class="font-semibold text-lg">${item.question}</h4>
+                        <span class="faq-icon text-2xl font-light transform transition-transform">＋</span>
+                    </div>
+                    <div class="faq-content hidden p-5 border-t text-slate-600"><p>${item.answer}</p></div>
+                </div>`);
+            document.querySelectorAll('.faq-header').forEach(h => h.addEventListener('click', () => {
+                const content = h.nextElementSibling;
+                const icon = h.querySelector('.faq-icon');
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-45');
+            }));
+            
+            // Solutions Tabs
+            const tabsContainer = document.getElementById('tabs-container');
+            const tabsContent = document.getElementById('tabs-content');
+            if (tabsContainer && tabsContent && content.solutions) {
+                const solutions = Object.values(content.solutions);
+                tabsContainer.innerHTML = solutions.map(s => `<button data-tab="${s.key}" class="tab-button flex items-center gap-2 font-medium py-2 px-4 rounded-lg border-2 border-transparent transition"><span class="text-xl">${s.emoji}</span> ${s.title.substring(3)}</button>`).join('');
+                const renderTab = key => {
+                    const s = content.solutions[key];
+                    tabsContent.innerHTML = `<h3 class="text-2xl font-bold text-teal-800">${s.title}</h3><p class="mt-4 text-slate-700">${s.description}</p><ul class="mt-4 space-y-2 list-disc list-inside text-slate-700">${s.deliverables.map(d=>`<li>${d}</li>`).join('')}</ul>`;
+                };
+                tabsContainer.addEventListener('click', e => {
+                    const btn = e.target.closest('.tab-button');
+                    if(btn) {
+                        tabsContainer.querySelector('.active')?.classList.remove('active');
+                        btn.classList.add('active');
+                        renderTab(btn.dataset.tab);
+                    }
+                });
+                tabsContainer.querySelector('.tab-button').click();
+            }
+
+            // Portfolio
+            if (portfolioData?.items) {
+                render('portfolio-grid', portfolioData.items, item => `
+                    <div class="portfolio-item-gallery" data-aos="zoom-in">
+                        <img src="${item.image}" alt="${item.title}" class="w-full h-[250px] object-cover transition-transform" loading="lazy">
+                        <div class="portfolio-info"><h3 class="text-xl font-bold">${item.title}</h3></div>
+                    </div>`);
+            }
+            
+            // Carousel
+            if (carouselData?.slides) {
+                render('carousel-slides-container', carouselData.slides, slide => `
                     <div class="swiper-slide">
                         <div class="bg-white rounded-lg p-4 shadow-lg flex flex-col items-center text-slate-800 w-full">
                             <img src="${slide.image}" alt="${slide.title}" class="rounded-lg max-h-96 w-auto object-contain mb-4" loading="lazy">
                             <h4 class="font-bold text-lg">${slide.title}</h4>
                             <p class="text-sm text-slate-600">${slide.category}</p>
                         </div>
-                    </div>
-                `).join('');
-
-                // Inicia o Swiper
-                const swiper = new Swiper('.entregaveis-swiper', {
-                    loop: true,
-                    grabCursor: true,
-                    pagination: {
-                        el: '.swiper-pagination',
-                        clickable: true,
-                    },
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
-                    autoplay: {
-                        delay: 5000,
-                        disableOnInteraction: false,
-                    },
-                });
+                    </div>`);
+                new Swiper('.entregaveis-swiper', { loop: true, grabCursor: true, pagination: { el: '.swiper-pagination', clickable: true }, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, autoplay: { delay: 5000 } });
             }
 
-            // Portfólio (código existente)
-            const portfolioGrid = document.getElementById('portfolio-grid');
-            if(portfolioGrid && portfolioItems.length > 0) {
-                 portfolioGrid.innerHTML = portfolioItems.map(item => `
-                    <div class="portfolio-item-gallery bg-white rounded-lg shadow-lg overflow-hidden" data-image="${item.image}" data-title="${item.title}" data-category="${item.category}" data-aos="zoom-in" data-aos-duration="600">
-                        <img src="${item.image}" alt="${item.title}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Imagem+Indisponível';">
-                        <div class="portfolio-info">
-                            <h3 class="text-xl font-bold">${item.title}</h3>
-                            <p class="text-sm mt-1 capitalize">Categoria: ${item.category}</p>
-                        </div>
-                    </div>
-                `).join('');
-            }
-            
-            // ... (código existente para Data, Cliente e Menu Mobile)
-            // Data e cliente
-            document.getElementById('proposal-date').textContent = new Date().toLocaleDateString('pt-BR');
-            const urlParams = new URLSearchParams(window.location.search);
-            const clientName = urlParams.get('cliente');
-            if (clientName) {
-                document.getElementById('client-name').textContent = decodeURIComponent(clientName.replace(/\+/g, ' '));
-            }
-
-            // Lógica do menu mobile
+            // Mobile Menu
             const menuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-            const navLinks = document.querySelector('#nav-links').innerHTML;
-            mobileMenu.innerHTML = navLinks.replace(/nav-link/g, 'mobile-nav-link').replace(/space-x-6/g, 'flex flex-col gap-4');
-            
+            mobileMenu.innerHTML = document.getElementById('nav-links').innerHTML;
             menuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
                 document.getElementById('menu-icon-open').classList.toggle('hidden');
