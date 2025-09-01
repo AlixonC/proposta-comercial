@@ -1,0 +1,19 @@
+{
+  "slides": [
+    {
+      "image": "/imagens/entregavel-vigas.jpg",
+      "title": "Detalhamento de Vigas",
+      "category": "Estrutural"
+    },
+    {
+      "image": "/imagens/detalhamento-sapatas.jpg",
+      "title": "Detalhamento de Sapatas",
+      "category": "Estrutural"
+    },
+    {
+      "image": "https://placehold.co/800x600/0d9488/white?text=Slide+3",
+      "title": "Planta Humanizada",
+      "category": "Arquitetônico"
+    }
+  ]
+}
