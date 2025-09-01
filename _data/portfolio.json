@@ -1,34 +1,80 @@
-{
-  "items": [
-    {
-      "title": "Casa Contemporânea",
-      "category": "residencial",
-      "image": "/imagens/3D_-2.webp"
-    },
-    {
-      "title": "Escritório Moderno",
-      "category": "comercial",
-      "image": "https://placehold.co/600x400/1e293b/white?text=Portfolio+2"
-    },
-    {
-      "title": "Reforma de Apartamento",
-      "category": "residencial",
-      "image": "https://placehold.co/600x400/0d9488/white?text=Portfolio+3"
-    },
-    {
-      "title": "Galpão Industrial",
-      "category": "comercial",
-      "image": "https://placehold.co/600x400/1e293b/white?text=Portfolio+4"
-    },
-    {
-      "title": "Casa de Campo",
-      "category": "residencial",
-      "image": "https://placehold.co/600x400/0d9488/white?text=Portfolio+5"
-    },
-    {
-      "title": "Loja Conceito",
-      "category": "comercial",
-      "image": "https://placehold.co/600x400/1e293b/white?text=Portfolio+6"
-    }
-  ]
-}
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "imagens"
+public_folder: "/imagens"
+
+collections:
+  - name: "settings"
+    label: "Conteúdo do Site"
+    files:
+      - name: "general"
+        label: "Textos e Configurações Principais"
+        file: "_data/site_content.json"
+        description: "Edite os principais textos, imagens e pacotes do site aqui."
+        fields:
+          - name: header
+            label: "Cabeçalho"
+            widget: "object"
+            fields:
+              - name: logo_type
+                label: "Tipo de Logo"
+                widget: "select"
+                options: ["text", "image"]
+                default: "text"
+              - {label: "Texto do Logo (se tipo for 'text')", name: "logo_text", widget: "string", required: false}
+              - {label: "Imagem do Logo (se tipo for 'image')", name: "logo_image", widget: "image", required: false}
+          - name: hero
+            label: "Secção Principal (Topo)"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Subtítulo", name: "subtitle", widget: "text"}
+          - name: problemas
+            label: "Cartões 'Pesadelos de um Projeto'"
+            label_singular: "Cartão de Problema"
+            widget: "list"
+            fields:
+              - {label: "Emoji", name: "emoji", widget: "string"}
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Cor (red, yellow, orange)", name: "color", widget: "string"}
+              - {label: "Descrição", name: "description", widget: "text"}
+          - name: sobre
+            label: "Secção Sobre"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Nome e Cargo", name: "name", widget: "string"}
+              - {label: "Biografia", name: "bio", widget: "text"}
+              - {label: "Foto de Perfil", name: "photo", widget: "image"}
+          - name: packages
+            label: "Pacotes de Serviços"
+            label_singular: "Pacote"
+            widget: "list"
+            fields:
+              - {label: "Nome do Pacote", name: "name", widget: "string"}
+              - {label: "Descrição", name: "description", widget: "string"}
+              - {label: "Preço", name: "price", widget: "string"}
+              - name: "features"
+                label: "Funcionalidades do Pacote"
+                label_singular: "Funcionalidade"
+                widget: "list"
+                field: { label: "Item da lista", name: "feature", widget: "string"}
+              - {label: "É Recomendado?", name: "recommended", widget: "boolean", default: false}
+
+  - name: "portfolio"
+    label: "Portfólio"
+    label_singular: "Projeto do Portfólio"
+    file: "_data/portfolio.json" # Aponta para o arquivo de dados
+    description: "Gerencie os itens que aparecem na galeria do portfólio."
+    widget: "object" # Usamos 'object' porque estamos editando a estrutura de um único arquivo
+    fields:
+      - name: "items"
+        label: "Projetos"
+        label_singular: "Projeto"
+        widget: "list"
+        fields:
+          - {label: "Título", name: "title", widget: "string"}
+          - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
+          - {label: "Imagem", name: "image", widget: "image"}
