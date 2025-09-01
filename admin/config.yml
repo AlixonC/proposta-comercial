@@ -4,17 +4,13 @@ backend:
 
 media_folder: "imagens"
 public_folder: "/imagens"
-media_library:
-  name: uploadcare
-  config:
-    publicKey: demopublickey # Substitua pela sua chave pública do Uploadcare
 
 collections:
   - name: "settings"
-    label: "Configurações Gerais"
+    label: "Conteúdo do Site"
     files:
-      - name: "main_content"
-        label: "Conteúdo Principal"
+      - name: "general"
+        label: "Textos e Configurações Principais"
         file: "_data/site_content.json"
         description: "Edite os principais textos, imagens e pacotes do site aqui."
         fields:
@@ -27,21 +23,31 @@ collections:
                 widget: "select"
                 options: ["text", "image"]
                 default: "text"
-              - name: logo_text
-                label: "Texto do Logo"
-                widget: "string"
-                hint: "O nome que aparece no canto superior esquerdo."
-                required: false
-              - name: logo_image
-                label: "Imagem do Logo"
-                widget: "image"
-                required: false
+              - {label: "Texto do Logo (se tipo for 'text')", name: "logo_text", widget: "string", required: false}
+              - {label: "Imagem do Logo (se tipo for 'image')", name: "logo_image", widget: "image", required: false}
           - name: hero
-            label: "Secção Principal (Hero)"
+            label: "Secção Principal (Topo)"
             widget: "object"
             fields:
-              - {label: "Título Principal", name: "title", widget: "string"}
-              - {label: "Subtítulo Principal", name: "subtitle", widget: "text"}
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Subtítulo", name: "subtitle", widget: "text"}
+          - name: problemas
+            label: "Cartões 'Pesadelos de um Projeto'"
+            label_singular: "Cartão de Problema"
+            widget: "list"
+            fields:
+              - {label: "Emoji", name: "emoji", widget: "string"}
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Cor (red, yellow, orange)", name: "color", widget: "string"}
+              - {label: "Descrição", name: "description", widget: "text"}
+          - name: sobre
+            label: "Secção Sobre"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Nome e Cargo", name: "name", widget: "string"}
+              - {label: "Biografia", name: "bio", widget: "text"}
+              - {label: "Foto de Perfil", name: "photo", widget: "image"}
           - name: packages
             label: "Pacotes de Serviços"
             label_singular: "Pacote"
@@ -51,24 +57,16 @@ collections:
               - {label: "Descrição", name: "description", widget: "string"}
               - {label: "Preço", name: "price", widget: "string"}
               - name: "features"
-                label: "Funcionalidades"
+                label: "Funcionalidades do Pacote"
                 label_singular: "Funcionalidade"
                 widget: "list"
-                field: { label: "Funcionalidade", name: "feature", widget: "string"}
-              - {label: "Recomendado?", name: "recommended", widget: "boolean", default: false}
-          - name: about
-            label: "Secção Sobre"
-            widget: "object"
-            fields:
-              - {label: "Título", name: "title", widget: "string"}
-              - {label: "Nome e Cargo", name: "name", widget: "string"}
-              - {label: "Biografia", name: "bio", widget: "text"}
-              - {label: "Foto de Perfil", name: "photo", widget: "image"}
+                field: { label: "Item da lista", name: "feature", widget: "string"}
+              - {label: "É Recomendado?", name: "recommended", widget: "boolean", default: false}
 
   - name: "portfolio"
     label: "Portfólio"
     label_singular: "Projeto"
-    folder: "_portfolio" # Usaremos uma pasta para cada projeto
+    folder: "_portfolio"
     create: true
     slug: "{{slug}}"
     fields:
