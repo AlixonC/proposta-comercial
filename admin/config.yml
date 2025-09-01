@@ -1,0 +1,17 @@
+backend:
+  name: git-gateway
+  branch: main # Altere para 'master' se essa for sua branch principal.
+
+media_folder: "imagens"
+public_folder: "/imagens"
+
+collections:
+  - name: "portfolio"
+    label: "Portfólio"
+    folder: "portfolio" # Salva os arquivos YAML na pasta 'portfolio' na raiz do projeto
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Título", name: "title", widget: "string", required: true}
+      - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
+      - {label: "Imagem", name: "image", widget: "image", required: true}
