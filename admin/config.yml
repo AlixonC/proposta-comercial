@@ -14,83 +14,42 @@ collections:
         file: "_data/site_content.json"
         description: "Edite os principais textos, imagens e pacotes do site aqui."
         fields:
-          - name: header
-            label: "Cabeçalho"
-            widget: "object"
-            fields:
-              - name: logo_type
-                label: "Tipo de Logo"
-                widget: "select"
-                options: ["text", "image"]
-                default: "text"
-              - {label: "Texto do Logo (se tipo for 'text')", name: "logo_text", widget: "string", required: false}
-              - {label: "Imagem do Logo (se tipo for 'image')", name: "logo_image", widget: "image", required: false}
-          - name: hero
-            label: "Secção Principal (Topo)"
-            widget: "object"
-            fields:
-              - {label: "Título", name: "title", widget: "string"}
-              - {label: "Subtítulo", name: "subtitle", widget: "text"}
-          - name: problemas
-            label: "Cartões 'Pesadelos de um Projeto'"
-            label_singular: "Cartão de Problema"
-            widget: "list"
-            fields:
-              - {label: "Emoji", name: "emoji", widget: "string"}
-              - {label: "Título", name: "title", widget: "string"}
-              - {label: "Cor (red, yellow, orange)", name: "color", widget: "string"}
-              - {label: "Descrição", name: "description", widget: "text"}
-          - name: sobre
-            label: "Secção Sobre"
-            widget: "object"
-            fields:
-              - {label: "Título", name: "title", widget: "string"}
-              - {label: "Nome e Cargo", name: "name", widget: "string"}
-              - {label: "Biografia", name: "bio", widget: "text"}
-              - {label: "Foto de Perfil", name: "photo", widget: "image"}
-          - name: packages
-            label: "Pacotes de Serviços"
-            label_singular: "Pacote"
-            widget: "list"
-            fields:
-              - {label: "Nome do Pacote", name: "name", widget: "string"}
-              - {label: "Descrição", name: "description", widget: "string"}
-              - {label: "Preço", name: "price", widget: "string"}
-              - name: "features"
-                label: "Funcionalidades do Pacote"
-                label_singular: "Funcionalidade"
-                widget: "list"
-                field: { label: "Item da lista", name: "feature", widget: "string"}
-              - {label: "É Recomendado?", name: "recommended", widget: "boolean", default: false}
+          - { name: "header", label: "Cabeçalho", widget: "object", fields: [ { name: "logo_type", label: "Tipo de Logo", widget: "select", options: ["text", "image"], default: "text" }, { label: "Texto do Logo (se tipo for 'text')", name: "logo_text", widget: "string", required: false }, { label: "Imagem do Logo (se tipo for 'image')", name: "logo_image", widget: "image", required: false } ] }
+          - { name: "hero", label: "Secção Principal (Topo)", widget: "object", fields: [ { label: "Título", name: "title", widget: "string" }, { label: "Subtítulo", name: "subtitle", widget: "text" } ] }
+          - { name: "problemas", label: "Cartões 'Pesadelos de um Projeto'", label_singular: "Cartão de Problema", widget: "list", fields: [ { label: "Emoji", name: "emoji", widget: "string" }, { label: "Título", name: "title", widget: "string" }, { label: "Cor (red, yellow, orange)", name: "color", widget: "string" }, { label: "Descrição", name: "description", widget: "text" } ] }
+          - { name: "sobre", label: "Secção Sobre", widget: "object", fields: [ { label: "Título", name: "title", widget: "string" }, { label: "Nome e Cargo", name: "name", widget: "string" }, { label: "Biografia", name: "bio", widget: "text" }, { label: "Foto de Perfil", name: "photo", widget: "image" } ] }
+          - { name: "packages", label: "Pacotes de Serviços", label_singular: "Pacote", widget: "list", fields: [ { label: "Nome do Pacote", name: "name", widget: "string" }, { label: "Descrição", name: "description", widget: "string" }, { label: "Preço", name: "price", widget: "string" }, { name: "features", label: "Funcionalidades do Pacote", label_singular: "Funcionalidade", widget: "list", field: { label: "Item da lista", name: "feature", widget: "string" } }, { label: "É Recomendado?", name: "recommended", widget: "boolean", default: false } ] }
 
   - name: "portfolio"
     label: "Portfólio"
-    label_singular: "Projeto do Portfólio"
-    file: "_data/portfolio.json" # Aponta para o arquivo de dados
-    description: "Gerencie os itens que aparecem na galeria do portfólio."
-    widget: "object"
-    fields:
-      - name: "items"
-        label: "Projetos"
-        label_singular: "Projeto"
-        widget: "list"
+    files: # Correção: Usar "files" para definir a lista de arquivos a editar
+      - name: "portfolio_items"
+        label: "Projetos do Portfólio"
+        file: "_data/portfolio.json"
+        description: "Gerencie os itens que aparecem na galeria do portfólio."
         fields:
-          - {label: "Título", name: "title", widget: "string"}
-          - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
-          - {label: "Imagem", name: "image", widget: "image"}
+          - name: "items"
+            label: "Projetos"
+            label_singular: "Projeto"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
+              - {label: "Imagem", name: "image", widget: "image"}
 
   - name: "carousel"
     label: "Carrossel de Entregáveis"
-    label_singular: "Slide do Carrossel"
-    file: "_data/carousel.json" # Aponta para o novo arquivo de dados
-    description: "Gerencie os slides que aparecem no carrossel da seção 'O que você recebe'."
-    widget: "object"
-    fields:
-      - name: "slides"
-        label: "Slides"
-        label_singular: "Slide"
-        widget: "list"
+    files: # Correção: Usar "files" aqui também
+      - name: "carousel_slides"
+        label: "Slides do Carrossel"
+        file: "_data/carousel.json"
+        description: "Gerencie os slides que aparecem no carrossel da seção 'O que você recebe'."
         fields:
-          - {label: "Imagem do Slide", name: "image", widget: "image"}
-          - {label: "Título", name: "title", widget: "string"}
-          - {label: "Categoria", name: "category", widget: "string"}
+          - name: "slides"
+            label: "Slides"
+            label_singular: "Slide"
+            widget: "list"
+            fields:
+              - {label: "Imagem do Slide", name: "image", widget: "image"}
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Categoria", name: "category", widget: "string"}
