@@ -4,385 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Proposta de Soluções Integradas | Alison Carvalho</title>
-    <!-- Incluindo Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <!-- AOS (Animate On Scroll) para animações de scroll -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <style>
-        /* Base e Fontes */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
-            -webkit-tap-highlight-color: transparent;
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-
-        /* Cores Principais */
-        :root {
-            --teal-600: #0d9488;
-            --teal-700: #0f766e;
-            --teal-800: #115e59;
-            --green-500: #22c55e;
-            --red-500: #ef4444;
-            --yellow-500: #f59e0b;
-        }
-
-        /* Swiper.js Customização */
-        .swiper {
-            width: 100%;
-            height: 100%;
-            cursor: grab;
-        }
-        
-        .swiper-slide {
-            /* Centraliza o conteúdo dentro do slide */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-        }
-        
-        .swiper-button-next, .swiper-button-prev {
-            color: var(--teal-600);
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 9999px;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-        
-        .swiper-button-next::after, .swiper-button-prev::after {
-            font-size: 20px;
-            font-weight: bold;
-        }
-        
-        .swiper-button-next:hover, .swiper-button-prev:hover {
-            background-color: white;
-            transform: scale(1.1);
-        }
-
-        .swiper-pagination-bullet {
-            background-color: rgba(255, 255, 255, 0.5);
-            width: 12px;
-            height: 12px;
-            transition: all 0.3s;
-        }
-        
-        .swiper-pagination-bullet-active {
-            background-color: var(--teal-600);
-            width: 24px;
-            border-radius: 9999px;
-        }
-        
-        /* Estilo do Modal (LightBox) */
-        .modal {
-            display: none; /* Escondido por padrão */
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.9);
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
-
-        .modal-content-wrapper {
-            position: relative;
-            width: 90%;
-            height: 90%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-image {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: bold;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-
-        .modal-close:hover,
-        .modal-close:focus {
-            color: #bbb;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        
-        /* Estilo para o novo modal de contato */
-        .contact-modal-content {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            max-width: 500px;
-            text-align: center;
-            position: relative;
-            animation: fadeInScale 0.3s ease-out forwards;
-        }
-
-        .modal-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #fff;
-            font-size: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            user-select: none;
-            padding: 0 16px;
-            transition: 0.3s;
-        }
-
-        .modal-nav:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .modal-prev {
-            left: 0;
-        }
-
-        .modal-next {
-            right: 0;
-        }
-
-        /* Animação para cards de garantia */
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .garantia-card {
-            animation: fadeInScale 0.6s ease-out forwards;
-        }
-
-        /* Header e Links */
-        header.scrolled {
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);
-        }
-        .nav-link {
-            color: #475569;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-            padding-bottom: 4px;
-        }
-        .nav-link:hover {
-            color: var(--teal-600);
-        }
-        .nav-link.active {
-            color: var(--teal-700);
-            font-weight: 700;
-        }
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--teal-700);
-        }
-        .cta-button {
-            background-color: var(--teal-700);
-            color: white;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 9999px;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        .cta-button:hover {
-            background-color: var(--teal-800);
-            transform: translateY(-2px);
-        }
-        .cta-button-secondary {
-            display: inline-block;
-            background-color: var(--teal-600);
-            color: white;
-            padding: 12px 32px;
-            border-radius: 9999px;
-            font-size: 1.125rem;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        .cta-button-secondary:hover {
-            background-color: var(--teal-700);
-            transform: scale(1.05);
-        }
-        .mobile-nav-link {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #334155;
-            padding: 8px 16px;
-            border-radius: 8px;
-        }
-        .mobile-nav-link:hover {
-            color: var(--teal-700);
-            background-color: rgba(13, 148, 136, 0.05);
-        }
-
-        /* Outros estilos do seu site */
-        .tab-button.active {
-            border-color: var(--teal-600);
-            background-color: #f0fdfa;
-            color: var(--teal-800);
-            font-weight: 600;
-        }
-        .package-card.selected {
-            transform: translateY(-10px) scale(1.03);
-            box-shadow: 0 20px 25px -5px rgba(13, 148, 136, 0.15), 0 10px 10px -5px rgba(13, 148, 136, 0.08);
-            border-color: var(--teal-600);
-        }
-        .filter-btn {
-            transition: all 0.2s ease-in-out;
-        }
-        .filter-btn.active {
-            background-color: var(--teal-700);
-            color: white;
-            transform: scale(1.05);
-        }
-        .deliverables-filter-btn {
-            transition: all 0.2s ease-in-out;
-        }
-        .deliverables-filter-btn:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-        .deliverables-filter-btn.active {
-            background-color: var(--teal-600);
-            color: white;
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -31px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background-color: #f0fdfa;
-            border: 4px solid var(--teal-600);
-        }
-        #scrollTopBtn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            opacity: 0;
-            transition: opacity 0.3s, transform 0.3s;
-            transform: translateY(10px);
-            pointer-events: none;
-        }
-        #scrollTopBtn.visible {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-
-        /* Estilo para a nova seção de FAQ */
-        .faq-item .faq-header {
-            cursor: pointer;
-            transition: background-color 0.2s ease-in-out;
-        }
-
-        .faq-item .faq-header:hover {
-            background-color: #f0f9ff;
-        }
-        
-        /* Adicionando microinterações aos cards */
-        .interactive-card {
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-
-        .interactive-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Estilos do portfólio para a galeria */
-        .portfolio-grid-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-        }
-
-        .portfolio-item-gallery {
-            position: relative;
-            overflow: hidden;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .portfolio-item-gallery:hover {
-            transform: scale(1.03);
-        }
-
-        .portfolio-item-gallery img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .portfolio-item-gallery:hover img {
-            transform: scale(1.1);
-        }
-
-        .portfolio-info {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
-            color: white;
-            transform: translateY(100%);
-            transition: transform 0.3s ease-in-out;
-        }
-        
-        .portfolio-item-gallery:hover .portfolio-info {
-            transform: translateY(0);
-        }
-        
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; -webkit-tap-highlight-color: transparent; padding-bottom: env(safe-area-inset-bottom); }
+        :root { --teal-600: #0d9488; --teal-700: #0f766e; --teal-800: #115e59; --green-500: #22c55e; --red-500: #ef4444; --yellow-500: #f59e0b; }
+        .swiper { width: 100%; height: 100%; cursor: grab; }
+        .swiper-slide { display: flex; justify-content: center; align-items: center; padding: 1rem; }
+        .swiper-button-next, .swiper-button-prev { color: var(--teal-600); background-color: rgba(255, 255, 255, 0.7); border-radius: 9999px; width: 48px; height: 48px; display: flex; justify-content: center; align-items: center; transition: all 0.3s ease-in-out; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
+        .swiper-button-next::after, .swiper-button-prev::after { font-size: 20px; font-weight: bold; }
+        .swiper-button-next:hover, .swiper-button-prev:hover { background-color: white; transform: scale(1.1); }
+        .swiper-pagination-bullet { background-color: rgba(255, 255, 255, 0.5); width: 12px; height: 12px; transition: all 0.3s; }
+        .swiper-pagination-bullet-active { background-color: var(--teal-600); width: 24px; border-radius: 9999px; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.9); justify-content: center; align-items: center; padding: 2rem; }
+        .modal-content-wrapper { position: relative; width: 90%; height: 90%; display: flex; justify-content: center; align-items: center; }
+        .modal-image { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .modal-close { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer; }
+        .modal-close:hover, .modal-close:focus { color: #bbb; text-decoration: none; cursor: pointer; }
+        .contact-modal-content { background-color: #fff; padding: 2rem; border-radius: 0.5rem; max-width: 500px; text-align: center; position: relative; animation: fadeInScale 0.3s ease-out forwards; }
+        .modal-nav { position: absolute; top: 50%; transform: translateY(-50%); color: #fff; font-size: 50px; font-weight: bold; cursor: pointer; user-select: none; padding: 0 16px; transition: 0.3s; }
+        .modal-nav:hover { background-color: rgba(255, 255, 255, 0.2); }
+        .modal-prev { left: 0; }
+        .modal-next { right: 0; }
+        @keyframes fadeInScale { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .garantia-card { animation: fadeInScale 0.6s ease-out forwards; }
+        header.scrolled { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07); }
+        .nav-link { color: #475569; font-weight: 500; transition: color 0.3s; position: relative; padding-bottom: 4px; }
+        .nav-link:hover { color: var(--teal-600); }
+        .nav-link.active { color: var(--teal-700); font-weight: 700; }
+        .nav-link.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background-color: var(--teal-700); }
+        .cta-button { background-color: var(--teal-700); color: white; font-weight: 500; padding: 8px 16px; border-radius: 9999px; transition: background-color 0.3s, transform 0.2s; }
+        .cta-button:hover { background-color: var(--teal-800); transform: translateY(-2px); }
+        .cta-button-secondary { display: inline-block; background-color: var(--teal-600); color: white; padding: 12px 32px; border-radius: 9999px; font-size: 1.125rem; font-weight: 600; transition: all 0.3s; }
+        .cta-button-secondary:hover { background-color: var(--teal-700); transform: scale(1.05); }
+        .mobile-nav-link { font-size: 1.5rem; font-weight: 600; color: #334155; padding: 8px 16px; border-radius: 8px; }
+        .mobile-nav-link:hover { color: var(--teal-700); background-color: rgba(13, 148, 136, 0.05); }
+        .tab-button.active { border-color: var(--teal-600); background-color: #f0fdfa; color: var(--teal-800); font-weight: 600; }
+        .package-card.selected { transform: translateY(-10px) scale(1.03); box-shadow: 0 20px 25px -5px rgba(13, 148, 136, 0.15), 0 10px 10px -5px rgba(13, 148, 136, 0.08); border-color: var(--teal-600); }
+        .filter-btn { transition: all 0.2s ease-in-out; }
+        .filter-btn.active { background-color: var(--teal-700); color: white; transform: scale(1.05); }
+        .deliverables-filter-btn { transition: all 0.2s ease-in-out; }
+        .deliverables-filter-btn:hover { background-color: rgba(255, 255, 255, 0.2); }
+        .deliverables-filter-btn.active { background-color: var(--teal-600); color: white; }
+        .timeline-item::before { content: ''; position: absolute; left: -31px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; border-radius: 50%; background-color: #f0fdfa; border: 4px solid var(--teal-600); }
+        #scrollTopBtn { position: fixed; bottom: 20px; right: 20px; opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateY(10px); pointer-events: none; }
+        #scrollTopBtn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .faq-item .faq-header { cursor: pointer; transition: background-color 0.2s ease-in-out; }
+        .faq-item .faq-header:hover { background-color: #f0f9ff; }
+        .interactive-card { transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; }
+        .interactive-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); }
+        .portfolio-grid-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+        .portfolio-item-gallery { position: relative; overflow: hidden; border-radius: 0.5rem; cursor: pointer; transition: transform 0.3s ease-in-out; }
+        .portfolio-item-gallery:hover { transform: scale(1.03); }
+        .portfolio-item-gallery img { width: 100%; height: 250px; object-fit: cover; transition: transform 0.3s ease-in-out; }
+        .portfolio-item-gallery:hover img { transform: scale(1.1); }
+        .portfolio-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 1rem; background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)); color: white; transform: translateY(100%); transition: transform 0.3s ease-in-out; }
+        .portfolio-item-gallery:hover .portfolio-info { transform: translateY(0); }
     </style>
 </head>
 <body class="text-slate-800">
 
     <header id="main-header" class="bg-white sticky top-0 z-50 transition-shadow duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold text-teal-700">
-                Alison Carvalho
+            <div id="logo-container" class="text-2xl font-bold text-teal-700">
+                <!-- O logo será inserido aqui pelo JavaScript -->
             </div>
             <div class="hidden md:flex items-center space-x-6" id="nav-links">
                 <a href="#solucoes" class="nav-link">Soluções</a>
@@ -400,7 +90,7 @@
             </button>
         </nav>
         <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-white/95 backdrop-blur-sm flex flex-col justify-center items-center gap-4 z-40 transition-opacity duration-300">
-            <a href="#solucoes" class="mobile-nav-link">Soluções</a>
+             <a href="#solucoes" class="mobile-nav-link">Soluções</a>
             <a href="#portfolio" class="mobile-nav-link">Portfólio</a>
             <a href="#sobre" class="mobile-nav-link">Sobre</a>
             <a href="#processo" class="mobile-nav-link">Processo</a>
@@ -412,11 +102,10 @@
     </header>
 
     <main>
-        <!-- Seção Hero -->
         <section id="hero" class="bg-white pt-20 pb-16 text-center">
             <div class="container mx-auto px-6">
-                <h1 class="text-4xl md:text-6xl font-extrabold text-teal-800 leading-tight" data-aos="fade-up">Construindo Sonhos com Segurança e Precisão</h1>
-                <p class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">Garantimos que seu maior investimento seja também o seu porto seguro, projetado para durar gerações.</p>
+                <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold text-teal-800 leading-tight" data-aos="fade-up"></h1>
+                <p id="hero-subtitle" class="mt-4 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100"></p>
                 <div class="mt-12 max-w-4xl mx-auto bg-white border border-slate-200 rounded-xl shadow-md p-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center" data-aos="fade-up" data-aos-delay="200">
                     <div>
                         <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Proposta Para</h3>
@@ -435,157 +124,20 @@
             </div>
         </section>
 
-        <!-- Seção Problema -->
-        <section id="problema" class="py-20">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold" data-aos="fade-up">O Barato que Sai Caro: Os 3 Pesadelos de um Projeto Desintegrado</h2>
-                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">Economizar na fase de projeto é plantar a semente para uma colheita de problemas caros e estressantes na obra.</p>
-                </div>
-                <div id="problema-cards" class="grid md:grid-cols-3 gap-8"></div>
-                <p class="text-center mt-12 text-lg text-slate-700 max-w-3xl mx-auto font-semibold" data-aos="fade-up">Nossa metodologia de projetos integrados é a sua apólice de seguro contra esses pesadelos.</p>
-            </div>
-        </section>
-
-        <!-- Seção Soluções -->
-        <section id="solucoes" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-4xl font-bold">Nossa Solução: A Engenharia da Tranquilidade</h2>
-                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Oferecemos um ecossistema completo de projetos 100% compatibilizados para uma construção coesa, segura e sem surpresas.</p>
-                </div>
-                <div class="max-w-5xl mx-auto" data-aos="fade-up" data-aos-delay="150">
-                    <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8" id="tabs-container"></div>
-                    <div id="tabs-content" class="bg-slate-50 p-6 sm:p-8 rounded-lg min-h-[320px]"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Seção Portfólio (Galeria de Imagens) -->
-        <section id="portfolio" class="py-20 bg-teal-50/50">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-4xl font-bold">Nossos Projetos: Qualidade em Cada Detalhe</h2>
-                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Veja na prática como transformamos ideias em realidade, com excelência em cada detalhe.</p>
-                </div>
-                <div id="portfolio-filters" class="flex justify-center space-x-2 md:space-x-4 mb-8" data-aos="fade-up" data-aos-delay="150"></div>
-                <!-- Nova grade do portfólio -->
-                <div id="portfolio-grid" class="portfolio-grid-gallery"></div>
-            </div>
-        </section>
-
         <!-- Seção Sobre -->
         <section id="sobre" class="py-20">
             <div class="container mx-auto px-6 grid md:grid-cols-5 gap-12 items-center">
                 <div class="md:col-span-2" data-aos="fade-right">
-                    <img src="imagens/foto-perfil.jpg" alt="Foto de Alison Carvalho" class="rounded-full mx-auto shadow-xl w-64 h-64 md:w-full md:h-auto object-cover">
+                    <img id="about-photo" src="" alt="Foto de Perfil" class="rounded-full mx-auto shadow-xl w-64 h-64 md:w-full md:h-auto object-cover">
                 </div>
                 <div class="md:col-span-3 text-center md:text-left" data-aos="fade-left">
-                    <h2 class="text-3xl md:text-4xl font-bold">Quem Você Está Contratando?</h2>
-                    <p class="text-xl font-semibold text-teal-600 mt-2">Alison Carvalho, Engenheiro Civil</p>
-                    <p class="text-lg text-slate-600 mt-4">Com vasta experiência no mercado, minha missão é transformar seus sonhos em realidade através de um trabalho pautado pela excelência, transparência e dedicação total ao seu projeto. Minha autoridade é construída em cada projeto entregue com sucesso e na satisfação de cada cliente.</p>
+                    <h2 id="about-title" class="text-3xl md:text-4xl font-bold"></h2>
+                    <p id="about-name" class="text-xl font-semibold text-teal-600 mt-2"></p>
+                    <p id="about-bio" class="text-lg text-slate-600 mt-4"></p>
                 </div>
             </div>
         </section>
-
-        <!-- Seção Processo (Estilizada) -->
-        <section id="processo" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-4xl font-bold">Nosso Processo de Trabalho</h2>
-                    <p class="text-lg text-slate-600 mt-4 max-w-2xl mx-auto">Um passo a passo claro e organizado para garantir que seu projeto flua sem complicações.</p>
-                </div>
-                <div id="timeline-container" class="relative max-w-3xl mx-auto">
-                    <!-- Linha vertical central -->
-                    <div class="border-l-2 border-dashed border-slate-300 absolute h-full top-0 left-4 md:left-1/2 md:-translate-x-1/2"></div>
-                    <div id="timeline-content"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Seção Entregáveis com Swiper.js -->
-        <section id="entregaveis" class="py-20 bg-slate-800 text-white">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold text-teal-500" data-aos="fade-up">O QUE VOCÊ RECEBE</h2>
-                <!-- Filtros -->
-                <div id="deliverables-filters" class="flex flex-wrap justify-center gap-2 md:gap-4 my-8" data-aos="fade-up" data-aos-delay="150"></div>
-                
-                <div class="max-w-4xl mx-auto relative" data-aos="fade-up" data-aos-delay="200">
-                    <!-- Swiper container -->
-                    <div class="swiper mySwiper rounded-lg overflow-hidden shadow-2xl">
-                        <!-- Wrapper para os slides -->
-                        <div class="swiper-wrapper" id="deliverables-carousel-track"></div>
-                        <!-- Paginação (dots) -->
-                        <div class="swiper-pagination"></div>
-                        <!-- Botões de navegação -->
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-                </div>
-                <p class="text-lg text-slate-300 max-w-3xl mx-auto mt-8 px-4 sm:px-0" data-aos="fade-up" data-aos-delay="250">Pranchas em tamanho ABNT com detalhes da instalação em planta baixa, em cortes e vistas 3D para facilitar a execução.</p>
-            </div>
-        </section>
-
-        <!-- Modal (LightBox) para visualização em tela cheia -->
-        <div id="imageModal" class="modal">
-            <span class="modal-close">&times;</span>
-            <div class="modal-content-wrapper">
-                <button id="modalPrev" class="modal-nav modal-prev">❮</button>
-                <img class="modal-image" id="modalImage" src="" alt="">
-                <button id="modalNext" class="modal-nav modal-next">❯</button>
-            </div>
-        </div>
         
-        <!-- Novo Modal de Contato para Planos -->
-        <div id="contactModal" class="modal">
-            <div class="contact-modal-content">
-                <span class="modal-close absolute top-2 right-4 text-slate-800 text-3xl cursor-pointer hover:text-red-500 transition-colors">&times;</span>
-                <h3 id="modalPlanTitle" class="text-2xl font-bold text-teal-800 mt-8 mb-4"></h3>
-                <p id="modalPlanDescription" class="text-slate-600 mb-6"></p>
-                <p class="text-lg font-semibold text-slate-800 mb-4">Escolha como entrar em contato:</p>
-                <div class="flex flex-col md:flex-row justify-center items-center gap-4">
-                    <a id="modalWhatsappLink" href="#" target="_blank" class="inline-flex items-center justify-center gap-3 bg-green-500 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.267.651 4.383 1.89 6.251l.244.442-1.123 4.105 4.226-1.109.431.252z"/></svg>
-                        <span>WhatsApp</span>
-                    </a>
-                    <a id="modalEmailLink" href="#" class="inline-flex items-center justify-center gap-3 bg-teal-600 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                        <span>E-mail</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Seção Garantia (Estilizada) -->
-        <section id="garantia" class="py-20 bg-slate-100">
-             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-up">Seu Investimento Seguro</h2>
-                <p class="text-lg text-slate-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">Nosso compromisso vai além do projeto. É com a sua tranquilidade.</p>
-                <div id="garantia-cards" class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-left"></div>
-            </div>
-        </section>
-
-        <!-- Seção Depoimentos -->
-        <section id="depoimentos" class="py-20 bg-white">
-             <div class="container mx-auto px-6">
-                <div class="text-center mb-12" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-4xl font-bold">O Que Nossos Clientes Dizem</h2>
-                </div>
-                <div id="depoimentos-grid" class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto"></div>
-            </div>
-        </section>
-
-        <!-- Seção FAQ -->
-        <section id="faq" class="py-20 bg-teal-50/50">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-4xl font-bold">Perguntas Frequentes</h2>
-                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Respostas para as dúvidas mais comuns. Se a sua não estiver aqui, é só nos contatar!</p>
-                </div>
-                <div id="faq-container" class="max-w-3xl mx-auto space-y-4" data-aos="fade-up" data-aos-delay="150"></div>
-            </div>
-        </section>
-
         <!-- Seção Pacotes -->
         <section id="pacotes" class="py-20">
             <div class="container mx-auto px-6">
@@ -593,251 +145,108 @@
                     <h2 class="text-3xl md:text-4xl font-bold">Compare e Escolha o Plano Ideal</h2>
                     <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Criamos pacotes flexíveis para atender exatamente ao que você precisa. Clique para comparar.</p>
                 </div>
-                <div class="grid lg:grid-cols-3 gap-8 items-start" id="packages-container"></div>
-                <div class="max-w-3xl mx-auto mt-12" data-aos="fade-up" data-aos-delay="200">
-                    <div class="bg-white rounded-lg shadow-md">
-                        <button class="accordion-header w-full flex justify-between items-center p-5 font-semibold text-left">
-                            <span>Escopo e Condições de Pagamento</span>
-                            <span class="accordion-icon text-2xl font-light transform transition-transform">＋</span>
-                        </button>
-                        <div class="accordion-content hidden p-5 border-t border-slate-200">
-                            <p class="text-slate-600"><strong>Pagamento:</strong> 50% de entrada para formalizar o contrato e iniciar os trabalhos, e 50% na entrega final. <br><strong>Aditivos:</strong> Qualquer solicitação que exceda o escopo original será tratada como um aditivo, com novo orçamento e ajuste de prazo.</p>
-                        </div>
-                    </div>
+                <div class="grid lg:grid-cols-3 gap-8 items-start" id="packages-container">
+                    <!-- Os pacotes serão inseridos dinamicamente aqui -->
                 </div>
             </div>
         </section>
 
-        <!-- Seção Contato -->
-        <footer id="contato" class="bg-white">
-            <div class="container mx-auto px-6 py-16 text-center" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-bold">Pronto para Começar?</h2>
-                <p class="mt-4 text-lg max-w-2xl mx-auto text-slate-600">Vamos conversar sobre como podemos transformar seu projeto em realidade. Esta proposta é válida por 15 dias.</p>
-                <div class="mt-8 flex flex-col md:flex-row justify-center items-center gap-6">
-                    <a href="https://wa.me/5575998014491" target="_blank" class="inline-flex items-center justify-center gap-3 bg-green-500 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.267.651 4.383 1.89 6.251l.244.442-1.123 4.105 4.226-1.109.431.252z"/></svg>
-                        <span>Entrar em contato no WhatsApp</span>
-                    </a>
-                    <a href="mailto:alison.karvalho@gmail.com" class="inline-flex items-center justify-center gap-3 bg-teal-600 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                        <span>Enviar um E-mail</span>
-                    </a>
+        <!-- Seção Portfólio -->
+        <section id="portfolio" class="py-20 bg-teal-50/50">
+             <div class="container mx-auto px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold">Nossos Projetos: Qualidade em Cada Detalhe</h2>
+                    <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Veja na prática como transformamos ideias em realidade, com excelência em cada detalhe.</p>
                 </div>
+                <div id="portfolio-filters" class="flex justify-center space-x-2 md:space-x-4 mb-8" data-aos="fade-up" data-aos-delay="150"></div>
+                <div id="portfolio-grid" class="portfolio-grid-gallery"></div>
             </div>
-        </footer>
+        </section>
+
+        <!-- Outras seções estáticas podem ser adicionadas aqui -->
+
     </main>
 
-    <button id="scrollTopBtn" class="bg-teal-600 hover:bg-teal-700 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-2xl z-50">
-        ↑
-    </button>
-    
-    <!-- Incluindo o JS da biblioteca AOS -->
+    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
+            AOS.init({ duration: 800, once: true, offset: 50 });
 
-            // Inicializando o AOS
-            AOS.init({
-                duration: 800,
-                once: true,
-                offset: 50
-            });
-            
-            // Função para buscar dados dinâmicos
-            async function fetchPortfolioData() {
+            // Função genérica para carregar dados JSON
+            async function fetchData(url) {
                 try {
-                    const response = await fetch('_data/portfolio.json');
+                    const response = await fetch(url);
                     if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                        console.error(`Erro ao carregar ${url}: ${response.statusText}`);
+                        return null;
                     }
-                    const data = await response.json();
-                    return data.items;
+                    return await response.json();
                 } catch (error) {
-                    console.error("Não foi possível carregar os dados do portfólio:", error);
-                    // Retorna um array vazio ou dados padrão em caso de erro
-                    return [];
-                }
-            }
-            
-            const portfolioItems = await fetchPortfolioData();
-
-            const APP_DATA = {
-                problemas: [
-                    { emoji: '💸', title: 'O Orçamento que Sangra', color: 'red', description: 'Cada incompatibilidade descoberta na obra vira um remendo caro. É o desperdício de material, o pagamento de mão de obra extra e a certeza de que o custo final será muito maior que o planejado.' },
-                    { emoji: '⏳', title: 'O Cronograma Destruído', color: 'yellow', description: 'A obra que se arrasta, os prazos estourados e a frustração de ver o sonho ser adiado. O retrabalho não consome apenas dinheiro, ele rouba seu tempo e sua paz.' },
-                    { emoji: '🤯', title: 'O Estresse que Não Acaba', color: 'orange', description: 'Conflitos com pedreiros, decisões tomadas sob pressão e a constante preocupação com a segurança da estrutura. Seu sonho não pode se transformar em um pesadelo.' }
-                ],
-                services: {
-                    arquitetonico: { title: '1. Projeto Arquitetônico', emoji: '🏠', subtitle: 'A alma do seu espaço, onde seus sonhos tomam forma.', description: 'Criamos espaços que refletem sua personalidade e atendem às suas necessidades, garantindo o máximo de conforto, iluminação e ventilação natural.', deliverables: ['Plantas baixas humanizadas', 'Cortes e fachadas detalhadas', 'Layout de pontos elétricos e hidráulicos', 'Modelo 3D para visualização'] },
-                    estrutural: { title: '2. Projeto Estrutural', emoji: '🏗️', subtitle: 'A base sólida que garante a segurança e a durabilidade.', description: 'Garantimos a segurança e a longevidade da sua construção, otimizando o uso de materiais para que você economize sem abrir mão da qualidade.', deliverables: ['Plantas de formas', 'Detalhamento de pilares, vigas, lajes e fundações', 'Lista de materiais (aço e concreto)'] },
-                    hidrossanitario: { title: '3. Projeto Hidrossanitário', emoji: '💧', subtitle: 'Saúde e conforto para o seu dia a dia.', description: 'Planejamos sistemas eficientes de água e esgoto para garantir o funcionamento perfeito da sua casa, evitando entupimentos e vazamentos futuros.', deliverables: ['Plantas de distribuição de água fria e quente', 'Isométricos para fácil execução', 'Detalhamento de caixas e esgoto', 'Lista de materiais'] },
-                    eletrico: { title: '4. Projeto Elétrico', emoji: '⚡', subtitle: 'A energia que dá vida ao seu lar, com total segurança.', description: 'Dimensionamos uma instalação elétrica segura e eficiente, prevendo o uso de todos os seus equipamentos para evitar sobrecargas ou falta de tomadas.', deliverables: ['Plantas de pontos de iluminação e tomadas', 'Diagramas dos quadros de distribuição', 'Detalhamento de eletrodutos e fiação', 'Lista de materiais'] }
-                },
-                portfolio: portfolioItems, // Usando os dados carregados dinamicamente
-                timeline: [
-                    { title: 'Briefing e Análise', description: 'Entendemos suas necessidades, desejos e orçamento para criar a base do projeto.' },
-                    { title: 'Estudo Preliminar e 3D', description: 'Desenvolvemos as primeiras ideias e modelos 3D para visualização e aprovação.' },
-                    { title: 'Projeto Executivo', description: 'Detalhamos todos os aspectos técnicos para a execução da obra sem erros.' },
-                    { title: 'Entrega e Suporte', description: 'Entregamos todos os projetos e permanecemos disponíveis para esclarecer dúvidas.' }
-                ],
-                deliverables: [
-                    { image: 'imagens/detalhamento-sapatas.jpg', title: 'Detalhamento de Sapatas', category: 'estrutural' },
-                    { image: 'imagens/entregavel-vigas.jpg', title: 'Detalhamento de Vigas', category: 'estrutural' },
-                    { image: 'https://placehold.co/800x600/0d9488/white?text=Planta+Humanizada', title: 'Planta Baixa Humanizada', category: 'arquitetonico' },
-                    { image: 'https://placehold.co/800x600/0d9488/white?text=Cortes+3D', title: 'Cortes e Vistas 3D', category: 'arquitetonico' },
-                    { image: 'https://placehold.co/800x600/1e293b/white?text=Elétrico', title: 'Projeto Elétrico', category: 'eletrico' },
-                    { image: 'https://placehold.co/800x600/1e293b/white?text=Diagrama', title: 'Diagrama Unifilar', category: 'eletrico' },
-                    { image: 'https://placehold.co/800x600/0d9488/white?text=Isométrico', title: 'Isométrico Hidráulico', category: 'hidrossanitario' },
-                    { image: 'https://placehold.co/800x600/0d9488/white?text=Esgoto', title: 'Planta de Esgoto', category: 'hidrossanitario' }
-                ],
-                garantias: [
-                    { title: 'Garantia de Compatibilidade', description: 'Asseguramos que todos os projetos (arquitetônico, estrutural, elétrico e hidráulico) são 100% compatíveis, eliminando surpresas e retrabalho na obra.', icon: '✅' },
-                    { title: 'Compromisso com Prazos', description: 'Respeitamos o cronograma acordado. A sua obra não pode esperar, e nós levamos isso a sério, garantindo a entrega pontual de todas as etapas.', icon: '⏰' },
-                    { title: 'Suporte Técnico Contínuo', description: 'Após a entrega, permanecemos à sua disposição e da sua equipe de construção para esclarecer qualquer dúvida, garantindo uma execução perfeita.', icon: '🛠️' }
-                ],
-                depoimentos: [
-                    { text: 'Estávamos com problemas de compatibilização entre a arquitetura e a estrutura. O Alison resolveu tudo de forma brilhante, nos poupando tempo e dinheiro na obra. O profissionalismo superou as expectativas!', author: '- Família Silva, Residência Jequitibá' },
-                    { text: 'Tínhamos medo de construir, mas o Alison nos deu total segurança. A comunicação foi clara do início ao fim e o resultado foi a casa dos seus sonhos, sem estouro do orçamento. Serviço impecável.', author: '- João e Maria, Casa do Campo' }
-                ],
-                packages: [
-                    { name: 'Pacote Essencial', description: 'O ponto de partida seguro para sua construção.', price: '4.500,00', features: ['Projeto Arquitetônico', 'Projeto Estrutural'], recommended: false },
-                    { name: 'Pacote Integrado', description: 'A solução completa para uma obra sem dor de cabeça.', price: '8.000,00', features: ['Todos os itens do Pacote Essencial', 'Projeto Hidrossanitário', 'Projeto Elétrico', 'Análise de Compatibilização 3D'], recommended: true },
-                    { name: 'Pacote Premium', description: 'A experiência definitiva em personalização e acompanhamento.', price: '12.500,00', features: ['Todos os itens do Pacote Integrado', 'Projeto de Luminotecnia', 'Detalhamento de Interiores', 'Visitas Técnicas de Acompanhamento'], recommended: false }
-                ],
-                faq: [
-                    { question: 'O que é um projeto compatibilizado?', answer: 'É a união de todos os projetos (arquitetônico, estrutural, elétrico e hidráulico) em um único modelo 3D. Isso nos permite identificar e corrigir possíveis conflitos e erros antes mesmo do início da obra, economizando tempo e dinheiro.' },
-                    { question: 'Quanto tempo leva para um projeto ser entregue?', answer: 'O prazo de entrega varia de acordo com a complexidade do projeto e o pacote contratado. Após o briefing inicial, fornecemos um cronograma detalhado com todas as etapas e prazos previstos.' },
-                    { question: 'Vocês realizam o acompanhamento da obra?', answer: 'Sim, o Pacote Premium inclui visitas técnicas para garantir que a execução do projeto esteja alinhada com o que foi planejado. Para os demais pacotes, este serviço pode ser contratado à parte.' },
-                    { question: 'O que acontece se eu precisar fazer alterações no projeto?', answer: 'Qualquer alteração solicitada que modifique o escopo original será tratada como um aditivo ao contrato, com novo orçamento e ajuste de prazo. Nosso objetivo é garantir que o projeto final atenda perfeitamente às suas expectativas.' }
-                ]
-            };
-
-            // Funções de Renderização
-            function renderContent(containerId, data, renderer) {
-                const container = document.getElementById(containerId);
-                if (container) {
-                    container.innerHTML = data.map(renderer).join('');
+                    console.error(`Falha na requisição para ${url}:`, error);
+                    return null;
                 }
             }
 
-            // Inicialização da UI
-            function initUI() {
-                // Altera o nome do cliente baseado na URL
-                const urlParams = new URLSearchParams(window.location.search);
-                const clientNameParam = urlParams.get('cliente');
-                if (clientNameParam) {
-                    const clientName = decodeURIComponent(clientNameParam.replace(/\+/g, ' '));
-                    document.getElementById('client-name').textContent = clientName;
+            // Carregar todos os dados em paralelo
+            const [siteContent, portfolioData] = await Promise.all([
+                fetchData('_data/site_content.json'),
+                fetchData('_data/portfolio.json')
+            ]);
+
+            // Função para popular a página com os dados carregados
+            function populatePage(content, portfolio) {
+                if (!content) {
+                    console.error("Conteúdo principal do site não pôde ser carregado.");
+                    return;
                 }
 
-                // Define a data atual
-                document.getElementById('proposal-date').textContent = new Date().toLocaleDateString('pt-BR');
-
-                // Comportamento do Header e Botão de Scroll
-                const header = document.getElementById('main-header');
-                const scrollTopBtn = document.getElementById('scrollTopBtn');
-                window.addEventListener('scroll', () => {
-                    header.classList.toggle('scrolled', window.scrollY > 10);
-                    scrollTopBtn.classList.toggle('visible', window.scrollY > 300);
-                });
-                scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-                // Acordeão
-                const accordionHeader = document.querySelector('.accordion-header');
-                if (accordionHeader) {
-                    accordionHeader.addEventListener('click', () => {
-                        document.querySelector('.accordion-content').classList.toggle('hidden');
-                        document.querySelector('.accordion-icon').classList.toggle('rotate-45');
-                    });
+                // Header e Logo
+                const logoContainer = document.getElementById('logo-container');
+                if (content.header && content.header.logo_type === 'image' && content.header.logo_image) {
+                    logoContainer.innerHTML = `<img src="${content.header.logo_image}" alt="Logo" class="h-10 w-auto">`;
+                } else if (content.header && content.header.logo_text) {
+                    logoContainer.textContent = content.header.logo_text;
                 }
-                
-                // Navegação por seções com IntersectionObserver
-                const navLinks = document.querySelectorAll('.nav-link');
-                const sections = document.querySelectorAll('main section');
-                const observer = new IntersectionObserver(entries => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            navLinks.forEach(link => {
-                                link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
-                            });
-                        }
-                    });
-                }, { rootMargin: '-40% 0px -60% 0px' });
-                sections.forEach(section => observer.observe(section));
-            }
 
-            function setupMobileMenu() {
-                const menuButton = document.getElementById('mobile-menu-button');
-                const mobileMenu = document.getElementById('mobile-menu');
-                const iconOpen = document.getElementById('menu-icon-open');
-                const iconClose = document.getElementById('menu-icon-close');
-                menuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                    iconOpen.classList.toggle('hidden');
-                    iconClose.classList.toggle('hidden');
-                    document.body.classList.toggle('overflow-hidden');
-                });
-                mobileMenu.querySelectorAll('.mobile-nav-link').forEach(link => {
-                    link.addEventListener('click', () => {
-                        mobileMenu.classList.add('hidden');
-                        iconOpen.classList.remove('hidden');
-                        iconClose.classList.add('hidden');
-                        document.body.classList.remove('overflow-hidden');
-                    });
-                });
-            }
+                // Seção Hero
+                if (content.hero) {
+                    document.getElementById('hero-title').textContent = content.hero.title || '';
+                    document.getElementById('hero-subtitle').textContent = content.hero.subtitle || '';
+                }
 
-            function setupTabs() {
-                const container = document.getElementById('tabs-container');
-                const contentEl = document.getElementById('tabs-content');
-                if (!container || !contentEl) return;
-                container.innerHTML = Object.keys(APP_DATA.services).map(key => {
-                    const service = APP_DATA.services[key];
-                    return `<button data-tab="${key}" class="tab-button flex items-center gap-2 text-sm md:text-base font-medium py-2 px-4 rounded-lg border-2 border-transparent hover:border-teal-600 transition">
-                                <span class="text-xl">${service.emoji}</span> ${service.title.substring(3)}
-                            </button>`;
-                }).join('');
-                const buttons = container.querySelectorAll('.tab-button');
-                const render = (key) => {
-                    const service = APP_DATA.services[key];
-                    contentEl.innerHTML = `
-                        <h3 class="text-2xl font-bold text-teal-800">${service.title}</h3>
-                        <p class="mt-1 text-slate-500 italic">${service.subtitle}</p>
-                        <p class="mt-4 text-slate-700">${service.description}</p>
-                        <p class="mt-6 font-semibold">O que você recebe:</p>
-                        <ul class="mt-2 space-y-2 list-disc list-inside text-slate-700">${service.deliverables.map(item => `<li>${item}</li>`).join('')}</ul>`;
-                };
-                container.addEventListener('click', e => {
-                    const button = e.target.closest('.tab-button');
-                    if (button) {
-                        container.querySelector('.active')?.classList.remove('active');
-                        button.classList.add('active');
-                        render(button.dataset.tab);
-                    }
-                });
-                buttons[0].click();
-            }
+                // Seção Sobre
+                if (content.about) {
+                    document.getElementById('about-title').textContent = content.about.title || '';
+                    document.getElementById('about-name').textContent = content.about.name || '';
+                    document.getElementById('about-bio').textContent = content.about.bio || '';
+                    document.getElementById('about-photo').src = content.about.photo || 'imagens/foto-perfil.jpg';
+                }
 
-            // Função para configurar a galeria do portfólio com lightbox
-            function setupPortfolio() {
-                const filtersContainer = document.getElementById('portfolio-filters');
-                const gridContainer = document.getElementById('portfolio-grid');
-                const imageModal = document.getElementById('imageModal');
-                const modalImage = document.getElementById('modalImage');
+                // Seção de Pacotes
+                const packagesContainer = document.getElementById('packages-container');
+                if (packagesContainer && content.packages) {
+                    packagesContainer.innerHTML = content.packages.map((pkg, index) => `
+                        <div class="package-card relative bg-white p-8 rounded-lg shadow-lg border-2 border-transparent transition-all duration-300 flex flex-col" data-aos="fade-up" data-aos-delay="${index * 100}">
+                            ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-teal-600 text-white text-sm font-bold px-4 py-1 rounded-full">RECOMENDADO</div>' : ''}
+                            <div class="flex-grow">
+                                <h3 class="text-2xl font-bold">${pkg.name || 'Pacote'}</h3>
+                                <p class="mt-2 text-slate-500 h-12">${pkg.description || ''}</p>
+                                <p class="text-4xl font-extrabold my-6">R$ ${pkg.price || '0,00'}</p>
+                                <ul class="space-y-3 text-slate-700 text-left">
+                                    ${(pkg.features || []).map(f => `<li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✔</span><span>${f}</span></li>`).join('')}
+                                </ul>
+                            </div>
+                            <button class="w-full mt-8 py-3 px-6 rounded-lg font-semibold transition-colors duration-300 bg-slate-200 text-slate-800 hover:bg-teal-100">Selecionar Plano</button>
+                        </div>
+                    `).join('');
+                }
 
-                let filteredPortfolio = APP_DATA.portfolio;
-
-                // Cria os botões de filtro
-                const categories = ['Todos', ...new Set(APP_DATA.portfolio.map(p => p.category))];
-                filtersContainer.innerHTML = categories.map(cat =>
-                    `<button class="filter-btn bg-white px-4 py-2 rounded-full font-semibold shadow-sm" data-filter="${cat.toLowerCase()}">${cat}</button>`
-                ).join('');
-
-                const renderGallery = () => {
-                    const data = filteredPortfolio.length > 0 ? filteredPortfolio : [{ image: 'https://placehold.co/600x400/f1f5f9/64748b?text=Nenhum+projeto+encontrado', title: 'Nenhum projeto encontrado', category: 'vazio' }];
-                    renderContent('portfolio-grid', data, item => `
+                // Seção Portfólio
+                const portfolioContainer = document.getElementById('portfolio-grid');
+                if (portfolioContainer && portfolio && portfolio.items) {
+                    portfolioContainer.innerHTML = portfolio.items.map(item => `
                         <div class="portfolio-item-gallery bg-white rounded-lg shadow-lg overflow-hidden" data-image="${item.image}" data-title="${item.title}" data-category="${item.category}" data-aos="zoom-in" data-aos-duration="600">
                             <img src="${item.image}" alt="${item.title}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Imagem+Indisponível';">
                             <div class="portfolio-info">
@@ -845,312 +254,19 @@
                                 <p class="text-sm mt-1 capitalize">Categoria: ${item.category}</p>
                             </div>
                         </div>
-                    `);
-                };
-
-                // Lógica para abrir o modal
-                gridContainer.addEventListener('click', e => {
-                    const item = e.target.closest('.portfolio-item-gallery');
-                    if (item) {
-                        const imageSrc = item.dataset.image;
-                        openModal(imageSrc);
-                    }
-                });
-
-                window.openModal = function(imageSrc) {
-                    modalImage.src = imageSrc;
-                    imageModal.style.display = 'flex';
-                };
-
-                document.querySelector('#imageModal .modal-close').onclick = function() {
-                    imageModal.style.display = "none";
-                };
-
-                imageModal.addEventListener('click', (e) => {
-                    if (e.target === imageModal) {
-                        imageModal.style.display = "none";
-                    }
-                });
-                
-                filtersContainer.addEventListener('click', e => {
-                    const button = e.target.closest('.filter-btn');
-                    if (button) {
-                        filtersContainer.querySelector('.active')?.classList.remove('active');
-                        button.classList.add('active');
-                        const filter = button.dataset.filter;
-                        filteredPortfolio = (filter === 'todos') ? APP_DATA.portfolio : APP_DATA.portfolio.filter(p => p.category === filter);
-                        renderGallery();
-                    }
-                });
-                
-                filtersContainer.querySelector('[data-filter="todos"]').click();
-            }
-
-            function setupTimeline() {
-                const container = document.getElementById('timeline-content');
-                if (!container) return;
-                const timelineContent = APP_DATA.timeline.map((item, index) => {
-                    const numberColor = ['bg-teal-600', 'bg-blue-600', 'bg-orange-600', 'bg-purple-600'][index % 4];
-                    const isEven = index % 2 === 0;
-                    // Classes para alinhar o conteúdo na esquerda ou direita em telas maiores
-                    const alignmentClasses = isEven ? 'md:text-right md:pl-0 md:pr-12' : 'md:text-left md:pl-12 md:pr-0';
-                    // Classes para posicionar o item na linha do tempo
-                    const flexClasses = isEven ? 'md:flex-row' : 'md:flex-row-reverse';
-                    const positionClasses = isEven ? 'justify-start' : 'justify-end';
-                    
-                    const aosEffect = isEven ? 'fade-right' : 'fade-left';
-
-                    return `
-                    <div class="relative mb-12 group flex items-center ${flexClasses}" data-aos="${aosEffect}" data-aos-offset="200">
-                        <!-- Círculo e Número -->
-                        <div class="absolute left-4 top-0 w-10 h-10 flex items-center justify-center rounded-full text-white font-bold text-xl shadow-lg transform transition-transform duration-300 group-hover:scale-125 z-10
-                                    md:relative md:left-0 md:top-auto md:-translate-x-1/2 md:w-12 md:h-12 md:flex-shrink-0">
-                            <span class="absolute left-0 top-0 w-10 h-10 flex items-center justify-center rounded-full text-white font-bold text-xl shadow-lg transform transition-transform duration-300 group-hover:scale-125 z-10
-                            md:relative md:left-1/2 md:-translate-x-1/2 md:w-12 md:h-12 md:flex-shrink-0 md:mt-2 ${numberColor}">${index + 1}</span>
-                        </div>
-                        <!-- Conteúdo do Item -->
-                        <div class="w-full pl-16 ${alignmentClasses} ${positionClasses}">
-                            <div class="bg-white p-6 rounded-lg shadow-lg border border-slate-200 transform transition-transform duration-300 group-hover:scale-105 w-full md:w-1/2 ${isEven ? 'md:ml-auto' : 'md:mr-auto'}">
-                                <h3 class="text-xl font-bold text-teal-800">${item.title}</h3>
-                                <p class="text-slate-600 mt-2">${item.description}</p>
-                            </div>
-                        </div>
-                    </div>`;
-                }).join('');
-                container.innerHTML = timelineContent;
-            }
-
-            function setupDeliverables() {
-                const filtersContainer = document.getElementById('deliverables-filters');
-                const swiperWrapper = document.getElementById('deliverables-carousel-track');
-                const imageModal = document.getElementById('imageModal');
-                const modalImage = document.getElementById('modalImage');
-                
-                let mySwiper;
-                let filteredDeliverables = APP_DATA.deliverables;
-
-                // Cria os botões de filtro
-                const categories = ['Todos', ...new Set(APP_DATA.deliverables.map(d => d.category))];
-                filtersContainer.innerHTML = categories.map(cat =>
-                    `<button class="deliverables-filter-btn px-4 py-2 rounded-full font-semibold" data-filter="${cat.toLowerCase()}">${cat}</button>`
-                ).join('');
-
-                const renderSlides = () => {
-                    swiperWrapper.innerHTML = filteredDeliverables.map(item => `
-                        <div class="swiper-slide" data-image="${item.image}">
-                            <div class="bg-white rounded-lg p-4 shadow-lg flex flex-col items-center">
-                                <img src="${item.image}" alt="${item.title}" class="rounded-lg max-h-96 w-auto object-contain transition-transform duration-300 cursor-pointer" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/800x600/cccccc/ffffff?text=Imagem+Indisponível';">
-                                <h4 class="mt-4 font-bold text-lg text-slate-800">${item.title}</h4>
-                            </div>
-                        </div>
                     `).join('');
-
-                    if (mySwiper) {
-                        mySwiper.destroy(true, true);
-                    }
-                    
-                    if (filteredDeliverables.length > 0) {
-                        mySwiper = new Swiper('.mySwiper', {
-                            loop: filteredDeliverables.length > 1,
-                            pagination: {
-                                el: '.swiper-pagination',
-                                clickable: true,
-                            },
-                            navigation: {
-                                nextEl: '.swiper-button-next',
-                                prevEl: '.swiper-button-prev',
-                            },
-                            autoplay: {
-                                delay: 5000,
-                                disableOnInteraction: false,
-                            },
-                            grabCursor: true,
-                        });
-                    }
-                };
-                
-                // Lógica para abrir o modal
-                swiperWrapper.addEventListener('click', e => {
-                    const slide = e.target.closest('.swiper-slide');
-                    if (slide) {
-                        const image = slide.dataset.image;
-                        openModal(image);
-                    }
-                });
-
-                window.openModal = function(imageSrc) {
-                    modalImage.src = imageSrc;
-                    imageModal.style.display = 'flex';
-                };
-
-                document.querySelector('#imageModal .modal-close').onclick = function() {
-                    imageModal.style.display = "none";
-                };
-
-                // Lógica para fechar o modal ao clicar fora da imagem
-                imageModal.addEventListener('click', (e) => {
-                    if (e.target === imageModal) {
-                        imageModal.style.display = "none";
-                    }
-                });
-
-                filtersContainer.addEventListener('click', e => {
-                    const button = e.target.closest('.deliverables-filter-btn');
-                    if (button) {
-                        filtersContainer.querySelector('.active')?.classList.remove('active');
-                        button.classList.add('active');
-                        const filter = button.dataset.filter;
-                        filteredDeliverables = (filter === 'todos') ? APP_DATA.deliverables : APP_DATA.deliverables.filter(d => d.category === filter);
-                        renderSlides();
-                    }
-                });
-                
-                // Inicializa o carrossel com o filtro 'todos' ativo
-                filtersContainer.querySelector('[data-filter="todos"]').click();
+                }
+                 // Data e Nome do Cliente (se necessário)
+                document.getElementById('proposal-date').textContent = new Date().toLocaleDateString('pt-BR');
+                const urlParams = new URLSearchParams(window.location.search);
+                const clientNameParam = urlParams.get('cliente');
+                if (clientNameParam) {
+                    document.getElementById('client-name').textContent = decodeURIComponent(clientNameParam.replace(/\+/g, ' '));
+                }
             }
 
-            function setupFAQ() {
-                renderContent('faq-container', APP_DATA.faq, item => `
-                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden" data-aos="fade-up">
-                        <div class="faq-header p-5 flex justify-between items-center">
-                            <h4 class="font-semibold text-lg">${item.question}</h4>
-                            <span class="faq-icon text-2xl font-light transform transition-transform">＋</span>
-                        </div>
-                        <div class="faq-content hidden p-5 border-t border-slate-200 text-slate-600">
-                            <p>${item.answer}</p>
-                        </div>
-                    </div>
-                `);
+            populatePage(siteContent, portfolioData);
 
-                document.querySelectorAll('.faq-header').forEach(header => {
-                    header.addEventListener('click', (e) => {
-                        const item = e.target.closest('.faq-item');
-                        const content = item.querySelector('.faq-content');
-                        const icon = item.querySelector('.faq-icon');
-                        content.classList.toggle('hidden');
-                        icon.classList.toggle('rotate-45');
-                    });
-                });
-            }
-
-            function setupPackages() {
-                const container = document.getElementById('packages-container');
-                const contactModal = document.getElementById('contactModal');
-                const modalCloseBtn = contactModal.querySelector('.modal-close');
-                const modalTitle = document.getElementById('modalPlanTitle');
-                const modalDescription = document.getElementById('modalPlanDescription');
-                const modalWhatsapp = document.getElementById('modalWhatsappLink');
-                const modalEmail = document.getElementById('modalEmailLink');
-                
-                if (!container) return;
-
-                renderContent('packages-container', APP_DATA.packages, (pkg, index) => `
-                    <div class="package-card cursor-pointer bg-white p-8 rounded-lg shadow-lg border-2 border-transparent transition-all duration-300 flex flex-col interactive-card" data-index="${index}" data-aos="fade-up" data-aos-delay="${index * 100}">
-                        ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-teal-600 text-white text-sm font-bold px-4 py-1 rounded-full">RECOMENDADO</div>' : ''}
-                        <div class="flex-grow">
-                            <h3 class="text-2xl font-bold">${pkg.name}</h3>
-                            <p class="mt-2 text-slate-500 h-12">${pkg.description}</p>
-                            <p class="text-4xl font-extrabold my-6">R$ ${pkg.price}</p>
-                            <ul class="space-y-3 text-slate-700 text-left">${pkg.features.map(f => `<li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✔</span><span>${f}</span></li>`).join('')}</ul>
-                        </div>
-                        <button class="w-full mt-8 py-3 px-6 rounded-lg font-semibold transition-colors duration-300" data-plan-name="${pkg.name}" data-plan-index="${index}">Selecionar Plano</button>
-                    </div>
-                `);
-
-                const updateSelection = (selectedIndex) => {
-                    document.querySelectorAll('.package-card').forEach((card) => {
-                        const isSelected = parseInt(card.dataset.index) === selectedIndex;
-                        card.classList.toggle('selected', isSelected);
-                        const button = card.querySelector('button');
-                        button.classList.toggle('bg-teal-600', isSelected);
-                        button.classList.toggle('text-white', isSelected);
-                        button.classList.toggle('bg-slate-200', !isSelected);
-                        button.classList.toggle('text-slate-800', !isSelected);
-                        button.textContent = isSelected ? 'Plano Selecionado' : 'Selecionar Plano';
-                    });
-                };
-                
-                // Nova função para abrir o modal de contato
-                const openContactModal = (planName) => {
-                    const planDetails = APP_DATA.packages.find(p => p.name === planName);
-                    
-                    if (planDetails) {
-                        modalTitle.textContent = `Plano Escolhido: ${planName}`;
-                        const featuresList = planDetails.features.map(f => `<li>✔ ${f}</li>`).join('');
-                        modalDescription.innerHTML = `O que você recebe: <ul class="list-disc list-inside mt-2 space-y-1">${featuresList}</ul>`;
-
-                        // Mensagens pré-preenchidas
-                        const whatsappMessage = encodeURIComponent(`Olá, gostaria de mais informações sobre o "${planName}" que vi em sua proposta.`);
-                        const emailSubject = encodeURIComponent(`Interesse no plano: ${planName}`);
-                        const emailBody = encodeURIComponent(`Olá, Alison. Meu nome é [Seu Nome] e gostaria de mais informações sobre o plano "${planName}" que vi em sua proposta. Pode me ajudar?`);
-                        
-                        modalWhatsapp.href = `https://wa.me/5575998014491?text=${whatsappMessage}`;
-                        modalEmail.href = `mailto:alison.karvalho@gmail.com?subject=${emailSubject}&body=${emailBody}`;
-
-                        contactModal.style.display = 'flex';
-                    }
-                };
-                
-                // Evento de clique para o botão de selecionar plano
-                container.addEventListener('click', e => {
-                    const button = e.target.closest('button');
-                    if (button && button.dataset.planName) {
-                        const planName = button.dataset.planName;
-                        const planIndex = parseInt(button.dataset.planIndex);
-                        updateSelection(planIndex);
-                        openContactModal(planName);
-                    } else {
-                        const card = e.target.closest('.package-card');
-                        if (card) {
-                            updateSelection(parseInt(card.dataset.index));
-                        }
-                    }
-                });
-
-                // Lógica para fechar o modal de contato
-                modalCloseBtn.addEventListener('click', () => {
-                    contactModal.style.display = 'none';
-                });
-                
-                window.addEventListener('click', (e) => {
-                    if (e.target === contactModal) {
-                        contactModal.style.display = 'none';
-                    }
-                });
-
-                const recommendedIndex = APP_DATA.packages.findIndex(p => p.recommended);
-                updateSelection(recommendedIndex > -1 ? recommendedIndex : 0);
-            }
-
-            // Chamada de todas as funções de setup
-            initUI();
-            setupMobileMenu();
-            renderContent('problema-cards', APP_DATA.problemas, (item, index) => `
-                <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-${item.color}-500 interactive-card" data-aos="fade-up" data-aos-delay="${index * 100}">
-                    <div class="text-4xl mb-4">${item.emoji}</div>
-                    <h3 class="text-xl font-bold text-${item.color}-600">${item.title}</h3>
-                    <p class="mt-2 text-slate-600">${item.description}</p>
-                </div>
-            `);
-            renderContent('garantia-cards', APP_DATA.garantias, (item, index) => `
-                <div class="garantia-card bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center interactive-card" data-aos="fade-up" data-aos-delay="${index * 100}">
-                    <span class="text-5xl mb-4">${item.icon}</span>
-                    <h3 class="font-bold text-xl text-teal-800">${item.title}</h3>
-                    <p class="mt-2 text-slate-600">${item.description}</p>
-                </div>
-            `);
-            renderContent('depoimentos-grid', APP_DATA.depoimentos, (item, index) => `
-                <div class="bg-slate-50 p-8 rounded-lg shadow-sm interactive-card" data-aos="fade-up" data-aos-delay="${index * 100}">
-                    <p class="text-slate-600 italic">"${item.text}"</p>
-                    <p class="font-bold text-slate-800 mt-4">${item.author}</p>
-                </div>
-            `);
-            setupTabs();
-            setupPortfolio();
-            setupTimeline();
-            setupDeliverables();
-            setupFAQ();
-            setupPackages();
         });
     </script>
 </body>
