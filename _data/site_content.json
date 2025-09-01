@@ -69,6 +69,32 @@
       ],
       "recommended": false
     }
+  ],
+  "solutions": {
+    "arquitetonico": { "key": "arquitetonico", "title": "1. Projeto Arquitetônico", "emoji": "🏠", "subtitle": "A alma do seu espaço, onde seus sonhos tomam forma.", "description": "Criamos espaços que refletem sua personalidade e atendem às suas necessidades, garantindo o máximo de conforto, iluminação e ventilação natural.", "deliverables": ["Plantas baixas humanizadas", "Cortes e fachadas detalhadas", "Layout de pontos elétricos e hidráulicos", "Modelo 3D para visualização"] },
+    "estrutural": { "key": "estrutural", "title": "2. Projeto Estrutural", "emoji": "🏗️", "subtitle": "A base sólida que garante a segurança e a durabilidade.", "description": "Garantimos a segurança e a longevidade da sua construção, otimizando o uso de materiais para que você economize sem abrir mão da qualidade.", "deliverables": ["Plantas de formas", "Detalhamento de pilares, vigas, lajes e fundações", "Lista de materiais (aço e concreto)"] },
+    "hidrossanitario": { "key": "hidrossanitario", "title": "3. Projeto Hidrossanitário", "emoji": "💧", "subtitle": "Saúde e conforto para o seu dia a dia.", "description": "Planejamos sistemas eficientes de água e esgoto para garantir o funcionamento perfeito da sua casa, evitando entupimentos e vazamentos futuros.", "deliverables": ["Plantas de distribuição de água fria e quente", "Isométricos para fácil execução", "Detalhamento de caixas e esgoto", "Lista de materiais"] },
+    "eletrico": { "key": "eletrico", "title": "4. Projeto Elétrico", "emoji": "⚡", "subtitle": "A energia que dá vida ao seu lar, com total segurança.", "description": "Dimensionamos uma instalação elétrica segura e eficiente, prevendo o uso de todos os seus equipamentos para evitar sobrecargas ou falta de tomadas.", "deliverables": ["Plantas de pontos de iluminação e tomadas", "Diagramas dos quadros de distribuição", "Detalhamento de eletrodutos e fiação", "Lista de materiais"] }
+  },
+  "timeline": [
+    { "title": "Briefing e Análise", "description": "Entendemos suas necessidades, desejos e orçamento para criar a base do projeto." },
+    { "title": "Estudo Preliminar e 3D", "description": "Desenvolvemos as primeiras ideias e modelos 3D para visualização e aprovação." },
+    { "title": "Projeto Executivo", "description": "Detalhamos todos os aspectos técnicos para a execução da obra sem erros." },
+    { "title": "Entrega e Suporte", "description": "Entregamos todos os projetos e permanecemos disponíveis para esclarecer dúvidas." }
+  ],
+  "guarantees": [
+    { "title": "Garantia de Compatibilidade", "description": "Asseguramos que todos os projetos (arquitetônico, estrutural, elétrico e hidráulico) são 100% compatíveis, eliminando surpresas e retrabalho na obra.", "icon": "✅" },
+    { "title": "Compromisso com Prazos", "description": "Respeitamos o cronograma acordado. A sua obra não pode esperar, e nós levamos isso a sério, garantindo a entrega pontual de todas as etapas.", "icon": "⏰" },
+    { "title": "Suporte Técnico Contínuo", "description": "Após a entrega, permanecemos à sua disposição e da sua equipe de construção para esclarecer qualquer dúvida, garantindo uma execução perfeita.", "icon": "🛠️" }
+  ],
+  "testimonials": [
+    { "text": "Estávamos com problemas de compatibilização entre a arquitetura e a estrutura. O Alison resolveu tudo de forma brilhante, nos poupando tempo e dinheiro na obra. O profissionalismo superou as expectativas!", "author": "- Família Silva, Residência Jequitibá" },
+    { "text": "Tínhamos medo de construir, mas o Alison nos deu total segurança. A comunicação foi clara do início ao fim e o resultado foi a casa dos seus sonhos, sem estouro no orçamento. Serviço impecável.", "author": "- João e Maria, Casa do Campo" }
+  ],
+  "faq": [
+    { "question": "O que é um projeto compatibilizado?", "answer": "É a união de todos os projetos (arquitetônico, estrutural, elétrico e hidráulico) em um único modelo 3D. Isso nos permite identificar e corrigir possíveis conflitos e erros antes mesmo do início da obra, economizando tempo e dinheiro." },
+    { "question": "Quanto tempo leva para um projeto ser entregue?", "answer": "O prazo de entrega varia de acordo com a complexidade do projeto e o pacote contratado. Após o briefing inicial, fornecemos um cronograma detalhado com todas as etapas e prazos previstos." },
+    { "question": "Vocês realizam o acompanhamento da obra?", "answer": "Sim, o Pacote Premium inclui visitas técnicas para garantir que a execução do projeto esteja alinhada com o que foi planejado. Para os demais pacotes, este serviço pode ser contratado à parte." },
+    { "question": "O que acontece se eu precisar fazer alterações no projeto?", "answer": "Qualquer alteração solicitada que modifique o escopo original será tratada como um aditivo ao contrato, com novo orçamento e ajuste de prazo. Nosso objetivo é garantir que o projeto final atenda perfeitamente às suas expectativas." }
   ]
 }
-
