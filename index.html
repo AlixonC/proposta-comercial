@@ -14,6 +14,8 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; -webkit-tap-highlight-color: transparent; padding-bottom: env(safe-area-inset-bottom); }
         :root { --teal-600: #0d9488; --teal-700: #0f766e; --teal-800: #115e59; --green-500: #22c55e; --red-500: #ef4444; --yellow-500: #f59e0b; }
+        
+        /* Estilos para o Swiper */
         .swiper { width: 100%; height: 100%; cursor: grab; }
         .swiper-slide { display: flex; justify-content: center; align-items: center; padding: 1rem; }
         .swiper-button-next, .swiper-button-prev { color: var(--teal-600); background-color: rgba(255, 255, 255, 0.7); border-radius: 9999px; width: 48px; height: 48px; display: flex; justify-content: center; align-items: center; transition: all 0.3s ease-in-out; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
@@ -21,6 +23,7 @@
         .swiper-button-next:hover, .swiper-button-prev:hover { background-color: white; transform: scale(1.1); }
         .swiper-pagination-bullet { background-color: rgba(255, 255, 255, 0.5); width: 12px; height: 12px; transition: all 0.3s; }
         .swiper-pagination-bullet-active { background-color: var(--teal-600); width: 24px; border-radius: 9999px; }
+
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.9); justify-content: center; align-items: center; padding: 2rem; }
         .modal-content-wrapper { position: relative; width: 90%; height: 90%; display: flex; justify-content: center; align-items: center; }
         .modal-image { max-width: 100%; max-height: 100%; object-fit: contain; }
@@ -59,7 +62,6 @@
                 <a href="#solucoes" class="nav-link">Soluções</a>
                 <a href="#portfolio" class="nav-link">Portfólio</a>
                 <a href="#sobre" class="nav-link">Sobre</a>
-                <a href="#processo" class="nav-link">Processo</a>
                 <a href="#entregaveis" class="nav-link">Entregáveis</a>
                 <a href="#pacotes" class="nav-link">Pacotes</a>
                 <a href="#faq" class="nav-link">FAQ</a>
@@ -115,6 +117,22 @@
                     <h2 id="about-title" class="text-3xl md:text-4xl font-bold"></h2>
                     <p id="about-name" class="text-xl font-semibold text-teal-600 mt-2"></p>
                     <p id="about-bio" class="text-lg text-slate-600 mt-4"></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="entregaveis" class="py-20 bg-slate-800 text-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-teal-500" data-aos="fade-up">O que Você Recebe</h2>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto mt-4 mb-8 px-4 sm:px-0" data-aos="fade-up" data-aos-delay="150">
+                    Pranchas em tamanho ABNT, detalhamentos em planta baixa, cortes e vistas 3D para facilitar a execução na obra.
+                </p>
+                <div class="swiper entregaveis-swiper max-w-4xl mx-auto rounded-lg shadow-2xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="swiper-wrapper" id="carousel-slides-container">
+                        </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
                 </div>
             </div>
         </section>
@@ -174,14 +192,19 @@
                 }
             }
 
-            const [siteContent, portfolioFiles] = await Promise.all([
+            // ATUALIZAÇÃO: Adicionado 'carouselFiles' para buscar os dados do novo carrossel
+            const [siteContent, portfolioFiles, carouselFiles] = await Promise.all([
                 fetchData('_data/site_content.json'),
-                fetchData('_data/portfolio.json')
+                fetchData('_data/portfolio.json'),
+                fetchData('_data/carousel.json') // Nova busca de dados
             ]);
             
             const portfolioItems = portfolioFiles ? portfolioFiles.items : [];
+            // ATUALIZAÇÃO: Variável para os slides do carrossel
+            const carouselSlides = carouselFiles ? carouselFiles.slides : [];
 
             if (siteContent) {
+                // ... (código existente para Header, Hero, Problemas, Sobre, Pacotes)
                 // Header e Logo
                 const logoContainer = document.getElementById('logo-container');
                 if (siteContent.header.logo_type === 'image' && siteContent.header.logo_image) {
@@ -189,11 +212,9 @@
                 } else {
                     logoContainer.textContent = siteContent.header.logo_text;
                 }
-
                 // Hero
                 document.getElementById('hero-title').textContent = siteContent.hero.title;
                 document.getElementById('hero-subtitle').textContent = siteContent.hero.subtitle;
-
                 // Problemas
                 const problemaCards = document.getElementById('problema-cards');
                 if(problemaCards && siteContent.problemas) {
@@ -205,13 +226,11 @@
                         </div>
                     `).join('');
                 }
-
                 // Sobre
                 document.getElementById('about-title').textContent = siteContent.sobre.title;
                 document.getElementById('about-name').textContent = siteContent.sobre.name;
                 document.getElementById('about-bio').textContent = siteContent.sobre.bio;
                 document.getElementById('about-photo').src = siteContent.sobre.photo;
-
                 // Pacotes
                 const packagesContainer = document.getElementById('packages-container');
                  if (packagesContainer && siteContent.packages) {
@@ -232,7 +251,39 @@
                 }
             }
 
-            // Portfólio
+            // ATUALIZAÇÃO: Lógica para popular e iniciar o carrossel Swiper
+            const carouselContainer = document.getElementById('carousel-slides-container');
+            if (carouselContainer && carouselSlides.length > 0) {
+                carouselContainer.innerHTML = carouselSlides.map(slide => `
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg p-4 shadow-lg flex flex-col items-center text-slate-800 w-full">
+                            <img src="${slide.image}" alt="${slide.title}" class="rounded-lg max-h-96 w-auto object-contain mb-4" loading="lazy">
+                            <h4 class="font-bold text-lg">${slide.title}</h4>
+                            <p class="text-sm text-slate-600">${slide.category}</p>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Inicia o Swiper
+                const swiper = new Swiper('.entregaveis-swiper', {
+                    loop: true,
+                    grabCursor: true,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                    autoplay: {
+                        delay: 5000,
+                        disableOnInteraction: false,
+                    },
+                });
+            }
+
+            // Portfólio (código existente)
             const portfolioGrid = document.getElementById('portfolio-grid');
             if(portfolioGrid && portfolioItems.length > 0) {
                  portfolioGrid.innerHTML = portfolioItems.map(item => `
@@ -246,6 +297,7 @@
                 `).join('');
             }
             
+            // ... (código existente para Data, Cliente e Menu Mobile)
             // Data e cliente
             document.getElementById('proposal-date').textContent = new Date().toLocaleDateString('pt-BR');
             const urlParams = new URLSearchParams(window.location.search);
@@ -269,4 +321,3 @@
     </script>
 </body>
 </html>
-
