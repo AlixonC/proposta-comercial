@@ -5,24 +5,44 @@ backend:
 media_folder: "imagens"
 public_folder: "/imagens"
 media_library:
-  name: "cloudinary"
+  name: uploadcare
   config:
-    cloud_name: "seu_cloud_name"
-    api_key: "sua_api_key"
+    publicKey: demopublickey # Substitua pela sua chave pública do Uploadcare
 
 collections:
-  - name: "pages"
-    label: "Páginas"
+  - name: "settings"
+    label: "Configurações Gerais"
     files:
       - name: "main_content"
         label: "Conteúdo Principal"
         file: "_data/site_content.json"
         description: "Edite os principais textos, imagens e pacotes do site aqui."
         fields:
-          - {label: "Texto do Logo", name: "logo_text", widget: "string", hint: "O nome que aparece no canto superior esquerdo."}
-          - {label: "Título Principal", name: "hero_title", widget: "string", hint: "O título grande no topo da página."}
-          - {label: "Subtítulo Principal", name: "hero_subtitle", widget: "text", hint: "O texto de apoio abaixo do título principal."}
-          - name: "packages"
+          - name: header
+            label: "Cabeçalho"
+            widget: "object"
+            fields:
+              - name: logo_type
+                label: "Tipo de Logo"
+                widget: "select"
+                options: ["text", "image"]
+                default: "text"
+              - name: logo_text
+                label: "Texto do Logo"
+                widget: "string"
+                hint: "O nome que aparece no canto superior esquerdo."
+                required: false
+              - name: logo_image
+                label: "Imagem do Logo"
+                widget: "image"
+                required: false
+          - name: hero
+            label: "Secção Principal (Hero)"
+            widget: "object"
+            fields:
+              - {label: "Título Principal", name: "title", widget: "string"}
+              - {label: "Subtítulo Principal", name: "subtitle", widget: "text"}
+          - name: packages
             label: "Pacotes de Serviços"
             label_singular: "Pacote"
             widget: "list"
@@ -36,11 +56,19 @@ collections:
                 widget: "list"
                 field: { label: "Funcionalidade", name: "feature", widget: "string"}
               - {label: "Recomendado?", name: "recommended", widget: "boolean", default: false}
-          - {label: "Foto de Perfil (Sobre)", name: "about_photo", widget: "image"}
+          - name: about
+            label: "Secção Sobre"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Nome e Cargo", name: "name", widget: "string"}
+              - {label: "Biografia", name: "bio", widget: "text"}
+              - {label: "Foto de Perfil", name: "photo", widget: "image"}
 
   - name: "portfolio"
     label: "Portfólio"
-    folder: "_data/portfolio"
+    label_singular: "Projeto"
+    folder: "_portfolio" # Usaremos uma pasta para cada projeto
     create: true
     slug: "{{slug}}"
     fields:
