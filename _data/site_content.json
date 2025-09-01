@@ -1,0 +1,42 @@
+{
+  "logo_text": "Alison Carvalho",
+  "hero_title": "Construindo Sonhos com Segurança e Precisão",
+  "hero_subtitle": "Garantimos que seu maior investimento seja também o seu porto seguro, projetado para durar gerações.",
+  "packages": [
+    {
+      "name": "Pacote Essencial",
+      "description": "O ponto de partida seguro para sua construção.",
+      "price": "4.500,00",
+      "features": [
+        "Projeto Arquitetônico",
+        "Projeto Estrutural"
+      ],
+      "recommended": false
+    },
+    {
+      "name": "Pacote Integrado",
+      "description": "A solução completa para uma obra sem dor de cabeça.",
+      "price": "8.000,00",
+      "features": [
+        "Todos os itens do Pacote Essencial",
+        "Projeto Hidrossanitário",
+        "Projeto Elétrico",
+        "Análise de Compatibilização 3D"
+      ],
+      "recommended": true
+    },
+    {
+      "name": "Pacote Premium",
+      "description": "A experiência definitiva em personalização e acompanhamento.",
+      "price": "12.500,00",
+      "features": [
+        "Todos os itens do Pacote Integrado",
+        "Projeto de Luminotecnia",
+        "Detalhamento de Interiores",
+        "Visitas Técnicas de Acompanhamento"
+      ],
+      "recommended": false
+    }
+  ],
+  "about_photo": "/imagens/foto-perfil.jpg"
+}
