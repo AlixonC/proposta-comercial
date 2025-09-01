@@ -1,0 +1,35 @@
+{
+  "items": [
+    {
+      "title": "Casa Contemporânea",
+      "category": "residencial",
+      "image": "https://placehold.co/600x400/0d9488/white?text=Portfolio+1"
+    },
+    {
+      "title": "Escritório Moderno",
+      "category": "comercial",
+      "image": "https://placehold.co/600x400/1e293b/white?text=Portfolio+2"
+    },
+    {
+      "title": "Reforma de Apartamento",
+      "category": "residencial",
+      "image": "https://placehold.co/600x400/0d9488/white?text=Portfolio+3"
+    },
+    {
+      "title": "Galpão Industrial",
+      "category": "comercial",
+      "image": "https://placehold.co/600x400/1e293b/white?text=Portfolio+4"
+    },
+    {
+      "title": "Casa de Campo",
+      "category": "residencial",
+      "image": "https://placehold.co/600x400/0d9488/white?text=Portfolio+5"
+    },
+    {
+      "title": "Loja Conceito",
+      "category": "comercial",
+      "image": "https://placehold.co/600x400/1e293b/white?text=Portfolio+6"
+    }
+  ]
+}
+
