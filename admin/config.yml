@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  branch: main # Altere para 'master' se essa for sua branch principal.
+  branch: main
 
 media_folder: "imagens"
 public_folder: "/imagens"
@@ -8,7 +8,7 @@ public_folder: "/imagens"
 collections:
   - name: "portfolio"
     label: "Portfólio"
-    folder: "portfolio" # Salva os arquivos YAML na pasta 'portfolio' na raiz do projeto
+    folder: "portfolio" # Recomendo alterar para algo como "content/portfolio" ou "_data/portfolio"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
