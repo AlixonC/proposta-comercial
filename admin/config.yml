@@ -1,30 +1,24 @@
 backend:
-name: git-gateway
-branch: main
+  name: git-gateway
+  branch: main
 
 media_folder: "imagens"
 public_folder: "/imagens"
 
 collections:
-
-name: "site_data"
-label: "Dados do Site"
-files:
-
-name: "portfolio"
-label: "Portfólio"
-file: "_data/portfolio.json"
-description: "Gerencie os itens que aparecem na seção de portfólio."
-fields:
-
-name: "items"
-label: "Itens do Portfólio"
-label_singular: "Item do Portfólio"
-widget: "list"
-fields:
-
-{label: "Título", name: "title", widget: "string"}
-
-{label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
-
-{label: "Imagem", name: "image", widget: "image"}
+  - name: "site_data"
+    label: "Dados do Site"
+    files:
+      - name: "portfolio"
+        label: "Portfólio"
+        file: "_data/portfolio.json"
+        description: "Gerencie os itens que aparecem na seção de portfólio."
+        fields:
+          - name: "items"
+            label: "Itens do Portfólio"
+            label_singular: "Item do Portfólio"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
+              - {label: "Imagem", name: "image", widget: "image"}
