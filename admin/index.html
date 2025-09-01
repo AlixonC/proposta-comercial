@@ -5,14 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
   
-  <!-- Adicionado para vincular o arquivo de configuração -->
   <link href="config.yml" type="text/yaml" rel="cms-config-url">
 
   <!-- Script para autenticação com Netlify/GitHub -->
   <script src="https://unpkg.com/netlify-identity-widget@^1.0.0/build/netlify-identity-widget.js"></script>
-  <!-- Script principal do Decap CMS -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </head>
 <body>
+  <!-- Script principal do Decap CMS -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
+  <!-- Script para gerenciar o login e redirecionamento -->
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>
+
