@@ -1,7 +1,13 @@
 {
-  "logo_text": "Alison Carvalho",
-  "hero_title": "Construindo Sonhos com Segurança e Precisão",
-  "hero_subtitle": "Garantimos que seu maior investimento seja também o seu porto seguro, projetado para durar gerações.",
+  "header": {
+    "logo_type": "text",
+    "logo_text": "Alison Carvalho",
+    "logo_image": ""
+  },
+  "hero": {
+    "title": "Construindo Sonhos com Segurança e Precisão",
+    "subtitle": "Garantimos que seu maior investimento seja também o seu porto seguro, projetado para durar gerações."
+  },
   "packages": [
     {
       "name": "Pacote Essencial",
@@ -38,5 +44,11 @@
       "recommended": false
     }
   ],
-  "about_photo": "/imagens/foto-perfil.jpg"
+  "about": {
+    "title": "Quem Você Está Contratando?",
+    "name": "Alison Carvalho, Engenheiro Civil",
+    "bio": "Com vasta experiência no mercado, minha missão é transformar seus sonhos em realidade através de um trabalho pautado pela excelência, transparência e dedicação total ao seu projeto. Minha autoridade é construída em cada projeto entregue com sucesso e na satisfação de cada cliente.",
+    "photo": "/imagens/foto-perfil.jpg"
+  }
 }
+
