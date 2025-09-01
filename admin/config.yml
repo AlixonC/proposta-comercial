@@ -2,13 +2,9 @@ backend:
 name: git-gateway
 branch: main
 
-Local onde as imagens serão salvas
 media_folder: "imagens"
-
-Como as imagens serão acessadas no site
 public_folder: "/imagens"
 
-Coleções de conteúdo gerenciáveis
 collections:
 
 name: "site_data"
@@ -27,8 +23,8 @@ label_singular: "Item do Portfólio"
 widget: "list"
 fields:
 
-{label: "Título", name: "title", widget: "string", required: true}
+{label: "Título", name: "title", widget: "string"}
 
 {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
 
-{label: "Imagem", name: "image", widget: "image", required: true}
+{label: "Imagem", name: "image", widget: "image"}
