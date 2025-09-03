@@ -1,1 +1,17 @@
+{
+  "items": [
+    {
+      "question": "O que é um projeto compatibilizado?",
+      "answer": "É a união de todos os projetos (arquitetônico, estrutural, elétrico e hidráulico) em um único modelo 3D. Isso nos permite identificar e corrigir possíveis conflitos e erros antes mesmo do início da obra, economizando tempo e dinheiro."
+    },
+    {
+      "question": "Quanto tempo leva para um projeto ser entregue?",
+      "answer": "O prazo de entrega varia de acordo com a complexidade do projeto e o pacote contratado. Após o briefing inicial, fornecemos um cronograma detalhado com todas as etapas e prazos previstos."
+    },
+    {
+      "question": "Vocês realizam o acompanhamento da obra?",
+      "answer": "Sim, o Pacote Premium inclui visitas técnicas para garantir que a execução do projeto esteja alinhada com o que foi planejado. Para os demais pacotes, este serviço pode ser contratado à parte."
+    }
+  ]
+}
 
