@@ -9,7 +9,8 @@
       "Layout de pontos elétricos e hidráulicos",
       "Modelo 3D para visualização",
       "Modelo 3D para visualização"
-    ]
+    ],
+    "image": "/imagens/3D_-2.webp"
   },
   "estrutural": {
     "title": "Projeto Estrutural",
@@ -19,9 +20,9 @@
       "Plantas de formas",
       "Detalhamento de pilares, vigas, lajes e fundações",
       "Lista de materiais (aço e concreto)",
-      "xxx",
       "adasdasda"
-    ]
+    ],
+    "image": "/imagens/3D_-2.webp"
   },
   "hidrossanitario": {
     "title": "Projeto Hidrossanitário",
@@ -32,7 +33,8 @@
       "Isométricos para fácil execução",
       "Detalhamento de caixas e esgoto",
       "Lista de materiais"
-    ]
+    ],
+    "image": "/imagens/3D_-2.webp"
   },
   "eletrico": {
     "title": "Projeto Elétrico",
@@ -43,6 +45,7 @@
       "Diagramas dos quadros de distribuição",
       "Detalhamento de eletrodutos e fiação",
       "Lista de materiais"
-    ]
+    ],
+    "image": "/imagens/3D_-2.webp"
   }
 }
