@@ -17,7 +17,42 @@ collections:
           - { name: "header", label: "Cabeçalho", widget: "object", fields: [ { name: "logo_type", label: "Tipo de Logo", widget: "select", options: ["text", "image"], default: "text" }, { label: "Texto do Logo", name: "logo_text", widget: "string", required: false }, { label: "Imagem do Logo", name: "logo_image", widget: "image", required: false } ] }
           - { name: "hero", label: "Seção Principal (Topo)", widget: "object", fields: [ { label: "Título", name: "title", widget: "string" }, { label: "Subtítulo", name: "subtitle", widget: "text" } ] }
           - { name: "problemas", label: "Cartões 'Riscos de um Projeto'", widget: "list", fields: [ { label: "Título", name: "title", widget: "string" }, { label: "Descrição", name: "description", widget: "text" } ] }
-          - { name: "solutions", label: "Soluções (Abas)", widget: "object", fields: [ { name: "arquitetonico", label: "Projeto Arquitetônico", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Emoji", name: "emoji", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] }, { name: "estrutural", label: "Projeto Estrutural", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Emoji", name: "emoji", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] }, { name: "hidrossanitario", label: "Projeto Hidrossanitário", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Emoji", name: "emoji", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] }, { name: "eletrico", label: "Projeto Elétrico", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Emoji", name: "emoji", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] } ] }
+          - name: "solutions"
+            label: "Soluções (Abas)"
+            widget: "object"
+            fields:
+              - name: "arquitetonico"
+                label: "Projeto Arquitetônico"
+                widget: "object"
+                fields:
+                  - {label: "Ícone (Phosphor Icon)", name: "icon", widget: "string", hint: "Ex: house-line"}
+                  - {label: "Título", name: "title", widget: "string"}
+                  - {label: "Descrição", name: "description", widget: "text"}
+                  - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+              - name: "estrutural"
+                label: "Projeto Estrutural"
+                widget: "object"
+                fields:
+                  - {label: "Ícone (Phosphor Icon)", name: "icon", widget: "string", hint: "Ex: hard-hat"}
+                  - {label: "Título", name: "title", widget: "string"}
+                  - {label: "Descrição", name: "description", widget: "text"}
+                  - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+              - name: "hidrossanitario"
+                label: "Projeto Hidrossanitário"
+                widget: "object"
+                fields:
+                  - {label: "Ícone (Phosphor Icon)", name: "icon", widget: "string", hint: "Ex: drop"}
+                  - {label: "Título", name: "title", widget: "string"}
+                  - {label: "Descrição", name: "description", widget: "text"}
+                  - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+              - name: "eletrico"
+                label: "Projeto Elétrico"
+                widget: "object"
+                fields:
+                  - {label: "Ícone (Phosphor Icon)", name: "icon", widget: "string", hint: "Ex: lightning"}
+                  - {label: "Título", name: "title", widget: "string"}
+                  - {label: "Descrição", name: "description", widget: "text"}
+                  - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
           - { name: "sobre", label: "Seção Sobre", widget: "object", fields: [ { label: "Título", name: "title", widget: "string" }, { label: "Nome e Cargo", name: "name", widget: "string" }, { label: "Biografia", name: "bio", widget: "text" }, { label: "Foto de Perfil", name: "photo", widget: "image" } ] }
           - { name: "timeline", label: "Processo de Trabalho (Linha do Tempo)", widget: "list", fields: [ {label: "Título da Etapa", name: "title", widget: "string"}, {label: "Descrição da Etapa", name: "description", widget: "text"} ] }
           - { name: "guarantees", label: "Garantias", widget: "list", fields: [ {label: "Ícone (Nome do Phosphor Icon)", name: "icon", widget: "string", hint: "Use o nome do ícone do Phosphor Icons em kebab-case. Ex: shield-check, timer, users-three"}, {label: "Título", name: "title", widget: "string"}, {label: "Descrição", name: "description", widget: "text"} ] }
@@ -56,3 +91,4 @@ collections:
               - {label: "Imagem do Slide", name: "image", widget: "image"}
               - {label: "Título", name: "title", widget: "string"}
               - {label: "Categoria", name: "category", widget: "string"}
+
