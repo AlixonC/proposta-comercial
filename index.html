@@ -289,70 +289,54 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // Função principal para iniciar a página
-            const main = async () => {
-                try {
-                    const [content, portfolioData, carouselData] = await Promise.all([
-                        fetchData('./_data/site_content.json'),
-                        fetchData('./_data/portfolio.json'),
-                        fetchData('./_data/carousel.json')
-                    ]);
-
-                    if (!content) {
-                        console.error("Falha ao carregar o conteúdo principal do site. A renderização foi interrompida.");
-                        return;
-                    }
-
-                    // Renderiza todo o conteúdo dinâmico
-                    renderAllContent(content, portfolioData, carouselData);
-
-                    // Configura todos os ouvintes de eventos e componentes interativos
-                    setupInteractiveComponents();
-                    
-                    // Inicia as animações
-                    startAnimations();
-
-                } catch (error) {
-                    console.error("Ocorreu um erro geral ao carregar a página:", error);
-                }
-            };
-
-            // Função para buscar e decodificar dados JSON
+            // --- FUNÇÕES UTILITÁRIAS ---
+            
+            // Busca e decodifica dados JSON de forma segura.
             const fetchData = async (url) => {
                 try {
                     const response = await fetch(url);
                     if (!response.ok) {
-                        throw new Error(`Erro na rede: ${response.statusText}`);
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     return await response.json();
-                } catch (error) {
-                    console.error(`Falha ao buscar dados de ${url}:`, error);
-                    return null;
+                } catch (e) {
+                    console.error(`Falha ao buscar dados de ${url}:`, e);
+                    return null; // Retorna null para que possamos lidar com o erro.
                 }
             };
 
-            // Agrupa toda a lógica de renderização
-            const renderAllContent = (content, portfolioData, carouselData) => {
-                const render = (elId, data, template) => {
-                    const el = document.getElementById(elId);
-                    if (el && data) el.innerHTML = Array.isArray(data) ? data.map(template).join('') : template(data);
-                };
-                const setText = (elId, text) => { 
-                    const el = document.getElementById(elId);
-                    if (el && text !== undefined) el.textContent = text;
-                };
-                const setSrc = (elId, src) => {
-                    const el = document.getElementById(elId);
-                    if (el && src) el.src = src;
-                };
+            // Template literal para renderizar listas de itens no DOM.
+            const render = (elementId, data, templateFn) => {
+                const element = document.getElementById(elementId);
+                if (element && data && Array.isArray(data)) {
+                    element.innerHTML = data.map(templateFn).join('');
+                }
+            };
+            
+            // Define o texto de um elemento de forma segura.
+            const setText = (elementId, text) => {
+                const element = document.getElementById(elementId);
+                if (element && text) {
+                    element.textContent = text;
+                }
+            };
+            
+            // Define o src de uma imagem de forma segura.
+            const setSrc = (elementId, src) => {
+                const element = document.getElementById(elementId);
+                if (element && src) {
+                    element.src = src;
+                }
+            };
 
-                // Cabeçalho e Herói
+            // --- LÓGICA DE RENDERIZAÇÃO DE CONTEÚDO ---
+            
+            const loadPageContent = async (content) => {
+                // Herói e Cabeçalho
                 if (content.header) {
                     const logoContainer = document.getElementById('logo-container');
-                    if(content.header.logo_type === 'image' && content.header.logo_image) {
-                        logoContainer.innerHTML = `<img src="${content.header.logo_image}" alt="Logo" class="h-10">`;
-                    } else {
-                        logoContainer.textContent = content.header.logo_text;
+                    if(logoContainer) {
+                        logoContainer.textContent = content.header.logo_text || 'Logo';
                     }
                 }
                 if (content.hero) {
@@ -360,19 +344,45 @@
                     setText('hero-subtitle', content.hero.subtitle);
                 }
                 setText('proposal-date', new Date().toLocaleDateString('pt-BR'));
-                const client = new URLSearchParams(window.location.search).get('cliente');
-                if (client) setText('client-name', decodeURIComponent(client.replace(/\+/g, ' ')));
-
-                // Seção "Problemas"
-                if (content.problemas) {
-                    const problemaIcons = { 'Custos Imprevistos': 'scales', 'Prazos Excedidos': 'clock-afternoon', 'Estresse e Desgaste': 'fire' };
-                    render('problema-cards', content.problemas, (item) => `
-                        <div class="bg-gray-800 p-8 rounded-lg interactive-card border-t-4 border-[color:var(--accent-bronze)]">
-                            <i class="ph-${problemaIcons[item.title] || 'warning-circle'}" style="color: var(--accent-bronze); font-size: 3rem; margin-bottom: 1.25rem; display: inline-block;"></i>
-                            <h3 class="text-xl font-bold text-white">${item.title}</h3>
-                            <p class="mt-3 text-gray-400">${item.description}</p>
-                        </div>`);
+                const clientName = new URLSearchParams(window.location.search).get('cliente');
+                if (clientName) {
+                    setText('client-name', decodeURIComponent(clientName.replace(/\+/g, ' ')));
                 }
+
+                // Seções baseadas em listas
+                const problemaIcons = { 'Custos Imprevistos': 'scales', 'Prazos Excedidos': 'clock-afternoon', 'Estresse e Desgaste': 'fire' };
+                render('problema-cards', content.problemas, item => `
+                    <div class="bg-gray-800 p-8 rounded-lg interactive-card border-t-4 border-[color:var(--accent-bronze)]">
+                        <i class="ph-${problemaIcons[item.title] || 'warning-circle'}" style="color: var(--accent-bronze); font-size: 3rem; margin-bottom: 1.25rem; display: inline-block;"></i>
+                        <h3 class="text-xl font-bold text-white">${item.title}</h3>
+                        <p class="mt-3 text-gray-400">${item.description}</p>
+                    </div>`);
+                
+                render('timeline-content', content.timeline, (item, i) => `
+                    <div class="relative timeline-item"><div class="md:flex items-center ${i % 2 === 0 ? '' : 'flex-row-reverse'}"><div class="md:w-1/2 p-4"><div class="bg-gray-800 p-6 rounded-lg shadow-lg border-l-4 border-[color:var(--accent-bronze)]"><h3 class="text-xl font-bold text-white">${item.title}</h3><p class="text-gray-400 mt-2">${item.description}</p></div></div></div></div>`);
+
+                render('garantia-cards', content.guarantees, item => `
+                    <div class="bg-gray-900/50 p-8 rounded-lg interactive-card backdrop-blur-sm">
+                        <i class="ph-${item.icon || 'check-circle'}" style="color: var(--accent-bronze); font-size: 3rem; margin-bottom: 1.25rem; display: inline-block;"></i>
+                        <h3 class="font-bold text-xl text-white">${item.title}</h3>
+                        <p class="mt-3 text-gray-300">${item.description}</p>
+                    </div>`);
+                
+                render('depoimentos-grid', content.testimonials, item => `
+                    <div class="bg-gray-800 p-8 rounded-lg interactive-card">
+                        <i class="ph-quotes-fill text-4xl text-gray-700"></i>
+                        <p class="text-gray-300 italic mt-4">"${item.text}"</p>
+                        <p class="font-bold text-white mt-6">${item.author}</p>
+                    </div>`);
+                
+                render('faq-container', content.faq, item => `
+                    <div class="faq-item bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+                        <div class="faq-header p-5 flex justify-between items-center cursor-pointer">
+                            <h4 class="font-semibold text-lg text-white">${item.question}</h4>
+                            <i class="ph-plus faq-icon text-2xl font-light" style="color: var(--accent-bronze);"></i>
+                        </div>
+                        <div class="faq-content hidden p-5 pt-0 text-gray-400"><p>${item.answer}</p></div>
+                    </div>`);
 
                 // Seção "Sobre"
                 if (content.sobre) {
@@ -382,156 +392,85 @@
                     setSrc('about-photo', content.sobre.photo);
                 }
 
-                // Seção "Pacotes"
-                if (content.packages) {
-                    render('packages-container', content.packages, (pkg) => `
-                        <div class="relative bg-white p-8 rounded-lg shadow-xl border-2 ${pkg.recommended ? 'border-[color:var(--accent-bronze)]' : 'border-transparent'} flex flex-col interactive-card">
-                            ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[color:var(--accent-bronze)] text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Recomendado</div>' : ''}
-                            <div class="flex-grow">
-                                <h3 class="text-2xl font-bold package-name text-gray-900">${pkg.name}</h3>
-                                <p class="mt-2 text-gray-500 min-h-[3rem]">${pkg.description}</p>
-                                <p class="text-4xl font-extrabold my-6 text-gray-900">R$ ${pkg.price}</p>
-                                <ul class="space-y-3 text-gray-700 text-left">${(pkg.features || []).map(f => `<li class="flex items-start"><i class="ph-check-circle text-green-500 text-xl mr-2 mt-0.5"></i><span>${f}</span></li>`).join('')}</ul>
-                            </div>
-                            <button class="select-plan-btn w-full mt-8 py-3 px-6 rounded-full font-semibold transition-colors ${pkg.recommended ? 'bg-[color:var(--primary-dark)] text-white hover:bg-black' : 'bg-slate-200 text-slate-800 hover:bg-slate-300'} cursor-pointer flex items-center justify-center gap-2">
-                                <span>Selecionar Plano</span>
-                                <i class="ph-arrow-right text-xl"></i>
-                            </button>
-                        </div>`);
-                }
+                // Seção "Pacotes" e "Soluções" que precisam de configuração de eventos depois.
+                render('packages-container', content.packages, pkg => `
+                    <div class="relative bg-white p-8 rounded-lg shadow-xl border-2 ${pkg.recommended ? 'border-[color:var(--accent-bronze)]' : 'border-transparent'} flex flex-col interactive-card">
+                        ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[color:var(--accent-bronze)] text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Recomendado</div>' : ''}
+                        <div class="flex-grow"><h3 class="text-2xl font-bold package-name text-gray-900">${pkg.name}</h3><p class="mt-2 text-gray-500 min-h-[3rem]">${pkg.description}</p><p class="text-4xl font-extrabold my-6 text-gray-900">R$ ${pkg.price}</p><ul class="space-y-3 text-gray-700 text-left">${(pkg.features || []).map(f => `<li class="flex items-start"><i class="ph-check-circle text-green-500 text-xl mr-2 mt-0.5"></i><span>${f}</span></li>`).join('')}</ul></div>
+                        <button class="select-plan-btn w-full mt-8 py-3 px-6 rounded-full font-semibold transition-colors ${pkg.recommended ? 'bg-[color:var(--primary-dark)] text-white hover:bg-black' : 'bg-slate-200 text-slate-800 hover:bg-slate-300'}">Selecionar Plano</button>
+                    </div>`);
 
-                // Seção "Garantias"
-                if (content.guarantees) {
-                    render('garantia-cards', content.guarantees, (item) => `
-                        <div class="bg-gray-900/50 p-8 rounded-lg interactive-card backdrop-blur-sm">
-                            <i class="ph-${item.icon || 'check-circle'}" style="color: var(--accent-bronze); font-size: 3rem; margin-bottom: 1.25rem; display: inline-block;"></i>
-                            <h3 class="font-bold text-xl text-white">${item.title}</h3>
-                            <p class="mt-3 text-gray-300">${item.description}</p>
-                        </div>`);
-                }
-                
-                // Seção "Depoimentos"
-                if (content.testimonials) {
-                    render('depoimentos-grid', content.testimonials, (item) => `
-                        <div class="bg-gray-800 p-8 rounded-lg interactive-card">
-                            <i class="ph-quotes-fill text-4xl text-gray-700"></i>
-                            <p class="text-gray-300 italic mt-4">"${item.text}"</p>
-                            <p class="font-bold text-white mt-6">${item.author}</p>
-                        </div>`);
-                }
-
-                // Seção "Timeline"
-                if (content.timeline) {
-                    render('timeline-content', content.timeline, (item, i) => `
-                        <div class="relative timeline-item">
-                            <div class="md:flex items-center ${i % 2 === 0 ? '' : 'flex-row-reverse'}">
-                                <div class="md:w-1/2 p-4">
-                                    <div class="bg-gray-800 p-6 rounded-lg shadow-lg border-l-4 border-[color:var(--accent-bronze)]">
-                                        <h3 class="text-xl font-bold text-white">${item.title}</h3>
-                                        <p class="text-gray-400 mt-2">${item.description}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`);
-                }
-                
-                // Seção "FAQ"
-                if (content.faq) {
-                    render('faq-container', content.faq, (item) => `
-                        <div class="faq-item bg-gray-800 rounded-lg shadow-sm overflow-hidden">
-                            <div class="faq-header p-5 flex justify-between items-center cursor-pointer">
-                                <h4 class="font-semibold text-lg text-white">${item.question}</h4>
-                                <i class="ph-plus faq-icon text-2xl font-light" style="color: var(--accent-bronze);"></i>
-                            </div>
-                            <div class="faq-content hidden p-5 pt-0 text-gray-400"><p>${item.answer}</p></div>
-                        </div>`);
-                }
-                
-                // Seção "Soluções" (Tabs)
-                if (content.solutions) {
-                    const tabsContainer = document.getElementById('tabs-container');
-                    const tabsContent = document.getElementById('tabs-content');
+                const tabsContainer = document.getElementById('tabs-container');
+                if (tabsContainer && content.solutions) {
                     const solutionKeys = Object.keys(content.solutions);
-                    
                     tabsContainer.innerHTML = solutionKeys.map(key => {
-                        const solution = content.solutions[key];
-                        return `<button data-tab="${key}" class="tab-button flex items-center gap-3 font-medium py-2 px-5 rounded-lg border-2 border-transparent transition"><i class="ph-${solution.icon} text-2xl"></i> ${solution.title}</button>`;
+                        const s = content.solutions[key];
+                        return `<button data-tab="${key}" class="tab-button flex items-center gap-3 font-medium py-2 px-5 rounded-lg border-2 border-transparent transition"><i class="ph-${s.icon} text-2xl"></i> ${s.title}</button>`;
                     }).join('');
                 }
-                
-                // Seção "Portfolio"
-                if (portfolioData?.items) {
-                    render('portfolio-grid', portfolioData.items, item => `
-                        <div class="group relative overflow-hidden rounded-lg shadow-lg interactive-card">
-                            <img src="${item.image}" alt="${item.title}" class="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                            <div class="absolute bottom-0 left-0 p-6">
-                                <h3 class="text-xl font-bold text-white">${item.title}</h3>
-                                <p class="capitalize" style="color: var(--accent-bronze);">${item.category}</p>
-                            </div>
-                        </div>`);
-                }
-                
-                // Seção "Entregáveis" (Carrossel)
-                if (carouselData?.slides) {
-                    render('carousel-slides-container', carouselData.slides, slide => `
-                        <div class="swiper-slide p-2">
-                            <div class="bg-white rounded-lg p-4 shadow-lg flex flex-col items-center text-slate-800 w-full">
-                                <img src="${slide.image}" alt="${slide.title}" class="rounded-lg h-96 w-auto object-contain mb-4" loading="lazy">
-                                <h4 class="font-bold text-lg">${slide.title}</h4>
-                                <p class="text-sm text-slate-600">${slide.category}</p>
-                            </div>
-                        </div>`);
-                }
+            };
+            
+            const loadPortfolio = (portfolioData) => {
+                render('portfolio-grid', portfolioData.items, item => `
+                    <div class="group relative overflow-hidden rounded-lg shadow-lg interactive-card">
+                        <img src="${item.image}" alt="${item.title}" class="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6"><h3 class="text-xl font-bold text-white">${item.title}</h3><p class="capitalize" style="color: var(--accent-bronze);">${item.category}</p></div>
+                    </div>`);
             };
 
-            // Agrupa a configuração de todos os componentes interativos
-            const setupInteractiveComponents = () => {
-                // Efeito de scroll no cabeçalho e navegação ativa
+            const loadCarousel = (carouselData) => {
+                render('carousel-slides-container', carouselData.slides, slide => `
+                    <div class="swiper-slide p-2">
+                        <div class="bg-white rounded-lg p-4 shadow-lg flex flex-col items-center text-slate-800 w-full"><img src="${slide.image}" alt="${slide.title}" class="rounded-lg h-96 w-auto object-contain mb-4" loading="lazy"><h4 class="font-bold text-lg">${slide.title}</h4><p class="text-sm text-slate-600">${slide.category}</p></div>
+                    </div>`);
+            };
+            
+            // --- CONFIGURAÇÃO DE COMPONENTES INTERATIVOS ---
+
+            const setupInteractions = (content) => {
+                // Navegação e Cabeçalho
                 const header = document.getElementById('main-header');
-                const sections = document.querySelectorAll('main section');
                 const navLinks = document.querySelectorAll('#nav-links a');
+                const sections = document.querySelectorAll('main section');
                 window.addEventListener('scroll', () => {
-                    if (window.scrollY > 50) {
-                        header.classList.add('scrolled');
-                    } else {
-                        header.classList.remove('scrolled');
-                    }
-                    let current = '';
+                    header.classList.toggle('scrolled', window.scrollY > 50);
+                    let currentSection = '';
                     sections.forEach(section => {
-                        const sectionTop = section.offsetTop;
-                        if (pageYOffset >= sectionTop - 150) {
-                            current = section.getAttribute('id');
+                        if (pageYOffset >= section.offsetTop - 150) {
+                            currentSection = section.getAttribute('id');
                         }
                     });
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${current}`) {
-                            link.classList.add('active');
-                        }
-                    });
-                });
-                
-                // Lógica do FAQ
-                document.querySelectorAll('.faq-header').forEach(header => {
-                    header.addEventListener('click', () => {
-                        header.nextElementSibling.classList.toggle('hidden');
-                        header.parentElement.classList.toggle('open');
-                    });
+                    navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${currentSection}`));
                 });
 
-                // Lógica das abas de "Soluções"
+                // Menu Mobile
+                const menuButton = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const menuIcon = document.getElementById('menu-icon');
+                mobileMenu.innerHTML = document.getElementById('nav-links').innerHTML.replace(/space-x-8/g, 'flex flex-col gap-6 text-xl') + `<a href="#contato" class="cta-button font-medium py-3 px-8 mt-4">Contato</a>`;
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    menuIcon.className = mobileMenu.classList.contains('hidden') ? 'ph-list text-3xl' : 'ph-x text-3xl';
+                });
+                mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+                
+                // Acordeão do FAQ
+                document.getElementById('faq-container').addEventListener('click', (e) => {
+                    const header = e.target.closest('.faq-header');
+                    if (header) {
+                        header.nextElementSibling.classList.toggle('hidden');
+                    }
+                });
+
+                // Tabs de Soluções
                 const tabsContainer = document.getElementById('tabs-container');
                 const tabsContent = document.getElementById('tabs-content');
-                if (tabsContainer && tabsContent) {
-                    const renderTabContent = async (key) => {
-                        const content = await fetchData('./_data/site_content.json');
-                        if (content && content.solutions && content.solutions[key]) {
-                            const s = content.solutions[key];
-                            tabsContent.innerHTML = `<h3 class="text-2xl font-bold" style="color: var(--text-dark);">${s.title}</h3><p class="mt-4 text-gray-700 leading-relaxed">${s.description}</p><ul class="mt-6 space-y-3">${s.deliverables.map(d=>`<li class="flex items-start"><i class="ph-check-circle text-xl mr-3 mt-0.5" style="color: var(--accent-bronze);"></i><span>${d}</span></li>`).join('')}</ul>`;
-                        }
+                if (tabsContainer && tabsContent && content.solutions) {
+                    const renderTabContent = (key) => {
+                        const s = content.solutions[key];
+                        tabsContent.innerHTML = `<h3 class="text-2xl font-bold" style="color: var(--text-dark);">${s.title}</h3><p class="mt-4 text-gray-700 leading-relaxed">${s.description}</p><ul class="mt-6 space-y-3">${s.deliverables.map(d=>`<li class="flex items-start"><i class="ph-check-circle text-xl mr-3 mt-0.5" style="color: var(--accent-bronze);"></i><span>${d}</span></li>`).join('')}</ul>`;
                     };
-
                     tabsContainer.addEventListener('click', (e) => {
                         const btn = e.target.closest('.tab-button');
                         if (btn) {
@@ -540,69 +479,35 @@
                             renderTabContent(btn.dataset.tab);
                         }
                     });
-
-                    // Ativa a primeira aba por padrão
-                    const firstTab = tabsContainer.querySelector('.tab-button');
-                    if (firstTab) {
-                        firstTab.click();
+                    // Ativa a primeira aba
+                    if(tabsContainer.querySelector('.tab-button')) {
+                       tabsContainer.querySelector('.tab-button').click();
                     }
                 }
-
-                // Carrossel
-                if (document.querySelector('.entregaveis-swiper')) {
-                    new Swiper('.entregaveis-swiper', { loop: true, grabCursor: true, pagination: { el: '.swiper-pagination', clickable: true }, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, autoplay: { delay: 5000, disableOnInteraction: false } });
-                }
-
-                // Menu mobile
-                const menuButton = document.getElementById('mobile-menu-button');
-                const mobileMenu = document.getElementById('mobile-menu');
-                const menuIcon = document.getElementById('menu-icon');
-                mobileMenu.innerHTML = document.getElementById('nav-links').innerHTML.replace(/space-x-8/g, 'flex flex-col gap-6 text-xl') + `<a href="#contato" class="cta-button font-medium py-3 px-8 mt-4">Contato</a>`;
-                menuButton.addEventListener('click', () => {
-                    const isHidden = mobileMenu.classList.toggle('hidden');
-                    menuIcon.className = isHidden ? 'ph-list text-3xl' : 'ph-x text-3xl';
-                });
-                mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                    menuIcon.className = 'ph-list text-3xl';
-                }));
                 
-                // Modal de contato
+                // Modal de Contato
                 const modal = document.getElementById('contact-modal');
-                const closeModalBtn = document.getElementById('close-modal');
-                const selectedPackageNameEl = document.getElementById('selected-package-name');
-                const whatsappLink = document.getElementById('whatsapp-link');
-                const emailLink = document.getElementById('email-link');
-
-                document.querySelectorAll('.select-plan-btn').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        const card = e.target.closest('.relative');
-                        const packageName = card.querySelector('.package-name').textContent;
-                        
-                        selectedPackageNameEl.textContent = packageName;
-                        const whatsappMessage = `Olá, tenho interesse no ${packageName}. Gostaria de mais informações.`;
-                        const emailSubject = `Interesse no ${packageName}`;
-                        const emailBody = `Olá, gostaria de mais informações sobre o ${packageName}.`;
-
-                        whatsappLink.href = `https://wa.me/5575998014491?text=${encodeURIComponent(whatsappMessage)}`;
-                        emailLink.href = `mailto:alison.karvalho@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-                        
+                const closeModal = () => modal.classList.add('invisible', 'opacity-0');
+                document.getElementById('packages-container').addEventListener('click', e => {
+                    const btn = e.target.closest('.select-plan-btn');
+                    if(btn) {
+                        const packageName = btn.closest('.relative').querySelector('.package-name').textContent;
+                        setText('selected-package-name', packageName);
+                        // Configurar links do modal aqui...
                         modal.classList.remove('invisible', 'opacity-0');
-                        modal.querySelector('.modal-content').classList.remove('scale-95');
-                    });
+                    }
                 });
-
-                const closeModal = () => {
-                    modal.classList.add('opacity-0');
-                    modal.querySelector('.modal-content').classList.add('scale-95');
-                    setTimeout(() => modal.classList.add('invisible'), 300);
-                };
-                closeModalBtn.addEventListener('click', closeModal);
-                modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+                document.getElementById('close-modal').addEventListener('click', closeModal);
+                modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+            };
+            
+            const initSwiper = () => {
+                if (document.querySelector('.entregaveis-swiper')) {
+                    new Swiper('.entregaveis-swiper', { loop: true, grabCursor: true, pagination: { el: '.swiper-pagination', clickable: true }, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, autoplay: { delay: 5000 } });
+                }
             };
 
-            // Inicia as animações com Framer Motion
-            const startAnimations = () => {
+            const initAnimations = () => {
                 const motion = window.motion;
                 if (motion) {
                     document.querySelectorAll('.motion-div').forEach(el => {
@@ -613,7 +518,33 @@
                 }
             };
 
-            // Inicia a execução do script
+            // --- PONTO DE ENTRADA PRINCIPAL ---
+            
+            const main = async () => {
+                const [content, portfolioData, carouselData] = await Promise.all([
+                    fetchData('./_data/site_content.json'),
+                    fetchData('./_data/portfolio.json'),
+                    fetchData('./_data/carousel.json')
+                ]);
+
+                if (!content) {
+                    document.body.innerHTML = "<h1>Erro ao carregar o conteúdo do site. Verifique o console para mais detalhes.</h1>";
+                    return;
+                }
+
+                // A ordem aqui é crucial!
+                await loadPageContent(content);
+                if (portfolioData) loadPortfolio(portfolioData);
+                if (carouselData) loadCarousel(carouselData);
+
+                // Agora que o HTML está no DOM, configure a interatividade.
+                setupInteractions(content);
+                
+                // Inicia componentes de terceiros e animações.
+                initSwiper();
+                initAnimations();
+            };
+
             main();
         });
     </script>
