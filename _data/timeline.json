@@ -1,1 +1,21 @@
+{
+  "items": [
+    {
+      "title": "Briefing e Análise",
+      "description": "Entendemos suas necessidades, desejos e orçamento para criar a base do projeto."
+    },
+    {
+      "title": "Estudo Preliminar e 3D",
+      "description": "Desenvolvemos as primeiras ideias e modelos 3D para visualização e aprovação."
+    },
+    {
+      "title": "Projeto Executivo",
+      "description": "Detalhamos todos os aspectos técnicos para a execução da obra sem erros."
+    },
+    {
+      "title": "Entrega e Suporte",
+      "description": "Entregamos todos os projetos e permanecemos disponíveis para esclarecer dúvidas."
+    }
+  ]
+}
 
