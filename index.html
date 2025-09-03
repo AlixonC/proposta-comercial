@@ -63,6 +63,7 @@
             margin-top: -30px;
             position: relative;
             z-index: 20;
+            overflow: hidden; /* Fix for margins collapsing */
         }
 
         /* Header */
@@ -244,21 +245,54 @@
             font-weight: 800;
         }
 
-        /* Modal System */
-        .modal-overlay { 
-            @apply fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[100] opacity-0 pointer-events-none transition-opacity duration-300;
+        /* Modal System - FIX */
+        .modal-overlay {
+            position: fixed;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
         }
         .modal-overlay.active {
-            @apply opacity-100 pointer-events-auto;
+            opacity: 1;
+            pointer-events: auto;
         }
         .modal-content {
-            @apply bg-white p-8 rounded-2xl w-full max-w-md m-4 text-center shadow-2xl scale-95 transition-transform duration-300 relative;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 100%;
+            max-width: 28rem;
+            margin: 1rem;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            transform: scale(0.95);
+            transition: transform 0.3s ease-in-out;
+            position: relative;
         }
         .modal-overlay.active .modal-content {
-            @apply scale-100;
+            transform: scale(1);
         }
         .modal-close-btn {
-            @apply absolute top-4 right-4 text-2xl text-slate-400 hover:text-slate-800 transition-colors z-10;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            line-height: 1;
+            color: #94a3b8; /* slate-400 */
+            transition: color 0.2s;
+            z-index: 10;
+            cursor: pointer;
+        }
+        .modal-close-btn:hover {
+            color: #1e293b; /* slate-800 */
         }
     </style>
 </head>
@@ -523,7 +557,17 @@
 
 <script type="module">
 document.addEventListener('DOMContentLoaded', async () => {
-    // --- DATA FETCHING ---
+    const githubRawBaseUrl = 'https://raw.githubusercontent.com/alixonc/proposta-comercial/main/';
+
+    // --- UTILITY FUNCTIONS ---
+    const resolveImageUrl = (path) => {
+        if (!path || path.startsWith('http')) {
+            return path;
+        }
+        const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+        return `${githubRawBaseUrl}${cleanPath}`;
+    };
+
     const fetchData = async (url) => {
         try {
             const response = await fetch(url);
@@ -546,7 +590,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // --- UTILITY FUNCTIONS ---
     const setText = (selector, text) => {
         const el = document.querySelector(selector);
         if (el && text) el.textContent = text;
@@ -640,7 +683,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
         
         // Activate first tab
-        switchTab(solutions[0][0]);
+        if(solutions.length > 0) {
+            switchTab(solutions[0][0]);
+        }
     };
     
     const initPortfolio = () => {
@@ -654,11 +699,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             render('#portfolio-grid', filteredItems, item => `
                 <div class="group portfolio-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" 
                      data-modal-target="portfolio-modal"
-                     data-img-src="${item.image}"
+                     data-img-src="${resolveImageUrl(item.image)}"
                      data-title="${item.title}"
                      data-category="${item.category}">
                     <div class="overflow-hidden pointer-events-none">
-                        <img src="${item.image}" alt="${item.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+                        <img src="${resolveImageUrl(item.image)}" alt="${item.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
                     </div>
                     <div class="p-6 pointer-events-none">
                         <span class="text-sm font-semibold uppercase tracking-wider text-slate-500">${item.category}</span>
@@ -702,7 +747,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!content.sobre) return;
         const { name, bio, photo } = content.sobre;
         setHtml('#profile-image-container', `
-            <img src="${photo}" alt="${name}" class="rounded-full w-48 h-48 md:w-64 md:h-64 object-cover shadow-2xl">
+            <img src="${resolveImageUrl(photo)}" alt="${name}" class="rounded-full w-48 h-48 md:w-64 md:h-64 object-cover shadow-2xl">
         `);
         setHtml('#profile-content', `
             <h3 class="text-2xl font-bold text-slate-800 mt-4 md:mt-0">${name}</h3>
@@ -742,13 +787,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const initDeliverablesCarousel = () => {
         if (!carouselData || !carouselData.slides) return;
         
-        const slides = [
+        const localSlides = [
             { image: "imagens/detalhamento-sapatas.jpg", title: "Detalhamento de Sapatas", category: "Estrutural" },
-            { image: "imagens/entregavel-vigas.jpg", title: "Detalhamento de Vigas", category: "Estrutural" },
-            ...carouselData.slides
+            { image: "imagens/entregavel-vigas.jpg", title: "Detalhamento de Vigas", category: "Estrutural" }
         ];
 
-        render('#deliverables-carousel', slides, slide => `
+        const allSlides = [...localSlides, ...carouselData.slides];
+
+        render('#deliverables-carousel', allSlides.map(slide => ({...slide, image: resolveImageUrl(slide.image)})), slide => `
             <div class="swiper-slide">
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden text-center">
                     <img src="${slide.image}" alt="${slide.title}" class="w-full h-80 object-contain bg-slate-100 p-4" loading="lazy">
