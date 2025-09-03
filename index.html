@@ -13,37 +13,38 @@
     <script src="https://unpkg.com/phosphor-icons"></script>
 
     <style>
+        :root {
+            --primary-blue: #0A2B4C; /* Oxford Blue */
+            --accent-gold: #D4A056;  /* Golden Ochre */
+            --light-bg: #f8f9fa;
+            --light-gray: #e9ecef;
+            --dark-text: #212529;
+            --medium-text: #495057;
+        }
+
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #f0fdfa; /* Um tom de verde-azulado muito claro */
-            color: #1e293b; 
+            background-color: var(--light-bg); 
+            color: var(--dark-text); 
         }
-        :root {
-            --teal-50: #f0fdfa;
-            --teal-100: #ccfbf1;
-            --teal-600: #0d9488;
-            --teal-700: #0f766e;
-            --teal-800: #115e59;
-            --slate-700: #334155;
-            --slate-800: #1e293b;
-        }
+
         .hero-pattern {
-            background-color: var(--teal-50);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23a7f3d0' fill-opacity='0.2'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-color: #eef6ff;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23d4a056' fill-opacity='0.1'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
         header.scrolled { 
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(8px);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); 
         }
         .nav-link { 
-            color: var(--slate-700); 
+            color: var(--medium-text); 
             font-weight: 500; 
             transition: color 0.3s; 
             position: relative; 
             padding-bottom: 6px; 
         }
-        .nav-link:hover { color: var(--teal-600); }
+        .nav-link:hover { color: var(--primary-blue); }
         .nav-link::after { 
             content: ''; 
             position: absolute; 
@@ -52,28 +53,28 @@
             transform: translateX(-50%);
             width: 0; 
             height: 2px; 
-            background-color: var(--teal-700);
+            background-color: var(--primary-blue);
             transition: width 0.3s ease-out;
         }
         .nav-link:hover::after, .nav-link.active::after { width: 100%; }
         
         .cta-button { 
-            background-color: var(--teal-700); 
+            background-color: var(--primary-blue); 
             color: white; 
             border-radius: 9999px; 
             transition: all 0.3s;
-            box-shadow: 0 4px 15px -5px rgba(15, 118, 110, 0.6);
+            box-shadow: 0 4px 15px -5px rgba(10, 43, 76, 0.6);
         }
         .cta-button:hover { 
-            background-color: var(--teal-800); 
+            background-color: #061e36; 
             transform: translateY(-3px); 
-            box-shadow: 0 6px 20px -5px rgba(15, 118, 110, 0.8);
+            box-shadow: 0 6px 20px -5px rgba(10, 43, 76, 0.8);
         }
         
         .tab-button.active { 
-            border-color: var(--teal-600); 
+            border-color: var(--primary-blue); 
             background-color: #fff; 
-            color: var(--teal-800); 
+            color: var(--primary-blue); 
             font-weight: 600;
             box-shadow: 0 4px 8px rgba(0,0,0,0.05);
         }
@@ -88,7 +89,7 @@
             height: 24px; 
             border-radius: 50%; 
             background-color: #fff; 
-            border: 5px solid var(--teal-600); 
+            border: 5px solid var(--primary-blue); 
             z-index: 1;
         }
 
@@ -103,58 +104,40 @@
         }
 
         .swiper-button-next, .swiper-button-prev { 
-            color: #fff; 
-            background-color: rgba(15, 118, 110, 0.5);
+            color: var(--primary-blue); 
+            background-color: rgba(255, 255, 255, 0.7);
             width: 44px;
             height: 44px;
             border-radius: 50%;
             transition: background-color 0.3s;
         }
         .swiper-button-next:hover, .swiper-button-prev:hover {
-            background-color: rgba(15, 118, 110, 0.8);
+            background-color: rgba(255, 255, 255, 1);
         }
-        .swiper-pagination-bullet-active { background-color: var(--teal-600); }
+        .swiper-pagination-bullet-active { background-color: var(--primary-blue); }
 
         .modal-overlay { 
-            position: fixed; 
-            top: 0; left: 0; right: 0; bottom: 0; 
-            background: rgba(0, 0, 0, 0.6); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            z-index: 1000; 
-            opacity: 0; 
-            visibility: hidden; 
-            transition: all 0.3s ease-in-out; 
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+            background: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; 
+            z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease-in-out; 
             backdrop-filter: blur(5px);
         }
         .modal-overlay.visible { opacity: 1; visibility: visible; }
         .modal-content { 
-            background: white; 
-            padding: 2.5rem; 
-            border-radius: 0.75rem; 
-            width: 90%; 
-            max-width: 500px; 
-            text-align: center; 
-            transform: scale(0.95) translateY(10px); 
-            transition: all 0.3s ease-in-out; 
+            background: white; padding: 2.5rem; border-radius: 0.75rem; width: 90%; max-width: 500px; 
+            text-align: center; transform: scale(0.95) translateY(10px); transition: all 0.3s ease-in-out; 
             box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
         }
         .modal-overlay.visible .modal-content { transform: scale(1) translateY(0); }
 
-        .floating-cta {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 999;
-        }
+        .floating-cta { position: fixed; bottom: 20px; right: 20px; z-index: 999; }
     </style>
 </head>
 <body class="text-slate-800">
 
     <header id="main-header" class="bg-transparent fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div id="logo-container" class="text-2xl font-bold text-teal-700"></div>
+            <div id="logo-container" class="text-2xl font-bold" style="color: var(--primary-blue);"></div>
             <div class="hidden md:flex items-center space-x-8" id="nav-links">
                 <a href="#solucoes" class="nav-link">Soluções</a>
                 <a href="#portfolio" class="nav-link">Portfólio</a>
@@ -175,20 +158,20 @@
     <main>
         <section id="hero" class="hero-pattern pt-32 pb-20 text-center">
             <div class="container mx-auto px-6">
-                <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold text-teal-800 leading-tight" data-aos="fade-up"></h1>
-                <p id="hero-subtitle" class="mt-6 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100"></p>
+                <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold leading-tight" style="color: var(--primary-blue);" data-aos="fade-up"></h1>
+                <p id="hero-subtitle" class="mt-6 text-lg md:text-xl max-w-3xl mx-auto" style="color: var(--medium-text);" data-aos="fade-up" data-aos-delay="100"></p>
                 <div class="mt-12 max-w-4xl mx-auto bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl shadow-lg p-6 grid grid-cols-1 sm:grid-cols-3 gap-6" data-aos="fade-up" data-aos-delay="200">
                     <div>
                         <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Proposta Para</h3>
-                        <p id="client-name" class="text-xl font-semibold text-teal-700 mt-1">Prezado(a) Cliente</p>
+                        <p id="client-name" class="text-xl font-semibold mt-1" style="color: var(--primary-blue);">Prezado(a) Cliente</p>
                     </div>
                     <div>
                         <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Data de Emissão</h3>
-                        <p id="proposal-date" class="text-xl font-semibold text-teal-700 mt-1"></p>
+                        <p id="proposal-date" class="text-xl font-semibold mt-1" style="color: var(--primary-blue);"></p>
                     </div>
                     <div>
                         <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Validade</h3>
-                        <p class="text-xl font-semibold text-teal-700 mt-1">15 dias</p>
+                        <p class="text-xl font-semibold mt-1" style="color: var(--primary-blue);">15 dias</p>
                     </div>
                 </div>
             </div>
@@ -226,12 +209,15 @@
 
         <section id="sobre" class="py-24">
             <div class="container mx-auto px-6 grid md:grid-cols-5 gap-12 items-center">
-                <div class="md:col-span-2" data-aos="fade-right">
-                    <img id="about-photo" src="" alt="Foto de Perfil" class="rounded-lg mx-auto shadow-2xl w-full h-auto object-cover">
+                <div class="md:col-span-2 flex justify-center items-center" data-aos="fade-right">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80">
+                        <div class="absolute inset-0 rounded-full" style="background-image: linear-gradient(45deg, var(--light-gray), #fff);"></div>
+                        <img id="about-photo" src="" alt="Foto de Perfil" class="relative w-full h-full rounded-full object-cover shadow-2xl border-4 border-white">
+                    </div>
                 </div>
                 <div class="md:col-span-3 text-center md:text-left" data-aos="fade-left">
                     <h2 id="about-title" class="text-3xl md:text-4xl font-bold"></h2>
-                    <p id="about-name" class="text-xl font-semibold text-teal-600 mt-2"></p>
+                    <p id="about-name" class="text-xl font-semibold mt-2" style="color: var(--accent-gold);"></p>
                     <p id="about-bio" class="text-lg text-slate-600 mt-6 leading-relaxed"></p>
                 </div>
             </div>
@@ -249,9 +235,9 @@
             </div>
         </section>
         
-        <section id="garantias" class="py-24 bg-slate-800 text-white">
+        <section id="garantias" class="py-24" style="background-color: var(--primary-blue); color: white;">
             <div class="container mx-auto px-6 text-center">
-               <h2 class="text-3xl md:text-4xl font-bold text-teal-400" data-aos="fade-up">Sua Tranquilidade é a Nossa Prioridade</h2>
+               <h2 class="text-3xl md:text-4xl font-bold" style="color: var(--accent-gold);" data-aos="fade-up">Sua Tranquilidade é a Nossa Prioridade</h2>
                <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-300" data-aos="fade-up" data-aos-delay="100">
                    Construir é um grande investimento. Por isso, oferecemos garantias sólidas para que você tenha total segurança do início ao fim do processo.
                </p>
@@ -265,8 +251,8 @@
                 <div class="swiper entregaveis-swiper max-w-4xl mx-auto mt-12" data-aos="fade-up" data-aos-delay="200">
                     <div class="swiper-wrapper" id="carousel-slides-container"></div>
                     <div class="swiper-pagination !relative mt-8"></div>
-                    <div class="swiper-button-prev !text-teal-700 !bg-white/70"></div>
-                    <div class="swiper-button-next !text-teal-700 !bg-white/70"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
                 </div>
             </div>
         </section>
@@ -299,7 +285,7 @@
         </section>
     </main>
 
-    <footer id="contato" class="bg-slate-800 text-white">
+    <footer id="contato" style="background-color: var(--primary-blue); color: white;">
         <div class="container mx-auto px-6 py-20 text-center" data-aos="fade-up">
             <h2 class="text-3xl md:text-4xl font-bold">Pronto para Construir Seu Sonho?</h2>
             <p class="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">Vamos conversar sobre como podemos transformar seu projeto em realidade com segurança e tranquilidade.</p>
@@ -308,7 +294,7 @@
                     <i class="ph-whatsapp-logo text-2xl"></i>
                     <span>Contato via WhatsApp</span>
                 </a>
-                <a href="mailto:alison.karvalho@gmail.com" class="inline-flex items-center gap-3 bg-teal-600 font-bold py-3 px-8 rounded-full transition-transform hover:scale-105 shadow-lg w-full md:w-auto justify-center">
+                <a href="mailto:alison.karvalho@gmail.com" class="inline-flex items-center gap-3 bg-gray-500 text-white font-bold py-3 px-8 rounded-full transition-transform hover:scale-105 shadow-lg w-full md:w-auto justify-center">
                     <i class="ph-envelope-simple text-2xl"></i>
                     <span>Enviar um E-mail</span>
                 </a>
@@ -319,13 +305,13 @@
     <div id="contact-modal" class="modal-overlay">
         <div class="modal-content">
             <h2 class="text-2xl font-bold mb-4">Excelente Escolha!</h2>
-            <p class="text-slate-600 mb-8">Você selecionou o <strong id="selected-package-name" class="text-teal-700"></strong>. Para prosseguir, escolha seu método de contato preferido:</p>
+            <p class="text-slate-600 mb-8">Você selecionou o <strong id="selected-package-name" style="color: var(--primary-blue);"></strong>. Para prosseguir, escolha seu método de contato preferido:</p>
             <div class="flex flex-col gap-4">
                  <a id="whatsapp-link" href="#" target="_blank" class="inline-flex items-center justify-center gap-3 bg-green-500 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
                     <i class="ph-whatsapp-logo text-xl"></i>
                     <span>Conversar no WhatsApp</span>
                 </a>
-                <a id="email-link" href="#" class="inline-flex items-center justify-center gap-3 bg-teal-600 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
+                <a id="email-link" href="#" class="inline-flex items-center justify-center gap-3 bg-gray-500 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
                     <i class="ph-envelope-simple text-xl"></i>
                     <span>Enviar um E-mail</span>
                 </a>
@@ -346,17 +332,14 @@
         document.addEventListener('DOMContentLoaded', async () => {
             AOS.init({ duration: 800, once: true, offset: 100 });
 
-            // Header Scroll & Active Link Effect
             const header = document.getElementById('main-header');
             const sections = document.querySelectorAll('main section');
             const navLinks = document.querySelectorAll('#nav-links a');
             
             window.addEventListener('scroll', () => {
-                // Header style change
                 if (window.scrollY > 50) header.classList.add('scrolled');
                 else header.classList.remove('scrolled');
 
-                // Active nav link
                 let current = '';
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
@@ -421,15 +404,15 @@
             setSrc('about-photo', content.sobre.photo);
             
             render('packages-container', content.packages, (pkg, i) => `
-                <div class="relative bg-white p-8 rounded-lg shadow-lg border-2 ${pkg.recommended ? 'border-teal-500' : 'border-transparent'} transition-all flex flex-col interactive-card" data-aos="fade-up" data-aos-delay="${i*100}">
-                    ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-teal-600 text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Recomendado</div>' : ''}
+                <div class="relative bg-white p-8 rounded-lg shadow-lg border-2 ${pkg.recommended ? 'border-[color:var(--primary-blue)]' : 'border-transparent'} flex flex-col interactive-card" data-aos="fade-up" data-aos-delay="${i*100}">
+                    ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[color:var(--primary-blue)] text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Recomendado</div>' : ''}
                     <div class="flex-grow">
                         <h3 class="text-2xl font-bold package-name">${pkg.name}</h3>
                         <p class="mt-2 text-slate-500 h-12">${pkg.description}</p>
                         <p class="text-4xl font-extrabold my-6">R$ ${pkg.price}</p>
                         <ul class="space-y-3 text-slate-700 text-left">${(pkg.features || []).map(f => `<li class="flex items-start"><i class="ph-check-circle text-green-500 text-xl mr-2 mt-0.5"></i><span>${f}</span></li>`).join('')}</ul>
                     </div>
-                    <button class="select-plan-btn w-full mt-8 py-3 px-6 rounded-full font-semibold transition-colors ${pkg.recommended ? 'bg-teal-600 text-white hover:bg-teal-700' : 'bg-slate-200 text-slate-800 hover:bg-teal-100'} cursor-pointer flex items-center justify-center gap-2">
+                    <button class="select-plan-btn w-full mt-8 py-3 px-6 rounded-full font-semibold transition-colors ${pkg.recommended ? 'bg-[color:var(--primary-blue)] text-white hover:bg-[#061e36]' : 'bg-slate-200 text-slate-800 hover:bg-slate-300'} cursor-pointer flex items-center justify-center gap-2">
                         <span>Selecionar Plano</span>
                         <i class="ph-arrow-right text-xl"></i>
                     </button>
@@ -437,15 +420,15 @@
 
             const guaranteeIcons = {'✅': 'shield-check', '⏰': 'timer', '🛠️': 'users-three'};
             render('garantia-cards', content.guarantees, (item, i) => `
-                <div class="bg-slate-700/50 p-8 rounded-lg interactive-card" data-aos="fade-up" data-aos-delay="${i*100}">
-                    <i class="ph-${guaranteeIcons[item.icon] || 'check-circle'} text-5xl text-teal-400 mb-5 inline-block"></i>
+                <div class="bg-white/10 p-8 rounded-lg interactive-card backdrop-blur-sm" data-aos="fade-up" data-aos-delay="${i*100}">
+                    <i class="ph-${guaranteeIcons[item.icon] || 'check-circle'}" style="color: var(--accent-gold); font-size: 3rem; margin-bottom: 1.25rem; display: inline-block;"></i>
                     <h3 class="font-bold text-xl text-white">${item.title}</h3>
                     <p class="mt-3 text-slate-300">${item.description}</p>
                 </div>`);
 
             render('depoimentos-grid', content.testimonials, (item, i) => `
                 <div class="bg-white p-8 rounded-lg interactive-card" data-aos="fade-up" data-aos-delay="${i * 100}">
-                    <i class="ph-quotes-fill text-4xl text-teal-200"></i>
+                    <i class="ph-quotes-fill text-4xl" style="color: var(--light-gray);"></i>
                     <p class="text-slate-600 italic mt-4">"${item.text}"</p>
                     <p class="font-bold text-slate-800 mt-6">${item.author}</p>
                 </div>`);
@@ -455,7 +438,7 @@
                     <div class="md:flex items-center ${i % 2 === 0 ? '' : 'flex-row-reverse'}">
                         <div class="md:w-1/2 p-4">
                             <div class="bg-white p-6 rounded-lg shadow-lg border">
-                                <h3 class="text-xl font-bold text-teal-800">${item.title}</h3>
+                                <h3 class="text-xl font-bold" style="color: var(--primary-blue);">${item.title}</h3>
                                 <p class="text-slate-600 mt-2">${item.description}</p>
                             </div>
                         </div>
@@ -466,7 +449,7 @@
                 <div class="faq-item bg-white rounded-lg shadow-sm overflow-hidden" data-aos="fade-up">
                     <div class="faq-header p-5 flex justify-between items-center">
                         <h4 class="font-semibold text-lg">${item.question}</h4>
-                        <i class="ph-plus faq-icon text-2xl font-light text-teal-600"></i>
+                        <i class="ph-plus faq-icon text-2xl font-light" style="color: var(--primary-blue);"></i>
                     </div>
                     <div class="faq-content hidden p-5 pt-0 text-slate-600"><p>${item.answer}</p></div>
                 </div>`);
@@ -483,7 +466,7 @@
                 tabsContainer.innerHTML = solutions.map(s => `<button data-tab="${s.key}" class="tab-button flex items-center gap-2 font-medium py-2 px-4 rounded-lg border-2 border-transparent transition"><span class="text-xl">${s.emoji}</span> ${s.title.substring(3)}</button>`).join('');
                 const renderTab = key => {
                     const s = content.solutions[key];
-                    tabsContent.innerHTML = `<h3 class="text-2xl font-bold text-teal-800">${s.title}</h3><p class="mt-4 text-slate-700 leading-relaxed">${s.description}</p><ul class="mt-6 space-y-3">${s.deliverables.map(d=>`<li class="flex items-start"><i class="ph-check-circle text-teal-500 text-xl mr-3 mt-0.5"></i><span>${d}</span></li>`).join('')}</ul>`;
+                    tabsContent.innerHTML = `<h3 class="text-2xl font-bold" style="color: var(--primary-blue);">${s.title}</h3><p class="mt-4 text-slate-700 leading-relaxed">${s.description}</p><ul class="mt-6 space-y-3">${s.deliverables.map(d=>`<li class="flex items-start"><i class="ph-check-circle text-xl mr-3 mt-0.5" style="color: var(--accent-gold);"></i><span>${d}</span></li>`).join('')}</ul>`;
                 };
                 tabsContainer.addEventListener('click', e => {
                     const btn = e.target.closest('.tab-button');
@@ -503,7 +486,7 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 p-6">
                             <h3 class="text-xl font-bold text-white">${item.title}</h3>
-                            <p class="text-teal-300 capitalize">${item.category}</p>
+                            <p class="capitalize" style="color: var(--accent-gold);">${item.category}</p>
                         </div>
                     </div>`);
             }
@@ -511,10 +494,10 @@
             if (carouselData?.slides) {
                 render('carousel-slides-container', carouselData.slides, slide => `
                     <div class="swiper-slide p-2">
-                        <div class="bg-slate-800 rounded-lg p-4 shadow-lg flex flex-col items-center text-white w-full">
+                        <div class="bg-slate-100 rounded-lg p-4 shadow-lg flex flex-col items-center text-slate-800 w-full">
                             <img src="${slide.image}" alt="${slide.title}" class="rounded-lg h-96 w-auto object-contain mb-4" loading="lazy">
                             <h4 class="font-bold text-lg">${slide.title}</h4>
-                            <p class="text-sm text-slate-300">${slide.category}</p>
+                            <p class="text-sm text-slate-600">${slide.category}</p>
                         </div>
                     </div>`);
                 new Swiper('.entregaveis-swiper', { loop: true, grabCursor: true, pagination: { el: '.swiper-pagination', clickable: true }, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, autoplay: { delay: 5000, disableOnInteraction: false } });
