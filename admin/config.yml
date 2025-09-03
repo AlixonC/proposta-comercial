@@ -2,106 +2,135 @@ backend:
   name: git-gateway
   branch: main
 
+logo_url: https://placehold.co/150x50/FFFFFF/0A2463?text=AC+Engenharia
+
 media_folder: "imagens"
 public_folder: "/imagens"
 
 collections:
-  - name: "settings"
+  - name: "content"
     label: "Conteúdo do Site"
     files:
-      - name: "general"
-        label: "Textos e Configurações Principais"
-        file: "_data/site_content.json"
-        description: "Edite os principais textos, imagens e seções do site aqui."
+      - label: "1. Configurações Gerais"
+        name: "config"
+        file: "_data/config.json"
+        description: "Configurações globais como logo e dados da proposta."
         fields:
-          - { name: "header", label: "Cabeçalho", widget: "object", fields: [ { name: "logo_type", label: "Tipo de Logo", widget: "select", options: ["text", "image"], default: "text" }, { label: "Texto do Logo", name: "logo_text", widget: "string", required: false }, { label: "Imagem do Logo", name: "logo_image", widget: "image", required: false } ] }
-          
-          - name: "proposal_details"
-            label: "Dados da Proposta (Valores Padrão)"
-            widget: "object"
-            fields:
-              - { label: "Título da Seção", name: "title", widget: "string", default: "Proposta de Soluções de Engenharia" }
-              - { label: "Texto de Validade", name: "validity_text", widget: "string", default: "Validade" }
-              - { label: "Número de Dias de Validade", name: "validity_days", widget: "number", default: 15 }
+          - { label: "Cabeçalho", name: "header", widget: "object", fields: [ { label: "Texto do Logo", name: "logo_text", widget: "string" } ] }
+          - { label: "Dados da Proposta (Padrão)", name: "proposal_details", widget: "object", fields: [ { label: "Texto de Validade", name: "validity_text", widget: "string" }, { label: "Dias de Validade", name: "validity_days", widget: "number" } ] }
+      
+      - label: "2. Seção Hero (Topo)"
+        name: "hero"
+        file: "_data/hero.json"
+        description: "A primeira seção que o cliente vê."
+        fields:
+          - { label: "Título Principal", name: "title", widget: "string" }
+          - { label: "Subtítulo", name: "subtitle", widget: "text" }
 
-          - { name: "hero", label: "Seção Principal (Topo)", widget: "object", fields: [ { label: "Título", name: "title", widget: "string" }, { label: "Subtítulo", name: "subtitle", widget: "text" }, { label: "Imagem de Fundo", name: "background_image", widget: "image", required: false, hint: "Opcional. Imagem que aparecerá no fundo da seção principal."} ] }
-          
-          - name: "value_comparison"
-            label: "Comparativo de Valor (ROI)"
+      - label: "3. Comparativo de Valor (ROI)"
+        name: "roi"
+        file: "_data/roi.json"
+        description: "A tabela de comparação 'Com vs Sem Engenheiro'."
+        fields:
+          - name: "items"
+            label: "Itens da Tabela"
             widget: "list"
             fields:
-              - { label: "Nome do Ícone (Phosphor Icons)", name: "icon", widget: "string", hint: "Ex: 'currency-dollar', 'timer', 'warning'. Visite phosphoricons.com." }
+              - { label: "Ícone (Phosphor Icons)", name: "icon", widget: "string" }
               - { label: "Critério", name: "criteria", widget: "string" }
-              - { label: "Resultado Sem Profissional", name: "without_professional", widget: "string" }
-              - { label: "Resultado Com Engenharia Integrada", name: "with_professional", widget: "string" }
+              - { label: "Sem Profissional", name: "without_professional", widget: "string" }
+              - { label: "Com Engenharia", name: "with_professional", widget: "string" }
 
-          - name: "solutions"
-            label: "Soluções (Abas)"
-            widget: "object"
+      - label: "4. Soluções (Abas)"
+        name: "solutions"
+        file: "_data/solutions.json"
+        description: "Os 4 tipos de projetos oferecidos."
+        fields:
+          - { label: "Projeto Arquitetônico", name: "arquitetonico", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Ícone", name: "icon", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] }
+          - { label: "Projeto Estrutural", name: "estrutural", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Ícone", name: "icon", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] }
+          - { label: "Projeto Hidrossanitário", name: "hidrossanitario", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Ícone", name: "icon", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] }
+          - { label: "Projeto Elétrico", name: "eletrico", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Ícone", name: "icon", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] }
+
+      - label: "5. Sobre o Profissional"
+        name: "sobre"
+        file: "_data/sobre.json"
+        description: "Sua foto, nome e biografia."
+        fields:
+          - { label: "Nome e Cargo", name: "name", widget: "string" }
+          - { label: "Biografia", name: "bio", widget: "text" }
+          - { label: "Sua Foto", name: "photo", widget: "image" }
+      
+      - label: "6. Processo de Trabalho"
+        name: "timeline"
+        file: "_data/timeline.json"
+        description: "As etapas do seu processo."
+        fields:
+          - name: "items"
+            label: "Etapas"
+            widget: "list"
             fields:
-              - name: "arquitetonico"
-                label: "Projeto Arquitetônico"
-                widget: "object"
-                fields:
-                  - {label: "Título", name: "title", widget: "string"}
-                  - {label: "Nome do Ícone (Phosphor Icons)", name: "icon", widget: "string", hint: "Ex: 'house-line'"}
-                  - {label: "Descrição", name: "description", widget: "text"}
-                  - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
-              - name: "estrutural"
-                label: "Projeto Estrutural"
-                widget: "object"
-                fields:
-                  - {label: "Título", name: "title", widget: "string"}
-                  - {label: "Nome do Ícone (Phosphor Icons)", name: "icon", widget: "string", hint: "Ex: 'buildings'"}
-                  - {label: "Descrição", name: "description", widget: "text"}
-                  - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
-              - name: "hidrossanitario"
-                label: "Projeto Hidrossanitário"
-                widget: "object"
-                fields:
-                  - {label: "Título", name: "title", widget: "string"}
-                  - {label: "Nome do Ícone (Phosphor Icons)", name: "icon", widget: "string", hint: "Ex: 'drop'"}
-                  - {label: "Descrição", name: "description", widget: "text"}
-                  - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
-              - name: "eletrico"
-                label: "Projeto Elétrico"
-                widget: "object"
-                fields:
-                  - {label: "Título", name: "title", widget: "string"}
-                  - {label: "Nome do Ícone (Phosphor Icons)", name: "icon", widget: "string", hint: "Ex: 'plugs'"}
-                  - {label: "Descrição", name: "description", widget: "text"}
-                  - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
-          
-          - { name: "sobre", label: "Seção Sobre", widget: "object", fields: [ { label: "Título", name: "title", widget: "string" }, { label: "Nome e Cargo", name: "name", widget: "string" }, { label: "Biografia", name: "bio", widget: "text" }, { label: "Foto de Perfil", name: "photo", widget: "image" } ] }
-          - { name: "timeline", label: "Processo de Trabalho (Linha do Tempo)", widget: "list", fields: [ {label: "Título da Etapa", name: "title", widget: "string"}, {label: "Descrição da Etapa", name: "description", widget: "text"} ] }
-          - { name: "guarantees", label: "Garantias", widget: "list", fields: [ {label: "Nome do Ícone (Phosphor Icons)", name: "icon", widget: "string", hint: "Ex: 'shield-check', 'clock', 'users-three'"}, {label: "Título", name: "title", widget: "string"}, {label: "Descrição", name: "description", widget: "text"} ] }
-          - { name: "testimonials", label: "Depoimentos", widget: "list", fields: [ {label: "Texto do Depoimento", name: "text", widget: "text"}, {label: "Autor", name: "author", widget: "string"} ] }
-          - name: "packages"
-            label: "Pacotes de Serviços"
+              - {label: "Título da Etapa", name: "title", widget: "string"}
+              - {label: "Descrição", name: "description", widget: "text"}
+
+      - label: "7. Garantias"
+        name: "guarantees"
+        file: "_data/guarantees.json"
+        description: "As garantias que você oferece."
+        fields:
+          - name: "items"
+            label: "Itens de Garantia"
+            widget: "list"
+            fields:
+              - {label: "Ícone", name: "icon", widget: "string"}
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Descrição", name: "description", widget: "text"}
+
+      - label: "8. Depoimentos"
+        name: "testimonials"
+        file: "_data/testimonials.json"
+        description: "Depoimentos de clientes."
+        fields:
+          - name: "items"
+            label: "Depoimentos"
+            widget: "list"
+            fields:
+              - {label: "Texto", name: "text", widget: "text"}
+              - {label: "Autor", name: "author", widget: "string"}
+
+      - label: "9. Pacotes de Serviços"
+        name: "packages"
+        file: "_data/packages.json"
+        description: "Os planos de investimento que você oferece."
+        fields:
+          - name: "items"
+            label: "Pacotes"
             widget: "list"
             fields:
               - { label: "Nome do Pacote", name: "name", widget: "string" }
               - { label: "Descrição", name: "description", widget: "string" }
               - { label: "Preço", name: "price", widget: "string" }
-              - name: "features" 
-                label: "Funcionalidades"
-                widget: "list"
-                field: { label: "Item", name: "feature", widget: "string" }
+              - { label: "Funcionalidades", name: "features", widget: "list", field: { label: "Item", name: "feature", widget: "string" } }
               - { label: "É Recomendado?", name: "recommended", widget: "boolean", default: false }
-          - { name: "faq", label: "Perguntas Frequentes (FAQ)", widget: "list", fields: [ {label: "Pergunta", name: "question", widget: "string"}, {label: "Resposta", name: "answer", widget: "text"} ] }
+
+      - label: "10. Perguntas Frequentes (FAQ)"
+        name: "faq"
+        file: "_data/faq.json"
+        description: "As perguntas e respostas mais comuns."
+        fields:
+          - name: "items"
+            label: "Perguntas"
+            widget: "list"
+            fields:
+              - {label: "Pergunta", name: "question", widget: "string"}
+              - {label: "Resposta", name: "answer", widget: "text"}
 
   - name: "portfolio"
     label: "Portfólio"
-    files:
-      - name: "portfolio_items"
-        label: "Projetos do Portfólio"
-        file: "_data/portfolio.json"
-        description: "Gerencie os itens que aparecem na galeria do portfólio."
-        fields:
-          - name: "items"
-            label: "Projetos"
-            widget: "list"
-            fields:
-              - {label: "Título", name: "title", widget: "string"}
-              - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
-              - {label: "Imagem", name: "image", widget: "image"}
+    folder: "_data/portfolio"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
+      - {label: "Imagem", name: "image", widget: "image"}
+
