@@ -3,9 +3,76 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Content Manager</title>
+  <title>Painel de Controle | AC Engenharia</title>
   
   <link href="config.yml" type="text/yaml" rel="cms-config-url">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Estilos Personalizados para a Página de Login -->
+  <style>
+    :root {
+      --color-primary: #0A2463;
+      --color-secondary: #1E293B;
+      --color-accent: #059669;
+      --font-heading: 'Plus Jakarta Sans', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+    /* Estiliza o widget de login do Netlify Identity */
+    [data-netlify-identity-widget] {
+      font-family: var(--font-body);
+    }
+    body::before {
+      content: 'Painel de Controle\AC Engenharia';
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 800;
+      color: white;
+      text-align: center;
+      padding-top: 5vh;
+      white-space: pre;
+    }
+    body {
+      background-color: var(--color-secondary);
+    }
+    .modal-container {
+      background-color: rgba(255, 255, 255, 0.05) !important;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+    .modal-content {
+      background: transparent !important;
+    }
+    .modal-label, .modal-list-heading, .modal-copy {
+      color: #e2e8f0 !important;
+    }
+    .modal-form input, .modal-form .btn {
+      border-radius: 8px !important;
+      border: 1px solid #475569 !important;
+      background-color: #334155 !important;
+      color: white !important;
+    }
+    .modal-form .btn {
+      background: var(--color-accent) !important;
+      border-color: var(--color-accent) !important;
+      font-weight: bold !important;
+      transition: all 0.2s ease-in-out;
+    }
+    .modal-form .btn:hover {
+        filter: brightness(1.1);
+    }
+    .modal-list-item-copy {
+        color: white !important;
+    }
+    .modal-list-item svg {
+        fill: white !important;
+    }
+  </style>
 
   <!-- Script para autenticação com Netlify/GitHub -->
   <script src="https://unpkg.com/netlify-identity-widget@^1.0.0/build/netlify-identity-widget.js"></script>
@@ -28,4 +95,3 @@
   </script>
 </body>
 </html>
-
