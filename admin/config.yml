@@ -1,15 +1,26 @@
+# Backend configuration for Netlify with Git Gateway
 backend:
   name: git-gateway
-  branch: main
+  branch: main # Or your default branch
 
+# URL for a custom logo in the CMS login and header
 logo_url: https://placehold.co/150x50/FFFFFF/0A2463?text=AC+Engenharia
 
-media_folder: "imagens"
-public_folder: "/imagens"
+# Media files configuration
+media_folder: "imagens" # Where to upload the files
+public_folder: "/imagens" # The src attribute for the uploaded media
+
+# This is a new setting to help with image management.
+# It allows the user to select images from the media library that have already been uploaded.
+media_library:
+  config:
+    multiple: false
 
 collections:
-  - name: "content"
-    label: "Conteúdo do Site"
+  # This collection uses the "files" type. It's perfect for managing different sections
+  # of the site where each section's content is stored in a single, separate JSON file.
+  - name: "pages"
+    label: "Conteúdo das Seções"
     files:
       - label: "1. Configurações Gerais"
         name: "config"
@@ -27,7 +38,59 @@ collections:
           - { label: "Título Principal", name: "title", widget: "string" }
           - { label: "Subtítulo", name: "subtitle", widget: "text" }
 
-      - label: "3. Comparativo de Valor (ROI)"
+      - label: "3. Sobre o Profissional"
+        name: "sobre"
+        file: "_data/sobre.json"
+        description: "Sua foto, nome e biografia."
+        fields:
+          - { label: "Sua Foto", name: "photo", widget: "image" }
+          - { label: "Nome e Cargo", name: "name", widget: "string" }
+          - { label: "Biografia", name: "bio", widget: "text" }
+      
+      # NOTE: The "solutions" section now includes an "image" field for each service.
+      - label: "4. Soluções (Abas)"
+        name: "solutions"
+        file: "_data/solutions.json"
+        description: "Os 4 tipos de projetos oferecidos, agora com imagens."
+        fields:
+          - label: "Projeto Arquitetônico"
+            name: "arquitetonico"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Ícone", name: "icon", widget: "string"}
+              - {label: "Descrição", name: "description", widget: "text"}
+              - {label: "Imagem de Destaque", name: "image", widget: "image"} # New image field
+              - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+          - label: "Projeto Estrutural"
+            name: "estrutural"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Ícone", name: "icon", widget: "string"}
+              - {label: "Descrição", name: "description", widget: "text"}
+              - {label: "Imagem de Destaque", name: "image", widget: "image"} # New image field
+              - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+          - label: "Projeto Hidrossanitário"
+            name: "hidrossanitario"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Ícone", name: "icon", widget: "string"}
+              - {label: "Descrição", name: "description", widget: "text"}
+              - {label: "Imagem de Destaque", name: "image", widget: "image"} # New image field
+              - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+          - label: "Projeto Elétrico"
+            name: "eletrico"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Ícone", name: "icon", widget: "string"}
+              - {label: "Descrição", name: "description", widget: "text"}
+              - {label: "Imagem de Destaque", name: "image", widget: "image"} # New image field
+              - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+
+      - label: "5. Comparativo de Valor (ROI)"
         name: "roi"
         file: "_data/roi.json"
         description: "A tabela de comparação 'Com vs Sem Engenheiro'."
@@ -40,26 +103,7 @@ collections:
               - { label: "Critério", name: "criteria", widget: "string" }
               - { label: "Sem Profissional", name: "without_professional", widget: "string" }
               - { label: "Com Engenharia", name: "with_professional", widget: "string" }
-
-      - label: "4. Soluções (Abas)"
-        name: "solutions"
-        file: "_data/solutions.json"
-        description: "Os 4 tipos de projetos oferecidos."
-        fields:
-          - { label: "Projeto Arquitetônico", name: "arquitetonico", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Ícone", name: "icon", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] }
-          - { label: "Projeto Estrutural", name: "estrutural", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Ícone", name: "icon", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] }
-          - { label: "Projeto Hidrossanitário", name: "hidrossanitario", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Ícone", name: "icon", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] }
-          - { label: "Projeto Elétrico", name: "eletrico", widget: "object", fields: [ {label: "Título", name: "title", widget: "string"}, {label: "Ícone", name: "icon", widget: "string"}, {label: "Descrição", name: "description", widget: "text"}, {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}} ] }
-
-      - label: "5. Sobre o Profissional"
-        name: "sobre"
-        file: "_data/sobre.json"
-        description: "Sua foto, nome e biografia."
-        fields:
-          - { label: "Nome e Cargo", name: "name", widget: "string" }
-          - { label: "Biografia", name: "bio", widget: "text" }
-          - { label: "Sua Foto", name: "photo", widget: "image" }
-      
+            
       - label: "6. Processo de Trabalho"
         name: "timeline"
         file: "_data/timeline.json"
@@ -124,13 +168,34 @@ collections:
               - {label: "Pergunta", name: "question", widget: "string"}
               - {label: "Resposta", name: "answer", widget: "text"}
 
+  # SOLUTION: The portfolio was incorrectly configured as a "folder" collection.
+  # This creates a new file for each item, but your site reads a single `portfolio.json`.
+  # The fix is to make it a "file" collection and manage the items with a "list" widget.
+  # This stops content duplication and inconsistency.
   - name: "portfolio"
     label: "Portfólio"
-    folder: "_data/portfolio"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    file: "_data/portfolio.json" # Point to the single JSON file
+    description: "Gerencie todos os projetos do seu portfólio aqui."
     fields:
-      - {label: "Título", name: "title", widget: "string"}
-      - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
-      - {label: "Imagem", name: "image", widget: "image"}
+      - name: "items"
+        label: "Projetos do Portfólio"
+        widget: "list"
+        fields:
+          - {label: "Título", name: "title", widget: "string"}
+          - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
+          - {label: "Imagem", name: "image", widget: "image"}
 
+  # NEW COLLECTION: A dedicated section for "Entregáveis" was missing.
+  # This allows you to edit the images and titles in this section directly from the CMS.
+  - name: "entregaveis"
+    label: "Exemplos de Entregáveis"
+    file: "_data/entregaveis.json"
+    description: "Gerencie as imagens e títulos da seção 'O Que Você Recebe'."
+    fields:
+      - name: "items"
+        label: "Itens Entregáveis"
+        widget: "list"
+        fields:
+          - {label: "Imagem do Entregável", name: "image", widget: "image"}
+          - {label: "Título", name: "title", widget: "string"}
+          - {label: "Categoria", name: "category", widget: "string"}
