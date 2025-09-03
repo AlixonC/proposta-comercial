@@ -1,1 +1,20 @@
+{
+  "items": [
+    {
+      "icon": "shield-check",
+      "title": "Garantia de Compatibilidade",
+      "description": "Asseguramos que todos os projetos são 100% compatíveis, eliminando surpresas e retrabalho."
+    },
+    {
+      "icon": "clock",
+      "title": "Compromisso com Prazos",
+      "description": "Respeitamos o cronograma acordado. A sua obra não pode esperar, e nós levamos isso a sério."
+    },
+    {
+      "icon": "users-three",
+      "title": "Suporte Técnico Contínuo",
+      "description": "Após a entrega, permanecemos à sua disposição e da sua equipe para esclarecer qualquer dúvida."
+    }
+  ]
+}
 
