@@ -98,7 +98,7 @@
         .motion-div { opacity: 0; }
     </style>
 </head>
-<body class="text-slate-800">
+<body>
 
     <header id="main-header" class="bg-transparent fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -268,93 +268,25 @@
         </div>
     </footer>
     
-    <!-- Modal e Floating CTA (se necessário) -->
-
+    <div id="contact-modal" class="modal-overlay fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[1000] opacity-0 invisible transition-all duration-300">
+        <div class="modal-content bg-white p-8 rounded-lg shadow-2xl w-full max-w-md text-center transform scale-95 transition-all duration-300">
+            <h2 class="text-2xl font-bold mb-4 text-gray-900">Excelente Escolha!</h2>
+            <p class="text-gray-600 mb-8">Você selecionou o <strong id="selected-package-name" style="color: var(--primary-dark);"></strong>. Para prosseguir, escolha seu método de contato:</p>
+            <div class="flex flex-col gap-4">
+                 <a id="whatsapp-link" href="#" target="_blank" class="inline-flex items-center justify-center gap-3 bg-green-500 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
+                    <i class="ph-whatsapp-logo text-xl"></i>
+                    <span>Conversar no WhatsApp</span>
+                </a>
+                <a id="email-link" href="#" class="inline-flex items-center justify-center gap-3 bg-gray-600 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
+                    <i class="ph-envelope-simple text-xl"></i>
+                    <span>Enviar um E-mail</span>
+                </a>
+            </div>
+            <button id="close-modal" class="mt-8 text-sm text-gray-500 hover:text-gray-700 transition-colors">Voltar</button>
+        </div>
+    </div>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            
-            // --- ANIMATION SETUP ---
-            const motion = window.motion;
-            document.querySelectorAll('.motion-div').forEach(el => {
-                motion.inView(el, () => {
-                    motion.animate(el, { opacity: 1, y: [20, 0] }, { duration: 0.7, delay: 0.2 });
-                });
-            });
-
-            // --- HEADER SCROLL & ACTIVE LINK ---
-            // ... (código existente) ...
-
-            // --- DATA FETCHING ---
-            // ... (código existente) ...
-
-            // --- RENDER FUNCTIONS ---
-            // ... (código existente) ...
-
-            // --- POPULATE CONTENT ---
-            // ... (código existente) ...
-
-            // PROBLEMA CARDS REVISED
-            const problemaIcons = { 'O Orçamento que Sangra': 'scales', 'O Cronograma Destruído': 'clock-afternoon', 'O Estresse que Não Acaba': 'fire' };
-            render('problema-cards', content.problemas, (item, i) => `
-                <div class="bg-gray-800 p-8 rounded-lg interactive-card border-t-4 border-[color:var(--accent-bronze)]">
-                    <i class="ph-${problemaIcons[item.title] || 'warning-circle'}" style="color: var(--accent-bronze); font-size: 3rem; margin-bottom: 1.25rem; display: inline-block;"></i>
-                    <h3 class="text-xl font-bold text-white">${item.title}</h3>
-                    <p class="mt-3 text-gray-400">${item.description}</p>
-                </div>`);
-            
-            // PACKAGES CONTAINER REVISED
-            render('packages-container', content.packages, (pkg, i) => `
-                <div class="relative bg-white p-8 rounded-lg shadow-xl border-2 ${pkg.recommended ? 'border-[color:var(--accent-bronze)]' : 'border-transparent'} flex flex-col interactive-card">
-                    ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[color:var(--accent-bronze)] text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Recomendado</div>' : ''}
-                    <div class="flex-grow">
-                        <h3 class="text-2xl font-bold package-name text-gray-900">${pkg.name}</h3>
-                        <p class="mt-2 text-gray-500 min-h-[3rem]">${pkg.description}</p>
-                        <p class="text-4xl font-extrabold my-6 text-gray-900">R$ ${pkg.price}</p>
-                        <ul class="space-y-3 text-gray-700 text-left">${(pkg.features || []).map(f => `<li class="flex items-start"><i class="ph-check-circle text-green-500 text-xl mr-2 mt-0.5"></i><span>${f}</span></li>`).join('')}</ul>
-                    </div>
-                    <button class="select-plan-btn w-full mt-8 py-3 px-6 rounded-full font-semibold transition-colors ${pkg.recommended ? 'bg-[color:var(--primary-dark)] text-white hover:bg-black' : 'bg-slate-200 text-slate-800 hover:bg-slate-300'} cursor-pointer flex items-center justify-center gap-2">
-                        <span>Selecionar Plano</span>
-                        <i class="ph-arrow-right text-xl"></i>
-                    </button>
-                </div>`);
-
-             // TIMELINE CONTENT REVISED
-             render('timeline-content', content.timeline, (item, i) => `
-                <div class="relative timeline-item">
-                    <div class="md:flex items-center ${i % 2 === 0 ? '' : 'flex-row-reverse'}">
-                        <div class="md:w-1/2 p-4">
-                            <div class="bg-gray-800 p-6 rounded-lg shadow-lg border-l-4 border-[color:var(--accent-bronze)]">
-                                <h3 class="text-xl font-bold text-white">${item.title}</h3>
-                                <p class="text-gray-400 mt-2">${item.description}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>`);
-
-            // FAQ REVISED
-            render('faq-container', content.faq, (item, i) => `
-                <div class="faq-item bg-gray-800 rounded-lg shadow-sm overflow-hidden">
-                    <div class="faq-header p-5 flex justify-between items-center cursor-pointer">
-                        <h4 class="font-semibold text-lg text-white">${item.question}</h4>
-                        <i class="ph-plus faq-icon text-2xl font-light" style="color: var(--accent-bronze);"></i>
-                    </div>
-                    <div class="faq-content hidden p-5 pt-0 text-gray-400"><p>${item.answer}</p></div>
-                </div>`);
-            document.querySelectorAll('.faq-header').forEach(h => h.addEventListener('click', () => {
-                const item = h.parentElement;
-                item.classList.toggle('open');
-                h.nextElementSibling.classList.toggle('hidden');
-            }));
-
-            // --- REST OF THE SCRIPT (MODAL, MENU, ETC) ---
-            // ... (código existente, adaptado para as novas cores se necessário)
-            // Lembre-se de checar o código completo abaixo, pois pequenas adaptações podem ser necessárias
-        });
-
-
-        // --- SCRIPT COMPLETO (COPIAR E COLAR) ---
-        // (Cole o script completo da versão anterior aqui, garantindo que as funções de renderização
-        // revisadas acima substituam as antigas. O restante da lógica pode ser mantida.)
         document.addEventListener('DOMContentLoaded', async () => {
             const motion = window.motion;
             document.querySelectorAll('.motion-div').forEach(el => {
@@ -450,10 +382,9 @@
                     </button>
                 </div>`);
 
-            const guaranteeIcons = {'✅': 'shield-check', '⏰': 'timer', '🛠️': 'users-three'};
             render('garantia-cards', content.guarantees, (item, i) => `
                 <div class="bg-gray-900/50 p-8 rounded-lg interactive-card backdrop-blur-sm">
-                    <i class="ph-${guaranteeIcons[item.icon] || 'check-circle'}" style="color: var(--accent-bronze); font-size: 3rem; margin-bottom: 1.25rem; display: inline-block;"></i>
+                    <i class="ph-${item.icon || 'check-circle'}" style="color: var(--accent-bronze); font-size: 3rem; margin-bottom: 1.25rem; display: inline-block;"></i>
                     <h3 class="font-bold text-xl text-white">${item.title}</h3>
                     <p class="mt-3 text-gray-300">${item.description}</p>
                 </div>`);
@@ -547,6 +478,38 @@
                 mobileMenu.classList.add('hidden');
                 menuIcon.className = 'ph-list text-3xl';
             }));
+            
+            const modal = document.getElementById('contact-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const selectedPackageNameEl = document.getElementById('selected-package-name');
+            const whatsappLink = document.getElementById('whatsapp-link');
+            const emailLink = document.getElementById('email-link');
+
+            document.querySelectorAll('.select-plan-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const card = e.target.closest('.relative');
+                    const packageName = card.querySelector('.package-name').textContent;
+                    
+                    selectedPackageNameEl.textContent = packageName;
+                    const whatsappMessage = `Olá, tenho interesse no ${packageName}. Gostaria de mais informações.`;
+                    const emailSubject = `Interesse no ${packageName}`;
+                    const emailBody = `Olá, gostaria de mais informações sobre o ${packageName}.`;
+
+                    whatsappLink.href = `https://wa.me/5575998014491?text=${encodeURIComponent(whatsappMessage)}`;
+                    emailLink.href = `mailto:alison.karvalho@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+                    
+                    modal.classList.remove('invisible', 'opacity-0');
+                    modal.querySelector('.modal-content').classList.remove('scale-95');
+                });
+            });
+
+            const closeModal = () => {
+                modal.classList.add('opacity-0');
+                modal.querySelector('.modal-content').classList.add('scale-95');
+                setTimeout(() => modal.classList.add('invisible'), 300);
+            };
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
         });
     </script>
