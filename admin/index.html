@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Estilos Personalizados para a Página de Login -->
+  <!-- Estilos Personalizados -->
   <style>
     :root {
       --color-primary: #0A2463;
@@ -21,10 +21,9 @@
       --font-heading: 'Plus Jakarta Sans', sans-serif;
       --font-body: 'Inter', sans-serif;
     }
-    /* Estiliza o widget de login do Netlify Identity */
-    [data-netlify-identity-widget] {
-      font-family: var(--font-body);
-    }
+
+    /* --- Estilos para a TELA DE LOGIN --- */
+    [data-netlify-identity-widget] { font-family: var(--font-body); }
     body::before {
       content: 'Painel de Controle\AC Engenharia';
       display: block;
@@ -36,21 +35,15 @@
       padding-top: 5vh;
       white-space: pre;
     }
-    body {
-      background-color: var(--color-secondary);
-    }
+    body { background-color: var(--color-secondary); }
     .modal-container {
       background-color: rgba(255, 255, 255, 0.05) !important;
       border-radius: 16px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(10px);
     }
-    .modal-content {
-      background: transparent !important;
-    }
-    .modal-label, .modal-list-heading, .modal-copy {
-      color: #e2e8f0 !important;
-    }
+    .modal-content { background: transparent !important; }
+    .modal-label, .modal-list-heading, .modal-copy { color: #e2e8f0 !important; }
     .modal-form input, .modal-form .btn {
       border-radius: 8px !important;
       border: 1px solid #475569 !important;
@@ -63,14 +56,45 @@
       font-weight: bold !important;
       transition: all 0.2s ease-in-out;
     }
-    .modal-form .btn:hover {
-        filter: brightness(1.1);
+    .modal-form .btn:hover { filter: brightness(1.1); }
+    .modal-list-item-copy { color: white !important; }
+    .modal-list-item svg { fill: white !important; }
+
+    /* --- Estilos para o PAINEL INTERNO do CMS (Pós-Login) --- */
+    /* Aplica a fonte principal a todo o painel */
+    [data-testid="app-root"] {
+      font-family: var(--font-body), sans-serif !important;
     }
-    .modal-list-item-copy {
+    /* Cabeçalho superior */
+    header[class*="AppHeader"] {
+      background-color: var(--color-primary) !important;
+    }
+    /* Título no cabeçalho */
+    header[class*="AppHeader"] h1, header[class*="AppHeader"] a {
+        font-family: var(--font-heading), sans-serif !important;
+        font-weight: 700 !important;
+    }
+    /* Barra lateral de coleções */
+    div[class*="SidebarContainer"] {
+        background-color: #F8FAFC !important;
+        border-right: 1px solid #e2e8f0;
+    }
+    /* Link ativo na barra lateral */
+    a[class*="CollectionLink-link-active"] {
+        background-color: var(--color-accent) !important;
+        color: white !important;
+        border-left: 4px solid var(--color-primary);
+    }
+    a[class*="CollectionLink-link-active"] div[class*="text"] {
         color: white !important;
     }
-    .modal-list-item svg {
-        fill: white !important;
+    /* Botão principal de "New" */
+    a[class*="Button-button-default"] {
+        background-color: var(--color-accent) !important;
+        font-weight: 600 !important;
+    }
+    a[class*="Button-button-default"]:hover {
+        filter: brightness(1.1);
     }
   </style>
 
@@ -95,3 +119,4 @@
   </script>
 </body>
 </html>
+
