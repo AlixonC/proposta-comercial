@@ -426,7 +426,7 @@
                 <i id="menu-icon" class="ph-bold ph-list text-3xl"></i>
             </button>
         </nav>
-         <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-[var(--color-primary)]/95 backdrop-blur-sm flex flex-col justify-center items-center gap-6 z-40"></div>
+         <div id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-[var(--color-secondary)] flex flex-col justify-center items-center gap-6 z-40 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out"></div>
     </header>
 
     <main>
@@ -763,8 +763,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         mobileMenu.innerHTML = document.getElementById('nav-links').innerHTML;
         
         const toggleMenu = () => {
-            mobileMenu.classList.toggle('hidden');
-            menuIcon.className = menuIcon.classList.contains('ph-list') ? 'ph-bold ph-x text-3xl' : 'ph-bold ph-list text-3xl';
+            const isOpening = mobileMenu.classList.contains('opacity-0');
+            if (isOpening) {
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+                menuIcon.className = 'ph-bold ph-x text-3xl';
+            } else {
+                mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                menuIcon.className = 'ph-bold ph-list text-3xl';
+            }
         };
 
         menuButton.addEventListener('click', toggleMenu);
