@@ -10,17 +10,12 @@ logo_url: https://placehold.co/150x50/FFFFFF/0A2463?text=AC+Engenharia
 media_folder: "imagens" # Where to upload the files
 public_folder: "/imagens" # The src attribute for the uploaded media
 
-# This is a new setting to help with image management.
-# It allows the user to select images from the media library that have already been uploaded.
-media_library:
-  config:
-    multiple: false
-
+# This collection uses the "files" type. It's perfect for managing different sections
+# of the site where each section's content is stored in a single, separate JSON file.
+# ALL file-based collections are now grouped here, which fixes the validation error.
 collections:
-  # This collection uses the "files" type. It's perfect for managing different sections
-  # of the site where each section's content is stored in a single, separate JSON file.
-  - name: "pages"
-    label: "Conteúdo das Seções"
+  - name: "content"
+    label: "Conteúdo do Site"
     files:
       - label: "1. Configurações Gerais"
         name: "config"
@@ -47,7 +42,6 @@ collections:
           - { label: "Nome e Cargo", name: "name", widget: "string" }
           - { label: "Biografia", name: "bio", widget: "text" }
       
-      # NOTE: The "solutions" section now includes an "image" field for each service.
       - label: "4. Soluções (Abas)"
         name: "solutions"
         file: "_data/solutions.json"
@@ -60,7 +54,7 @@ collections:
               - {label: "Título", name: "title", widget: "string"}
               - {label: "Ícone", name: "icon", widget: "string"}
               - {label: "Descrição", name: "description", widget: "text"}
-              - {label: "Imagem de Destaque", name: "image", widget: "image"} # New image field
+              - {label: "Imagem de Destaque", name: "image", widget: "image"}
               - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
           - label: "Projeto Estrutural"
             name: "estrutural"
@@ -69,7 +63,7 @@ collections:
               - {label: "Título", name: "title", widget: "string"}
               - {label: "Ícone", name: "icon", widget: "string"}
               - {label: "Descrição", name: "description", widget: "text"}
-              - {label: "Imagem de Destaque", name: "image", widget: "image"} # New image field
+              - {label: "Imagem de Destaque", name: "image", widget: "image"}
               - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
           - label: "Projeto Hidrossanitário"
             name: "hidrossanitario"
@@ -78,7 +72,7 @@ collections:
               - {label: "Título", name: "title", widget: "string"}
               - {label: "Ícone", name: "icon", widget: "string"}
               - {label: "Descrição", name: "description", widget: "text"}
-              - {label: "Imagem de Destaque", name: "image", widget: "image"} # New image field
+              - {label: "Imagem de Destaque", name: "image", widget: "image"}
               - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
           - label: "Projeto Elétrico"
             name: "eletrico"
@@ -87,7 +81,7 @@ collections:
               - {label: "Título", name: "title", widget: "string"}
               - {label: "Ícone", name: "icon", widget: "string"}
               - {label: "Descrição", name: "description", widget: "text"}
-              - {label: "Imagem de Destaque", name: "image", widget: "image"} # New image field
+              - {label: "Imagem de Destaque", name: "image", widget: "image"}
               - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
 
       - label: "5. Comparativo de Valor (ROI)"
@@ -115,10 +109,36 @@ collections:
             fields:
               - {label: "Título da Etapa", name: "title", widget: "string"}
               - {label: "Descrição", name: "description", widget: "text"}
+      
+      - label: "7. Portfólio"
+        name: "portfolio"
+        file: "_data/portfolio.json"
+        description: "Gerencie todos os projetos do seu portfólio aqui."
+        fields:
+          - name: "items"
+            label: "Projetos do Portfólio"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
+              - {label: "Imagem", name: "image", widget: "image"}
 
-      - label: "7. Garantias"
+      - label: "8. Exemplos de Entregáveis"
+        name: "entregaveis"
+        file: "_data/entregaveis.json"
+        description: "Gerencie as imagens e títulos da seção 'O Que Você Recebe'."
+        fields:
+          - name: "items"
+            label: "Itens Entregáveis"
+            widget: "list"
+            fields:
+              - {label: "Imagem do Entregável", name: "image", widget: "image"}
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Categoria", name: "category", widget: "string"}
+
+      - label: "9. Garantias"
         name: "guarantees"
-        file: "_data/guarantees.json"
+        file: "_data/guaranteis.json"
         description: "As garantias que você oferece."
         fields:
           - name: "items"
@@ -129,7 +149,7 @@ collections:
               - {label: "Título", name: "title", widget: "string"}
               - {label: "Descrição", name: "description", widget: "text"}
 
-      - label: "8. Depoimentos"
+      - label: "10. Depoimentos"
         name: "testimonials"
         file: "_data/testimonials.json"
         description: "Depoimentos de clientes."
@@ -141,7 +161,7 @@ collections:
               - {label: "Texto", name: "text", widget: "text"}
               - {label: "Autor", name: "author", widget: "string"}
 
-      - label: "9. Pacotes de Serviços"
+      - label: "11. Pacotes de Serviços"
         name: "packages"
         file: "_data/packages.json"
         description: "Os planos de investimento que você oferece."
@@ -156,7 +176,7 @@ collections:
               - { label: "Funcionalidades", name: "features", widget: "list", field: { label: "Item", name: "feature", widget: "string" } }
               - { label: "É Recomendado?", name: "recommended", widget: "boolean", default: false }
 
-      - label: "10. Perguntas Frequentes (FAQ)"
+      - label: "12. Perguntas Frequentes (FAQ)"
         name: "faq"
         file: "_data/faq.json"
         description: "As perguntas e respostas mais comuns."
@@ -168,34 +188,3 @@ collections:
               - {label: "Pergunta", name: "question", widget: "string"}
               - {label: "Resposta", name: "answer", widget: "text"}
 
-  # SOLUTION: The portfolio was incorrectly configured as a "folder" collection.
-  # This creates a new file for each item, but your site reads a single `portfolio.json`.
-  # The fix is to make it a "file" collection and manage the items with a "list" widget.
-  # This stops content duplication and inconsistency.
-  - name: "portfolio"
-    label: "Portfólio"
-    file: "_data/portfolio.json" # Point to the single JSON file
-    description: "Gerencie todos os projetos do seu portfólio aqui."
-    fields:
-      - name: "items"
-        label: "Projetos do Portfólio"
-        widget: "list"
-        fields:
-          - {label: "Título", name: "title", widget: "string"}
-          - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
-          - {label: "Imagem", name: "image", widget: "image"}
-
-  # NEW COLLECTION: A dedicated section for "Entregáveis" was missing.
-  # This allows you to edit the images and titles in this section directly from the CMS.
-  - name: "entregaveis"
-    label: "Exemplos de Entregáveis"
-    file: "_data/entregaveis.json"
-    description: "Gerencie as imagens e títulos da seção 'O Que Você Recebe'."
-    fields:
-      - name: "items"
-        label: "Itens Entregáveis"
-        widget: "list"
-        fields:
-          - {label: "Imagem do Entregável", name: "image", widget: "image"}
-          - {label: "Título", name: "title", widget: "string"}
-          - {label: "Categoria", name: "category", widget: "string"}
