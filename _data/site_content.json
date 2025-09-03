@@ -10,15 +10,15 @@
   },
   "problemas": [
     {
-      "title": "O Orçamento que Sangra",
+      "title": "Custos Imprevistos",
       "description": "Cada incompatibilidade descoberta na obra vira um remendo caro. É o desperdício de material, o pagamento de mão de obra extra e a certeza de que o custo final será muito maior que o planejado."
     },
     {
-      "title": "O Cronograma Destruído",
+      "title": "Prazos Excedidos",
       "description": "A obra que se arrasta, os prazos estourados e a frustração de ver o sonho ser adiado. O retrabalho não consome apenas dinheiro, ele rouba seu tempo e sua paz."
     },
     {
-      "title": "O Estresse que Não Acaba",
+      "title": "Estresse e Desgaste",
       "description": "Conflitos com a equipe, decisões tomadas sob pressão e a constante preocupação com a segurança da estrutura. Seu sonho não pode se transformar em um pesadelo."
     }
   ],
@@ -65,10 +65,10 @@
     }
   ],
   "solutions": {
-    "arquitetonico": { "key": "arquitetonico", "title": "1. Projeto Arquitetônico", "emoji": "🏠", "subtitle": "A alma do seu espaço, onde seus sonhos tomam forma.", "description": "Criamos espaços que refletem sua personalidade e atendem às suas necessidades, garantindo o máximo de conforto, iluminação e ventilação natural.", "deliverables": ["Plantas baixas humanizadas", "Cortes e fachadas detalhadas", "Layout de pontos elétricos e hidráulicos", "Modelo 3D para visualização"] },
-    "estrutural": { "key": "estrutural", "title": "2. Projeto Estrutural", "emoji": "🏗️", "subtitle": "A base sólida que garante a segurança e a durabilidade.", "description": "Garantimos a segurança e a longevidade da sua construção, otimizando o uso de materiais para que você economize sem abrir mão da qualidade.", "deliverables": ["Plantas de formas", "Detalhamento de pilares, vigas, lajes e fundações", "Lista de materiais (aço e concreto)"] },
-    "hidrossanitario": { "key": "hidrossanitario", "title": "3. Projeto Hidrossanitário", "emoji": "💧", "subtitle": "Saúde e conforto para o seu dia a dia.", "description": "Planejamos sistemas eficientes de água e esgoto para garantir o funcionamento perfeito da sua casa, evitando entupimentos e vazamentos futuros.", "deliverables": ["Plantas de distribuição de água fria e quente", "Isométricos para fácil execução", "Detalhamento de caixas e esgoto", "Lista de materiais"] },
-    "eletrico": { "key": "eletrico", "title": "4. Projeto Elétrico", "emoji": "⚡", "subtitle": "A energia que dá vida ao seu lar, com total segurança.", "description": "Dimensionamos uma instalação elétrica segura e eficiente, prevendo o uso de todos os seus equipamentos para evitar sobrecargas ou falta de tomadas.", "deliverables": ["Plantas de pontos de iluminação e tomadas", "Diagramas dos quadros de distribuição", "Detalhamento de eletrodutos e fiação", "Lista de materiais"] }
+    "arquitetonico": { "icon": "house-line", "title": "Projeto Arquitetônico", "description": "Criamos espaços que refletem sua personalidade e atendem às suas necessidades, garantindo o máximo de conforto, iluminação e ventilação natural.", "deliverables": ["Plantas baixas humanizadas", "Cortes e fachadas detalhadas", "Layout de pontos elétricos e hidráulicos", "Modelo 3D para visualização"] },
+    "estrutural": { "icon": "hard-hat", "title": "Projeto Estrutural", "description": "Garantimos a segurança e a longevidade da sua construção, otimizando o uso de materiais para que você economize sem abrir mão da qualidade.", "deliverables": ["Plantas de formas", "Detalhamento de pilares, vigas, lajes e fundações", "Lista de materiais (aço e concreto)"] },
+    "hidrossanitario": { "icon": "drop", "title": "Projeto Hidrossanitário", "description": "Planejamos sistemas eficientes de água e esgoto para garantir o funcionamento perfeito da sua casa, evitando entupimentos e vazamentos futuros.", "deliverables": ["Plantas de distribuição de água fria e quente", "Isométricos para fácil execução", "Detalhamento de caixas e esgoto", "Lista de materiais"] },
+    "eletrico": { "icon": "lightning", "title": "Projeto Elétrico", "description": "Dimensionamos uma instalação elétrica segura e eficiente, prevendo o uso de todos os seus equipamentos para evitar sobrecargas ou falta de tomadas.", "deliverables": ["Plantas de pontos de iluminação e tomadas", "Diagramas dos quadros de distribuição", "Detalhamento de eletrodutos e fiação", "Lista de materiais"] }
   },
   "timeline": [
     { "title": "Briefing e Análise", "description": "Entendemos suas necessidades, desejos e orçamento para criar a base do projeto." },
@@ -92,3 +92,4 @@
     { "question": "O que acontece se eu precisar fazer alterações no projeto?", "answer": "Qualquer alteração solicitada que modifique o escopo original será tratada como um aditivo ao contrato, com novo orçamento e ajuste de prazo. Nosso objetivo é garantir que o projeto final atenda perfeitamente às suas expectativas." }
   ]
 }
+
