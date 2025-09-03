@@ -76,7 +76,18 @@ collections:
           - { name: "timeline", label: "Processo de Trabalho (Linha do Tempo)", widget: "list", fields: [ {label: "Título da Etapa", name: "title", widget: "string"}, {label: "Descrição da Etapa", name: "description", widget: "text"} ] }
           - { name: "guarantees", label: "Garantias", widget: "list", fields: [ {label: "Nome do Ícone (Phosphor Icons)", name: "icon", widget: "string", hint: "Ex: 'shield-check', 'clock', 'users-three'"}, {label: "Título", name: "title", widget: "string"}, {label: "Descrição", name: "description", widget: "text"} ] }
           - { name: "testimonials", label: "Depoimentos", widget: "list", fields: [ {label: "Texto do Depoimento", name: "text", widget: "text"}, {label: "Autor", name: "author", widget: "string"} ] }
-          - { name: "packages", label: "Pacotes de Serviços", widget: "list", fields: [ { label: "Nome do Pacote", name: "name", widget: "string" }, { label: "Descrição", name: "description", widget: "string" }, { label: "Preço", name: "price", widget: "string" }, { label: "features", label: "Funcionalidades", widget: "list", field: { label: "Item", name: "feature", widget: "string" } }, { label: "É Recomendado?", name: "recommended", widget: "boolean", default: false } ] }
+          - name: "packages"
+            label: "Pacotes de Serviços"
+            widget: "list"
+            fields:
+              - { label: "Nome do Pacote", name: "name", widget: "string" }
+              - { label: "Descrição", name: "description", widget: "string" }
+              - { label: "Preço", name: "price", widget: "string" }
+              - name: "features" 
+                label: "Funcionalidades"
+                widget: "list"
+                field: { label: "Item", name: "feature", widget: "string" }
+              - { label: "É Recomendado?", name: "recommended", widget: "boolean", default: false }
           - { name: "faq", label: "Perguntas Frequentes (FAQ)", widget: "list", fields: [ {label: "Pergunta", name: "question", widget: "string"}, {label: "Resposta", name: "answer", widget: "text"} ] }
 
   - name: "portfolio"
@@ -94,4 +105,3 @@ collections:
               - {label: "Título", name: "title", widget: "string"}
               - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
               - {label: "Imagem", name: "image", widget: "image"}
-
