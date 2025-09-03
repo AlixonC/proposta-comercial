@@ -702,7 +702,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- UTILITY FUNCTIONS ---
     const resolveImageUrl = (path) => {
         if (!path || path.startsWith('http')) return path;
-        return `${GITHUB_RAW_BASE_URL}${path.startsWith('/') ? path.substring(1) : path}`;
+        // Ensure the path doesn't start with a slash if it's coming from the CMS,
+        // as it might be saved as "/imagens/file.jpg".
+        const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+        return `${GITHUB_RAW_BASE_URL}${cleanPath}`;
     };
 
     const fetchData = async (url) => {
@@ -717,18 +720,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
     
     const fetchAllContent = async () => {
-        const dataFiles = ['config', 'hero', 'roi', 'solutions', 'sobre', 'timeline', 'entregaveis', 'guarantees', 'testimonials', 'packages', 'faq'];
+        const dataFiles = ['config', 'hero', 'roi', 'solutions', 'sobre', 'timeline', 'entregaveis', 'guarantees', 'testimonials', 'packages', 'faq', 'portfolio'];
         const fetchPromises = dataFiles.map(file => fetchData(`${GITHUB_RAW_BASE_URL}_data/${file}.json`));
         const allData = await Promise.all(fetchPromises);
         
         const [
             config, hero, roi, solutions, sobre, timeline, entregaveis,
-            guarantees, testimonials, packages, faq
+            guarantees, testimonials, packages, faq, portfolio
         ] = allData;
 
-        // Adicionando um fallback para garantir que o objeto não seja nulo
         if (!config || !hero || !solutions || !sobre || !timeline || !packages) {
-             console.error("Um ou mais arquivos de conteúdo principal não puderam ser carregados.");
+             console.error("One or more main content files could not be loaded.");
              return null;
         }
 
@@ -744,14 +746,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             guarantees: guarantees?.items,
             testimonials: testimonials?.items,
             packages: packages?.items,
-            faq: faq?.items
+            faq: faq?.items,
+            portfolio: portfolio?.items
         };
     };
 
-    const [content, portfolioData] = await Promise.all([
-        fetchAllContent(),
-        fetchData(`${GITHUB_RAW_BASE_URL}_data/portfolio.json`),
-    ]);
+    const content = await fetchAllContent();
 
     if (!content) {
         document.body.innerHTML = "<div class='h-screen w-screen flex items-center justify-center text-white bg-red-500'><h1>Erro ao carregar o conteúdo da proposta. Por favor, recarregue a página.</h1></div>";
@@ -760,6 +760,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Process data once
     deliverablesData = (content.entregaveis || []).map(slide => ({ ...slide, image: resolveImageUrl(slide.image) }));
+    const portfolioData = { items: content.portfolio || [] };
+
 
     const setText = (selector, text) => {
         const el = document.querySelector(selector);
@@ -813,7 +815,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const params = new URLSearchParams(window.location.search);
         const clientName = params.get('cliente') || "Prezado(a) Cliente";
         const issueDate = new Date();
-        const expiryDate = new Date(issueDate.setDate(issueDate.getDate() + (content.proposal_details.validity_days || 15)));
+        const expiryDate = new Date(new Date().setDate(issueDate.getDate() + (content.proposal_details.validity_days || 15)));
 
         setText('#client-name', clientName);
         setText('#footer-client-name', clientName);
@@ -827,6 +829,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const solutions = Object.entries(content.solutions);
         
         render('#tabs-buttons', solutions, ([key, s]) => `<button class="tab-button font-semibold text-lg py-2 px-4" data-tab="${key}">${s.title}</button>`);
+        
+        // UPDATE: Now uses s.image for the image source
         render('#tabs-content', solutions, ([key, s]) => `
             <div id="tab-content-${key}" class="tab-content">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -836,7 +840,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <ul class="mt-6 space-y-3">${(s.deliverables || []).map(d => `<li class="flex items-start"><i class="ph-fill ph-check-circle text-xl mr-3 mt-0.5 text-[var(--color-accent)]"></i><span>${d}</span></li>`).join('')}</ul>
                     </div>
                     <div class="mt-8 md:mt-0 md:order-1">
-                        <img src="https://placehold.co/500x400/F8FAFC/1E293B?text=${encodeURIComponent(s.title)}" class="rounded-xl shadow-lg w-full">
+                        <img src="${resolveImageUrl(s.image) || `https://placehold.co/500x400/F8FAFC/1E293B?text=${encodeURIComponent(s.title)}`}" class="rounded-xl shadow-lg w-full h-auto aspect-[5/4] object-cover">
                     </div>
                 </div>
             </div>`);
@@ -859,15 +863,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                 ? portfolioData.items 
                 : portfolioData.items.filter(item => item.category === filter);
             
-            render('#portfolio-grid', filteredItems, (item, index) => `
+            render('#portfolio-grid', filteredItems, (item, index) => {
+                const originalIndex = portfolioData.items.findIndex(p => p.title === item.title && p.image === item.image);
+                return `
                 <div class="group portfolio-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" 
-                     data-index="${index}" data-filter="${filter}">
+                     data-index="${originalIndex}" data-filter="${filter}">
                     <div class="overflow-hidden"><img src="${resolveImageUrl(item.image)}" alt="${item.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy"></div>
                     <div class="p-6">
                         <span class="text-sm font-semibold uppercase tracking-wider text-slate-500">${item.category}</span>
                         <h3 class="text-xl font-bold text-slate-800 mt-2">${item.title}</h3>
                     </div>
-                </div>`);
+                </div>`;
+            });
         };
         
         document.querySelector('#portfolio-filters').addEventListener('click', e => {
@@ -946,7 +953,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const initTestimonials = () => render('#testimonials-container', content.testimonials, t => `<div class="bg-slate-800 p-8 rounded-xl shadow-lg"><i class="ph-fill ph-quotes text-4xl text-[var(--color-accent)]"></i><p class="text-lg italic text-slate-300 mt-4">"${t.text}"</p><p class="font-bold text-right mt-6 text-slate-200">${t.author}</p></div>`);
 
     const initPackages = () => render('#packages-container', content.packages, pkg => `
-        <div class="package-card relative p-8 flex flex-col cursor-pointer" data-modal-target="package-modal" data-package-name="${pkg.name}">
+        <div class="package-card relative p-8 flex flex-col cursor-pointer ${pkg.recommended ? 'recommended' : ''}" data-modal-target="package-modal" data-package-name="${pkg.name}">
             ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[var(--color-accent)] text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Recomendado</div>' : ''}
             <div class="flex-grow">
                 <h3 class="text-2xl font-bold text-[var(--color-primary)]">${pkg.name}</h3>
@@ -1014,7 +1021,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const packageName = packageModalTrigger.dataset.packageName;
                 setText('#package-modal-name', packageName);
 
-                // Find the selected package to display its features
                 const selectedPackage = content.packages.find(p => p.name === packageName);
                 if (selectedPackage && selectedPackage.features) {
                     render('#package-modal-features', selectedPackage.features, feature => `
@@ -1040,13 +1046,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const { index, filter } = portfolioTrigger.dataset;
                 const filteredItems = (filter === 'all' ? portfolioData.items : portfolioData.items.filter(item => item.category === filter))
                                       .map(item => ({ ...item, image: resolveImageUrl(item.image) }));
-                const clickedIndex = filteredItems.findIndex(item => resolveImageUrl(item.image) === resolveImageUrl(portfolioData.items[index].image));
-                createLightboxSwiper(filteredItems, clickedIndex);
+                
+                const clickedItemOriginalIndex = parseInt(portfolioTrigger.dataset.index, 10);
+                const clickedItem = portfolioData.items[clickedItemOriginalIndex];
+                
+                const actualIndexInFilteredList = filteredItems.findIndex(item => item.title === clickedItem.title && item.image === resolveImageUrl(clickedItem.image));
+
+                createLightboxSwiper(filteredItems, actualIndexInFilteredList >= 0 ? actualIndexInFilteredList : 0);
             }
 
             const deliverablesTrigger = e.target.closest('.deliverables-swiper .swiper-slide');
             if(deliverablesTrigger) {
-                const realIndex = deliverablesTrigger.dataset.swiperSlideIndex;
+                const realIndex = deliverablesTrigger.dataset.swiperSlideIndex || deliverablesTrigger.dataset.index;
                 createLightboxSwiper(deliverablesData, parseInt(realIndex, 10));
             }
 
@@ -1076,4 +1087,3 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 </body>
 </html>
-
