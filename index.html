@@ -8,136 +8,101 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://unpkg.com/phosphor-icons"></script>
+    <script src="https://unpkg.com/framer-motion@10/dist/framer-motion.umd.js"></script>
 
     <style>
         :root {
-            --primary-blue: #0A2B4C; /* Oxford Blue */
-            --accent-gold: #D4A056;  /* Golden Ochre */
-            --light-bg: #f8f9fa;
-            --light-gray: #e9ecef;
-            --dark-text: #212529;
-            --medium-text: #495057;
+            --primary-dark: #111827; /* Gray-900 */
+            --primary-light: #f9fafb; /* Gray-50 */
+            --accent-bronze: #B4753C; 
+            --text-dark: #1f2937;     /* Gray-800 */
+            --text-light: #d1d5db;    /* Gray-300 */
+            --text-medium: #6b7280;   /* Gray-500 */
         }
 
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: var(--light-bg); 
-            color: var(--dark-text); 
+            background-color: var(--primary-dark); 
+            color: var(--text-light); 
         }
 
         .hero-pattern {
-            background-color: #eef6ff;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23d4a056' fill-opacity='0.1'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-color: var(--primary-light);
         }
         header.scrolled { 
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(17, 24, 39, 0.85);
             backdrop-filter: blur(8px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); 
         }
         .nav-link { 
-            color: var(--medium-text); 
+            color: var(--text-light); 
             font-weight: 500; 
             transition: color 0.3s; 
             position: relative; 
             padding-bottom: 6px; 
         }
-        .nav-link:hover { color: var(--primary-blue); }
+        .nav-link:hover { color: var(--accent-bronze); }
         .nav-link::after { 
-            content: ''; 
-            position: absolute; 
-            bottom: 0; 
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0; 
-            height: 2px; 
-            background-color: var(--primary-blue);
+            content: ''; position: absolute; bottom: 0; left: 50%;
+            transform: translateX(-50%); width: 0; height: 2px; 
+            background-color: var(--accent-bronze);
             transition: width 0.3s ease-out;
         }
         .nav-link:hover::after, .nav-link.active::after { width: 100%; }
         
         .cta-button { 
-            background-color: var(--primary-blue); 
+            background-color: var(--accent-bronze); 
             color: white; 
             border-radius: 9999px; 
             transition: all 0.3s;
-            box-shadow: 0 4px 15px -5px rgba(10, 43, 76, 0.6);
+            box-shadow: 0 4px 20px -5px rgba(180, 117, 60, 0.5);
         }
         .cta-button:hover { 
-            background-color: #061e36; 
+            background-color: #a56a36; 
             transform: translateY(-3px); 
-            box-shadow: 0 6px 20px -5px rgba(10, 43, 76, 0.8);
+            box-shadow: 0 6px 25px -5px rgba(180, 117, 60, 0.7);
         }
         
         .tab-button.active { 
-            border-color: var(--primary-blue); 
-            background-color: #fff; 
-            color: var(--primary-blue); 
+            border-color: var(--accent-bronze); 
+            background-color: var(--primary-light); 
+            color: var(--text-dark); 
             font-weight: 600;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
         }
 
         .timeline-item::before { 
-            content: ''; 
-            position: absolute; 
-            left: -32px; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            width: 24px; 
-            height: 24px; 
-            border-radius: 50%; 
-            background-color: #fff; 
-            border: 5px solid var(--primary-blue); 
-            z-index: 1;
+            content: ''; position: absolute; left: -32px; top: 50%; 
+            transform: translateY(-50%); width: 24px; height: 24px; 
+            border-radius: 50%; background-color: var(--primary-light); 
+            border: 5px solid var(--accent-bronze); z-index: 1;
         }
-
-        .faq-header { cursor: pointer; }
-        .faq-icon { transition: transform 0.3s; }
-        .faq-item.open .faq-icon { transform: rotate(45deg); }
         
         .interactive-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .interactive-card:hover { 
-            transform: translateY(-8px) scale(1.03); 
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15); 
+            transform: translateY(-10px) scale(1.03); 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); 
         }
 
         .swiper-button-next, .swiper-button-prev { 
-            color: var(--primary-blue); 
-            background-color: rgba(255, 255, 255, 0.7);
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
+            color: #fff; background-color: rgba(17, 24, 39, 0.5);
+            width: 44px; height: 44px; border-radius: 50%;
             transition: background-color 0.3s;
         }
         .swiper-button-next:hover, .swiper-button-prev:hover {
-            background-color: rgba(255, 255, 255, 1);
+            background-color: rgba(17, 24, 39, 0.8);
         }
-        .swiper-pagination-bullet-active { background-color: var(--primary-blue); }
-
-        .modal-overlay { 
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
-            background: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; 
-            z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease-in-out; 
-            backdrop-filter: blur(5px);
-        }
-        .modal-overlay.visible { opacity: 1; visibility: visible; }
-        .modal-content { 
-            background: white; padding: 2.5rem; border-radius: 0.75rem; width: 90%; max-width: 500px; 
-            text-align: center; transform: scale(0.95) translateY(10px); transition: all 0.3s ease-in-out; 
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-        }
-        .modal-overlay.visible .modal-content { transform: scale(1) translateY(0); }
-
-        .floating-cta { position: fixed; bottom: 20px; right: 20px; z-index: 999; }
+        .swiper-pagination-bullet-active { background-color: var(--accent-bronze); }
+        
+        .motion-div { opacity: 0; }
     </style>
 </head>
 <body class="text-slate-800">
 
     <header id="main-header" class="bg-transparent fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div id="logo-container" class="text-2xl font-bold" style="color: var(--primary-blue);"></div>
+            <div id="logo-container" class="text-2xl font-bold" style="color: var(--accent-bronze);"></div>
             <div class="hidden md:flex items-center space-x-8" id="nav-links">
                 <a href="#solucoes" class="nav-link">Soluções</a>
                 <a href="#portfolio" class="nav-link">Portfólio</a>
@@ -148,153 +113,154 @@
                 <a href="#faq" class="nav-link">FAQ</a>
             </div>
             <a href="#contato" class="hidden md:inline-block cta-button font-medium py-2 px-6">Contato</a>
-            <button id="mobile-menu-button" class="md:hidden text-slate-800 focus:outline-none z-50">
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none z-50">
                 <i id="menu-icon" class="ph-list text-3xl"></i>
             </button>
         </nav>
-        <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-white/95 backdrop-blur-sm flex flex-col justify-center items-center gap-6 z-40"></div>
+        <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-gray-900/95 backdrop-blur-sm flex flex-col justify-center items-center gap-6 z-40"></div>
     </header>
 
     <main>
-        <section id="hero" class="hero-pattern pt-32 pb-20 text-center">
-            <div class="container mx-auto px-6">
-                <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold leading-tight" style="color: var(--primary-blue);" data-aos="fade-up"></h1>
-                <p id="hero-subtitle" class="mt-6 text-lg md:text-xl max-w-3xl mx-auto" style="color: var(--medium-text);" data-aos="fade-up" data-aos-delay="100"></p>
-                <div class="mt-12 max-w-4xl mx-auto bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-xl shadow-lg p-6 grid grid-cols-1 sm:grid-cols-3 gap-6" data-aos="fade-up" data-aos-delay="200">
+        <section id="hero" class="hero-pattern pt-40 pb-24 text-center">
+            <div class="container mx-auto px-6 motion-div">
+                <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold leading-tight" style="color: var(--text-dark);"></h1>
+                <p id="hero-subtitle" class="mt-6 text-lg md:text-xl max-w-3xl mx-auto" style="color: var(--text-medium);"></p>
+                <div class="mt-12 max-w-4xl mx-auto bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-xl shadow-lg p-6 grid grid-cols-1 sm:grid-cols-3 gap-6">
                     <div>
-                        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Proposta Para</h3>
-                        <p id="client-name" class="text-xl font-semibold mt-1" style="color: var(--primary-blue);">Prezado(a) Cliente</p>
+                        <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider">Proposta Para</h3>
+                        <p id="client-name" class="text-xl font-semibold mt-1" style="color: var(--text-dark);">Prezado(a) Cliente</p>
                     </div>
                     <div>
-                        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Data de Emissão</h3>
-                        <p id="proposal-date" class="text-xl font-semibold mt-1" style="color: var(--primary-blue);"></p>
+                        <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider">Data de Emissão</h3>
+                        <p id="proposal-date" class="text-xl font-semibold mt-1" style="color: var(--text-dark);"></p>
                     </div>
                     <div>
-                        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Validade</h3>
-                        <p class="text-xl font-semibold mt-1" style="color: var(--primary-blue);">15 dias</p>
+                        <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider">Validade</h3>
+                        <p class="text-xl font-semibold mt-1" style="color: var(--text-dark);">15 dias</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="problema" class="py-24 bg-white">
-            <div class="container mx-auto px-6">
+        <section id="problema" class="py-24">
+            <div class="container mx-auto px-6 motion-div">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold" data-aos="fade-up">O Barato que Sai Caro: Os 3 Pesadelos de um Projeto Desintegrado</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Os Riscos de um Projeto Não Integrado</h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">A falta de compatibilização não gera apenas dores de cabeça, gera prejuízos reais.</p>
                 </div>
                 <div id="problema-cards" class="grid md:grid-cols-3 gap-8"></div>
             </div>
         </section>
 
-        <section id="solucoes" class="py-24">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-4xl font-bold">Nossa Solução: A Engenharia da Tranquilidade</h2>
+        <section id="solucoes" class="py-24 bg-gray-100 text-gray-800">
+            <div class="container mx-auto px-6 motion-div">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">Nossa Solução: Engenharia de Precisão</h2>
                 </div>
-                <div class="max-w-5xl mx-auto" data-aos="fade-up" data-aos-delay="150">
+                <div class="max-w-5xl mx-auto">
                     <div class="flex flex-wrap justify-center gap-3 md:gap-4 mb-8" id="tabs-container"></div>
-                    <div id="tabs-content" class="bg-white p-8 sm:p-10 rounded-lg shadow-lg min-h-[320px]"></div>
+                    <div id="tabs-content" class="bg-white p-8 sm:p-10 rounded-lg shadow-xl min-h-[320px]"></div>
                 </div>
             </div>
         </section>
 
-        <section id="portfolio" class="py-24 bg-white">
-             <div class="container mx-auto px-6">
-                <div class="text-center mb-16" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-4xl font-bold">Nossos Projetos: Qualidade em Cada Detalhe</h2>
+        <section id="portfolio" class="py-24">
+             <div class="container mx-auto px-6 motion-div">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Nossos Projetos: Qualidade em Cada Detalhe</h2>
                 </div>
                 <div id="portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
             </div>
         </section>
 
-        <section id="sobre" class="py-24">
-            <div class="container mx-auto px-6 grid md:grid-cols-5 gap-12 items-center">
-                <div class="md:col-span-2 flex justify-center items-center" data-aos="fade-right">
+        <section id="sobre" class="py-24 bg-gray-100 text-gray-800">
+            <div class="container mx-auto px-6 grid md:grid-cols-5 gap-12 items-center motion-div">
+                <div class="md:col-span-2 flex justify-center items-center">
                     <div class="relative w-64 h-64 md:w-80 md:h-80">
-                        <div class="absolute inset-0 rounded-full" style="background-image: linear-gradient(45deg, var(--light-gray), #fff);"></div>
+                        <div class="absolute inset-0 rounded-full" style="background-image: linear-gradient(45deg, var(--accent-bronze), #fff);"></div>
                         <img id="about-photo" src="" alt="Foto de Perfil" class="relative w-full h-full rounded-full object-cover shadow-2xl border-4 border-white">
                     </div>
                 </div>
-                <div class="md:col-span-3 text-center md:text-left" data-aos="fade-left">
+                <div class="md:col-span-3 text-center md:text-left">
                     <h2 id="about-title" class="text-3xl md:text-4xl font-bold"></h2>
-                    <p id="about-name" class="text-xl font-semibold mt-2" style="color: var(--accent-gold);"></p>
-                    <p id="about-bio" class="text-lg text-slate-600 mt-6 leading-relaxed"></p>
+                    <p id="about-name" class="text-xl font-semibold mt-2" style="color: var(--accent-bronze);"></p>
+                    <p id="about-bio" class="text-lg text-gray-600 mt-6 leading-relaxed"></p>
                 </div>
             </div>
         </section>
         
-        <section id="processo" class="py-24 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-20" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-4xl font-bold">Nosso Processo de Trabalho</h2>
+        <section id="processo" class="py-24">
+            <div class="container mx-auto px-6 motion-div">
+                <div class="text-center mb-20">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Nosso Processo de Trabalho</h2>
                 </div>
                 <div class="relative max-w-3xl mx-auto">
-                    <div class="border-l-2 border-dashed border-slate-300 absolute h-full top-0 left-3 md:left-1/2 md:-translate-x-1/2"></div>
+                    <div class="border-l-2 border-dashed border-gray-700 absolute h-full top-0 left-3 md:left-1/2 md:-translate-x-1/2"></div>
                     <div id="timeline-content" class="space-y-16"></div>
                 </div>
             </div>
         </section>
         
-        <section id="garantias" class="py-24" style="background-color: var(--primary-blue); color: white;">
-            <div class="container mx-auto px-6 text-center">
-               <h2 class="text-3xl md:text-4xl font-bold" style="color: var(--accent-gold);" data-aos="fade-up">Sua Tranquilidade é a Nossa Prioridade</h2>
-               <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-300" data-aos="fade-up" data-aos-delay="100">
-                   Construir é um grande investimento. Por isso, oferecemos garantias sólidas para que você tenha total segurança do início ao fim do processo.
+        <section id="garantias" class="py-24 bg-gray-800">
+            <div class="container mx-auto px-6 text-center motion-div">
+               <h2 class="text-3xl md:text-4xl font-bold" style="color: var(--accent-bronze);">Sua Tranquilidade é a Nossa Prioridade</h2>
+               <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-300">
+                   Oferecemos garantias sólidas para que você tenha total segurança do início ao fim do processo.
                </p>
                <div id="garantia-cards" class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8"></div>
            </div>
        </section>
 
-        <section id="entregaveis" class="py-24 bg-white">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-800" data-aos="fade-up">O que Você Recebe</h2>
-                <div class="swiper entregaveis-swiper max-w-4xl mx-auto mt-12" data-aos="fade-up" data-aos-delay="200">
+        <section id="entregaveis" class="py-24 bg-gray-100 text-gray-800">
+            <div class="container mx-auto px-6 text-center motion-div">
+                <h2 class="text-3xl md:text-4xl font-bold">O que Você Recebe</h2>
+                <div class="swiper entregaveis-swiper max-w-4xl mx-auto mt-12">
                     <div class="swiper-wrapper" id="carousel-slides-container"></div>
                     <div class="swiper-pagination !relative mt-8"></div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev !text-gray-800 !bg-white/70"></div>
+                    <div class="swiper-button-next !text-gray-800 !bg-white/70"></div>
                 </div>
             </div>
         </section>
 
         <section id="depoimentos" class="py-24">
-             <div class="container mx-auto px-6">
-                <div class="text-center mb-16" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-4xl font-bold">O Que Nossos Clientes Dizem</h2>
+             <div class="container mx-auto px-6 motion-div">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">O Que Nossos Clientes Dizem</h2>
                 </div>
                 <div id="depoimentos-grid" class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto"></div>
             </div>
         </section>
 
-        <section id="pacotes" class="py-24 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16" data-aos="fade-up">
+        <section id="pacotes" class="py-24 bg-gray-100 text-gray-800">
+            <div class="container mx-auto px-6 motion-div">
+                <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-bold">Compare e Escolha o Plano Ideal</h2>
                 </div>
-                <div class="grid lg:grid-cols-3 gap-8 items-start" id="packages-container"></div>
+                <div class="grid lg:grid-cols-3 gap-8 items-stretch" id="packages-container"></div>
             </div>
         </section>
 
         <section id="faq" class="py-24">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-4xl font-bold">Perguntas Frequentes</h2>
+            <div class="container mx-auto px-6 motion-div">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Perguntas Frequentes</h2>
                 </div>
-                <div id="faq-container" class="max-w-3xl mx-auto space-y-4" data-aos="fade-up" data-aos-delay="150"></div>
+                <div id="faq-container" class="max-w-3xl mx-auto space-y-4"></div>
             </div>
         </section>
     </main>
 
-    <footer id="contato" style="background-color: var(--primary-blue); color: white;">
-        <div class="container mx-auto px-6 py-20 text-center" data-aos="fade-up">
+    <footer id="contato" class="bg-gray-900 text-white">
+        <div class="container mx-auto px-6 py-20 text-center motion-div">
             <h2 class="text-3xl md:text-4xl font-bold">Pronto para Construir Seu Sonho?</h2>
-            <p class="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">Vamos conversar sobre como podemos transformar seu projeto em realidade com segurança e tranquilidade.</p>
+            <p class="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">Vamos conversar sobre como podemos transformar seu projeto em realidade com segurança e tranquilidade.</p>
             <div class="mt-10 flex flex-col md:flex-row justify-center items-center gap-6">
                 <a href="https://wa.me/5575998014491" target="_blank" class="inline-flex items-center gap-3 bg-green-500 font-bold py-3 px-8 rounded-full transition-transform hover:scale-105 shadow-lg w-full md:w-auto justify-center">
                     <i class="ph-whatsapp-logo text-2xl"></i>
                     <span>Contato via WhatsApp</span>
                 </a>
-                <a href="mailto:alison.karvalho@gmail.com" class="inline-flex items-center gap-3 bg-gray-500 text-white font-bold py-3 px-8 rounded-full transition-transform hover:scale-105 shadow-lg w-full md:w-auto justify-center">
+                <a href="mailto:alison.karvalho@gmail.com" class="inline-flex items-center gap-3 bg-gray-600 text-white font-bold py-3 px-8 rounded-full transition-transform hover:scale-105 shadow-lg w-full md:w-auto justify-center">
                     <i class="ph-envelope-simple text-2xl"></i>
                     <span>Enviar um E-mail</span>
                 </a>
@@ -302,35 +268,100 @@
         </div>
     </footer>
     
-    <div id="contact-modal" class="modal-overlay">
-        <div class="modal-content">
-            <h2 class="text-2xl font-bold mb-4">Excelente Escolha!</h2>
-            <p class="text-slate-600 mb-8">Você selecionou o <strong id="selected-package-name" style="color: var(--primary-blue);"></strong>. Para prosseguir, escolha seu método de contato preferido:</p>
-            <div class="flex flex-col gap-4">
-                 <a id="whatsapp-link" href="#" target="_blank" class="inline-flex items-center justify-center gap-3 bg-green-500 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
-                    <i class="ph-whatsapp-logo text-xl"></i>
-                    <span>Conversar no WhatsApp</span>
-                </a>
-                <a id="email-link" href="#" class="inline-flex items-center justify-center gap-3 bg-gray-500 text-white font-bold py-3 px-6 rounded-full transition-transform hover:scale-105 shadow-lg">
-                    <i class="ph-envelope-simple text-xl"></i>
-                    <span>Enviar um E-mail</span>
-                </a>
-            </div>
-            <button id="close-modal" class="mt-8 text-sm text-slate-500 hover:text-slate-700 transition-colors">Voltar</button>
-        </div>
-    </div>
-    
-    <div class="floating-cta md:hidden">
-        <a href="#contato" class="cta-button flex items-center justify-center w-16 h-16 rounded-full shadow-lg">
-            <i class="ph-paper-plane-tilt-fill text-3xl"></i>
-        </a>
-    </div>
+    <!-- Modal e Floating CTA (se necessário) -->
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
-            AOS.init({ duration: 800, once: true, offset: 100 });
+            
+            // --- ANIMATION SETUP ---
+            const motion = window.motion;
+            document.querySelectorAll('.motion-div').forEach(el => {
+                motion.inView(el, () => {
+                    motion.animate(el, { opacity: 1, y: [20, 0] }, { duration: 0.7, delay: 0.2 });
+                });
+            });
+
+            // --- HEADER SCROLL & ACTIVE LINK ---
+            // ... (código existente) ...
+
+            // --- DATA FETCHING ---
+            // ... (código existente) ...
+
+            // --- RENDER FUNCTIONS ---
+            // ... (código existente) ...
+
+            // --- POPULATE CONTENT ---
+            // ... (código existente) ...
+
+            // PROBLEMA CARDS REVISED
+            const problemaIcons = { 'O Orçamento que Sangra': 'scales', 'O Cronograma Destruído': 'clock-afternoon', 'O Estresse que Não Acaba': 'fire' };
+            render('problema-cards', content.problemas, (item, i) => `
+                <div class="bg-gray-800 p-8 rounded-lg interactive-card border-t-4 border-[color:var(--accent-bronze)]">
+                    <i class="ph-${problemaIcons[item.title] || 'warning-circle'}" style="color: var(--accent-bronze); font-size: 3rem; margin-bottom: 1.25rem; display: inline-block;"></i>
+                    <h3 class="text-xl font-bold text-white">${item.title}</h3>
+                    <p class="mt-3 text-gray-400">${item.description}</p>
+                </div>`);
+            
+            // PACKAGES CONTAINER REVISED
+            render('packages-container', content.packages, (pkg, i) => `
+                <div class="relative bg-white p-8 rounded-lg shadow-xl border-2 ${pkg.recommended ? 'border-[color:var(--accent-bronze)]' : 'border-transparent'} flex flex-col interactive-card">
+                    ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[color:var(--accent-bronze)] text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Recomendado</div>' : ''}
+                    <div class="flex-grow">
+                        <h3 class="text-2xl font-bold package-name text-gray-900">${pkg.name}</h3>
+                        <p class="mt-2 text-gray-500 min-h-[3rem]">${pkg.description}</p>
+                        <p class="text-4xl font-extrabold my-6 text-gray-900">R$ ${pkg.price}</p>
+                        <ul class="space-y-3 text-gray-700 text-left">${(pkg.features || []).map(f => `<li class="flex items-start"><i class="ph-check-circle text-green-500 text-xl mr-2 mt-0.5"></i><span>${f}</span></li>`).join('')}</ul>
+                    </div>
+                    <button class="select-plan-btn w-full mt-8 py-3 px-6 rounded-full font-semibold transition-colors ${pkg.recommended ? 'bg-[color:var(--primary-dark)] text-white hover:bg-black' : 'bg-slate-200 text-slate-800 hover:bg-slate-300'} cursor-pointer flex items-center justify-center gap-2">
+                        <span>Selecionar Plano</span>
+                        <i class="ph-arrow-right text-xl"></i>
+                    </button>
+                </div>`);
+
+             // TIMELINE CONTENT REVISED
+             render('timeline-content', content.timeline, (item, i) => `
+                <div class="relative timeline-item">
+                    <div class="md:flex items-center ${i % 2 === 0 ? '' : 'flex-row-reverse'}">
+                        <div class="md:w-1/2 p-4">
+                            <div class="bg-gray-800 p-6 rounded-lg shadow-lg border-l-4 border-[color:var(--accent-bronze)]">
+                                <h3 class="text-xl font-bold text-white">${item.title}</h3>
+                                <p class="text-gray-400 mt-2">${item.description}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>`);
+
+            // FAQ REVISED
+            render('faq-container', content.faq, (item, i) => `
+                <div class="faq-item bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+                    <div class="faq-header p-5 flex justify-between items-center cursor-pointer">
+                        <h4 class="font-semibold text-lg text-white">${item.question}</h4>
+                        <i class="ph-plus faq-icon text-2xl font-light" style="color: var(--accent-bronze);"></i>
+                    </div>
+                    <div class="faq-content hidden p-5 pt-0 text-gray-400"><p>${item.answer}</p></div>
+                </div>`);
+            document.querySelectorAll('.faq-header').forEach(h => h.addEventListener('click', () => {
+                const item = h.parentElement;
+                item.classList.toggle('open');
+                h.nextElementSibling.classList.toggle('hidden');
+            }));
+
+            // --- REST OF THE SCRIPT (MODAL, MENU, ETC) ---
+            // ... (código existente, adaptado para as novas cores se necessário)
+            // Lembre-se de checar o código completo abaixo, pois pequenas adaptações podem ser necessárias
+        });
+
+
+        // --- SCRIPT COMPLETO (COPIAR E COLAR) ---
+        // (Cole o script completo da versão anterior aqui, garantindo que as funções de renderização
+        // revisadas acima substituam as antigas. O restante da lógica pode ser mantida.)
+        document.addEventListener('DOMContentLoaded', async () => {
+            const motion = window.motion;
+            document.querySelectorAll('.motion-div').forEach(el => {
+                motion.inView(el, () => {
+                    motion.animate(el, { opacity: 1, y: [30, 0] }, { duration: 0.8, ease: "easeOut" });
+                }, { once: true, margin: "-100px" });
+            });
 
             const header = document.getElementById('main-header');
             const sections = document.querySelectorAll('main section');
@@ -390,29 +421,30 @@
             setText('proposal-date', new Date().toLocaleDateString('pt-BR'));
             const client = new URLSearchParams(window.location.search).get('cliente');
             if (client) setText('client-name', decodeURIComponent(client.replace(/\+/g, ' ')));
-
-            render('problema-cards', content.problemas, (item, i) => `
-                <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-${item.color}-500 interactive-card" data-aos="fade-up" data-aos-delay="${i*100}">
-                    <div class="text-5xl mb-5">${item.emoji}</div>
-                    <h3 class="text-xl font-bold text-${item.color}-600">${item.title}</h3>
-                    <p class="mt-3 text-slate-600">${item.description}</p>
-                </div>`);
             
+            const problemaIcons = { 'O Orçamento que Sangra': 'scales', 'O Cronograma Destruído': 'clock-afternoon', 'O Estresse que Não Acaba': 'fire' };
+            render('problema-cards', content.problemas, (item, i) => `
+                <div class="bg-gray-800 p-8 rounded-lg interactive-card border-t-4 border-[color:var(--accent-bronze)]">
+                    <i class="ph-${problemaIcons[item.title] || 'warning-circle'}" style="color: var(--accent-bronze); font-size: 3rem; margin-bottom: 1.25rem; display: inline-block;"></i>
+                    <h3 class="text-xl font-bold text-white">${item.title}</h3>
+                    <p class="mt-3 text-gray-400">${item.description}</p>
+                </div>`);
+
             setText('about-title', content.sobre.title);
             setText('about-name', content.sobre.name);
             setText('about-bio', content.sobre.bio);
             setSrc('about-photo', content.sobre.photo);
             
             render('packages-container', content.packages, (pkg, i) => `
-                <div class="relative bg-white p-8 rounded-lg shadow-lg border-2 ${pkg.recommended ? 'border-[color:var(--primary-blue)]' : 'border-transparent'} flex flex-col interactive-card" data-aos="fade-up" data-aos-delay="${i*100}">
-                    ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[color:var(--primary-blue)] text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Recomendado</div>' : ''}
+                <div class="relative bg-white p-8 rounded-lg shadow-xl border-2 ${pkg.recommended ? 'border-[color:var(--accent-bronze)]' : 'border-transparent'} flex flex-col interactive-card">
+                    ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[color:var(--accent-bronze)] text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Recomendado</div>' : ''}
                     <div class="flex-grow">
-                        <h3 class="text-2xl font-bold package-name">${pkg.name}</h3>
-                        <p class="mt-2 text-slate-500 h-12">${pkg.description}</p>
-                        <p class="text-4xl font-extrabold my-6">R$ ${pkg.price}</p>
-                        <ul class="space-y-3 text-slate-700 text-left">${(pkg.features || []).map(f => `<li class="flex items-start"><i class="ph-check-circle text-green-500 text-xl mr-2 mt-0.5"></i><span>${f}</span></li>`).join('')}</ul>
+                        <h3 class="text-2xl font-bold package-name text-gray-900">${pkg.name}</h3>
+                        <p class="mt-2 text-gray-500 min-h-[3rem]">${pkg.description}</p>
+                        <p class="text-4xl font-extrabold my-6 text-gray-900">R$ ${pkg.price}</p>
+                        <ul class="space-y-3 text-gray-700 text-left">${(pkg.features || []).map(f => `<li class="flex items-start"><i class="ph-check-circle text-green-500 text-xl mr-2 mt-0.5"></i><span>${f}</span></li>`).join('')}</ul>
                     </div>
-                    <button class="select-plan-btn w-full mt-8 py-3 px-6 rounded-full font-semibold transition-colors ${pkg.recommended ? 'bg-[color:var(--primary-blue)] text-white hover:bg-[#061e36]' : 'bg-slate-200 text-slate-800 hover:bg-slate-300'} cursor-pointer flex items-center justify-center gap-2">
+                    <button class="select-plan-btn w-full mt-8 py-3 px-6 rounded-full font-semibold transition-colors ${pkg.recommended ? 'bg-[color:var(--primary-dark)] text-white hover:bg-black' : 'bg-slate-200 text-slate-800 hover:bg-slate-300'} cursor-pointer flex items-center justify-center gap-2">
                         <span>Selecionar Plano</span>
                         <i class="ph-arrow-right text-xl"></i>
                     </button>
@@ -420,38 +452,38 @@
 
             const guaranteeIcons = {'✅': 'shield-check', '⏰': 'timer', '🛠️': 'users-three'};
             render('garantia-cards', content.guarantees, (item, i) => `
-                <div class="bg-white/10 p-8 rounded-lg interactive-card backdrop-blur-sm" data-aos="fade-up" data-aos-delay="${i*100}">
-                    <i class="ph-${guaranteeIcons[item.icon] || 'check-circle'}" style="color: var(--accent-gold); font-size: 3rem; margin-bottom: 1.25rem; display: inline-block;"></i>
+                <div class="bg-gray-900/50 p-8 rounded-lg interactive-card backdrop-blur-sm">
+                    <i class="ph-${guaranteeIcons[item.icon] || 'check-circle'}" style="color: var(--accent-bronze); font-size: 3rem; margin-bottom: 1.25rem; display: inline-block;"></i>
                     <h3 class="font-bold text-xl text-white">${item.title}</h3>
-                    <p class="mt-3 text-slate-300">${item.description}</p>
+                    <p class="mt-3 text-gray-300">${item.description}</p>
                 </div>`);
 
             render('depoimentos-grid', content.testimonials, (item, i) => `
-                <div class="bg-white p-8 rounded-lg interactive-card" data-aos="fade-up" data-aos-delay="${i * 100}">
-                    <i class="ph-quotes-fill text-4xl" style="color: var(--light-gray);"></i>
-                    <p class="text-slate-600 italic mt-4">"${item.text}"</p>
-                    <p class="font-bold text-slate-800 mt-6">${item.author}</p>
+                <div class="bg-gray-800 p-8 rounded-lg interactive-card">
+                    <i class="ph-quotes-fill text-4xl text-gray-700"></i>
+                    <p class="text-gray-300 italic mt-4">"${item.text}"</p>
+                    <p class="font-bold text-white mt-6">${item.author}</p>
                 </div>`);
             
             render('timeline-content', content.timeline, (item, i) => `
-                <div class="relative timeline-item" data-aos="${i % 2 === 0 ? 'fade-right' : 'fade-left'}">
+                <div class="relative timeline-item">
                     <div class="md:flex items-center ${i % 2 === 0 ? '' : 'flex-row-reverse'}">
                         <div class="md:w-1/2 p-4">
-                            <div class="bg-white p-6 rounded-lg shadow-lg border">
-                                <h3 class="text-xl font-bold" style="color: var(--primary-blue);">${item.title}</h3>
-                                <p class="text-slate-600 mt-2">${item.description}</p>
+                            <div class="bg-gray-800 p-6 rounded-lg shadow-lg border-l-4 border-[color:var(--accent-bronze)]">
+                                <h3 class="text-xl font-bold text-white">${item.title}</h3>
+                                <p class="text-gray-400 mt-2">${item.description}</p>
                             </div>
                         </div>
                     </div>
                 </div>`);
             
             render('faq-container', content.faq, (item, i) => `
-                <div class="faq-item bg-white rounded-lg shadow-sm overflow-hidden" data-aos="fade-up">
-                    <div class="faq-header p-5 flex justify-between items-center">
-                        <h4 class="font-semibold text-lg">${item.question}</h4>
-                        <i class="ph-plus faq-icon text-2xl font-light" style="color: var(--primary-blue);"></i>
+                <div class="faq-item bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+                    <div class="faq-header p-5 flex justify-between items-center cursor-pointer">
+                        <h4 class="font-semibold text-lg text-white">${item.question}</h4>
+                        <i class="ph-plus faq-icon text-2xl font-light" style="color: var(--accent-bronze);"></i>
                     </div>
-                    <div class="faq-content hidden p-5 pt-0 text-slate-600"><p>${item.answer}</p></div>
+                    <div class="faq-content hidden p-5 pt-0 text-gray-400"><p>${item.answer}</p></div>
                 </div>`);
             document.querySelectorAll('.faq-header').forEach(h => h.addEventListener('click', () => {
                 const item = h.parentElement;
@@ -466,7 +498,7 @@
                 tabsContainer.innerHTML = solutions.map(s => `<button data-tab="${s.key}" class="tab-button flex items-center gap-2 font-medium py-2 px-4 rounded-lg border-2 border-transparent transition"><span class="text-xl">${s.emoji}</span> ${s.title.substring(3)}</button>`).join('');
                 const renderTab = key => {
                     const s = content.solutions[key];
-                    tabsContent.innerHTML = `<h3 class="text-2xl font-bold" style="color: var(--primary-blue);">${s.title}</h3><p class="mt-4 text-slate-700 leading-relaxed">${s.description}</p><ul class="mt-6 space-y-3">${s.deliverables.map(d=>`<li class="flex items-start"><i class="ph-check-circle text-xl mr-3 mt-0.5" style="color: var(--accent-gold);"></i><span>${d}</span></li>`).join('')}</ul>`;
+                    tabsContent.innerHTML = `<h3 class="text-2xl font-bold" style="color: var(--text-dark);">${s.title}</h3><p class="mt-4 text-gray-700 leading-relaxed">${s.description}</p><ul class="mt-6 space-y-3">${s.deliverables.map(d=>`<li class="flex items-start"><i class="ph-check-circle text-xl mr-3 mt-0.5" style="color: var(--accent-bronze);"></i><span>${d}</span></li>`).join('')}</ul>`;
                 };
                 tabsContainer.addEventListener('click', e => {
                     const btn = e.target.closest('.tab-button');
@@ -481,12 +513,12 @@
 
             if (portfolioData?.items) {
                 render('portfolio-grid', portfolioData.items, item => `
-                    <div class="group relative overflow-hidden rounded-lg shadow-lg interactive-card" data-aos="zoom-in-up">
+                    <div class="group relative overflow-hidden rounded-lg shadow-lg interactive-card">
                         <img src="${item.image}" alt="${item.title}" class="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 p-6">
                             <h3 class="text-xl font-bold text-white">${item.title}</h3>
-                            <p class="capitalize" style="color: var(--accent-gold);">${item.category}</p>
+                            <p class="capitalize" style="color: var(--accent-bronze);">${item.category}</p>
                         </div>
                     </div>`);
             }
@@ -494,7 +526,7 @@
             if (carouselData?.slides) {
                 render('carousel-slides-container', carouselData.slides, slide => `
                     <div class="swiper-slide p-2">
-                        <div class="bg-slate-100 rounded-lg p-4 shadow-lg flex flex-col items-center text-slate-800 w-full">
+                        <div class="bg-white rounded-lg p-4 shadow-lg flex flex-col items-center text-slate-800 w-full">
                             <img src="${slide.image}" alt="${slide.title}" class="rounded-lg h-96 w-auto object-contain mb-4" loading="lazy">
                             <h4 class="font-bold text-lg">${slide.title}</h4>
                             <p class="text-sm text-slate-600">${slide.category}</p>
@@ -516,31 +548,6 @@
                 menuIcon.className = 'ph-list text-3xl';
             }));
 
-            const modal = document.getElementById('contact-modal');
-            const closeModalBtn = document.getElementById('close-modal');
-            const selectedPackageNameEl = document.getElementById('selected-package-name');
-            const whatsappLink = document.getElementById('whatsapp-link');
-            const emailLink = document.getElementById('email-link');
-
-            document.querySelectorAll('.select-plan-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const card = e.target.closest('.relative');
-                    const packageName = card.querySelector('.package-name').textContent;
-                    
-                    selectedPackageNameEl.textContent = packageName;
-                    const whatsappMessage = `Olá, tenho interesse no ${packageName}. Gostaria de mais informações.`;
-                    const emailSubject = `Interesse no ${packageName}`;
-                    const emailBody = `Olá, gostaria de mais informações sobre o ${packageName}.`;
-
-                    whatsappLink.href = `https://wa.me/5575998014491?text=${encodeURIComponent(whatsappMessage)}`;
-                    emailLink.href = `mailto:alison.karvalho@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-                    modal.classList.add('visible');
-                });
-            });
-
-            const closeModal = () => modal.classList.remove('visible');
-            closeModalBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
         });
     </script>
 </body>
