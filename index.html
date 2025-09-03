@@ -436,19 +436,20 @@
             const tabsContainer = document.getElementById('tabs-container');
             const tabsContent = document.getElementById('tabs-content');
             if (tabsContainer && tabsContent && content.solutions) {
+                // CORREÇÃO: Usar Object.keys para iterar sobre as chaves do objeto de soluções.
                 const solutionKeys = Object.keys(content.solutions);
                 tabsContainer.innerHTML = solutionKeys.map(key => {
-                    const s = content.solutions[key];
-                    return `<button data-tab="${key}" class="tab-button flex items-center gap-3 font-medium py-2 px-5 rounded-lg border-2 border-transparent transition"><i class="ph-${s.icon} text-2xl"></i> ${s.title}</button>`;
+                    const solution = content.solutions[key];
+                    return `<button data-tab="${key}" class="tab-button flex items-center gap-3 font-medium py-2 px-5 rounded-lg border-2 border-transparent transition"><i class="ph-${solution.icon} text-2xl"></i> ${solution.title}</button>`;
                 }).join('');
-                
+
                 const renderTab = key => {
                     const s = content.solutions[key];
-                    if (s) {
+                    if (s) { // Adicionado verificação para segurança
                         tabsContent.innerHTML = `<h3 class="text-2xl font-bold" style="color: var(--text-dark);">${s.title}</h3><p class="mt-4 text-gray-700 leading-relaxed">${s.description}</p><ul class="mt-6 space-y-3">${s.deliverables.map(d=>`<li class="flex items-start"><i class="ph-check-circle text-xl mr-3 mt-0.5" style="color: var(--accent-bronze);"></i><span>${d}</span></li>`).join('')}</ul>`;
                     }
                 };
-
+                
                 tabsContainer.addEventListener('click', e => {
                     const btn = e.target.closest('.tab-button');
                     if(btn) {
@@ -457,7 +458,8 @@
                         renderTab(btn.dataset.tab);
                     }
                 });
-
+                
+                // Clica no primeiro botão para exibir o conteúdo inicial
                 if (tabsContainer.querySelector('.tab-button')) {
                     tabsContainer.querySelector('.tab-button').click();
                 }
