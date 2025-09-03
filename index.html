@@ -436,12 +436,19 @@
             const tabsContainer = document.getElementById('tabs-container');
             const tabsContent = document.getElementById('tabs-content');
             if (tabsContainer && tabsContent && content.solutions) {
-                const solutions = Object.values(content.solutions);
-                tabsContainer.innerHTML = solutions.map(s => `<button data-tab="${s.key}" class="tab-button flex items-center gap-3 font-medium py-2 px-5 rounded-lg border-2 border-transparent transition"><i class="ph-${s.icon} text-2xl"></i> ${s.title}</button>`).join('');
+                const solutionKeys = Object.keys(content.solutions);
+                tabsContainer.innerHTML = solutionKeys.map(key => {
+                    const s = content.solutions[key];
+                    return `<button data-tab="${key}" class="tab-button flex items-center gap-3 font-medium py-2 px-5 rounded-lg border-2 border-transparent transition"><i class="ph-${s.icon} text-2xl"></i> ${s.title}</button>`;
+                }).join('');
+                
                 const renderTab = key => {
                     const s = content.solutions[key];
-                    tabsContent.innerHTML = `<h3 class="text-2xl font-bold" style="color: var(--text-dark);">${s.title}</h3><p class="mt-4 text-gray-700 leading-relaxed">${s.description}</p><ul class="mt-6 space-y-3">${s.deliverables.map(d=>`<li class="flex items-start"><i class="ph-check-circle text-xl mr-3 mt-0.5" style="color: var(--accent-bronze);"></i><span>${d}</span></li>`).join('')}</ul>`;
+                    if (s) {
+                        tabsContent.innerHTML = `<h3 class="text-2xl font-bold" style="color: var(--text-dark);">${s.title}</h3><p class="mt-4 text-gray-700 leading-relaxed">${s.description}</p><ul class="mt-6 space-y-3">${s.deliverables.map(d=>`<li class="flex items-start"><i class="ph-check-circle text-xl mr-3 mt-0.5" style="color: var(--accent-bronze);"></i><span>${d}</span></li>`).join('')}</ul>`;
+                    }
                 };
+
                 tabsContainer.addEventListener('click', e => {
                     const btn = e.target.closest('.tab-button');
                     if(btn) {
@@ -450,7 +457,10 @@
                         renderTab(btn.dataset.tab);
                     }
                 });
-                tabsContainer.querySelector('.tab-button').click();
+
+                if (tabsContainer.querySelector('.tab-button')) {
+                    tabsContainer.querySelector('.tab-button').click();
+                }
             }
 
             if (portfolioData?.items) {
@@ -526,4 +536,3 @@
     </script>
 </body>
 </html>
-
