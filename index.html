@@ -66,6 +66,46 @@
             overflow: hidden; /* Fix for margins collapsing */
         }
 
+        /* --- Dark Section Overrides --- */
+        .section-dark {
+            background-color: var(--color-secondary);
+        }
+        .section-dark .section-title {
+            color: #FFFFFF;
+        }
+        .section-dark .section-subtitle {
+            color: #cbd5e1; /* slate-300 */
+        }
+        .section-dark .tab-button {
+            color: #cbd5e1;
+        }
+        .section-dark .tab-button.active {
+            color: var(--color-accent);
+            border-bottom-color: var(--color-accent);
+        }
+        .section-dark .tab-content h3 {
+             color: #FFFFFF;
+        }
+        .section-dark .tab-content p, .section-dark .tab-content ul {
+            color: #cbd5e1;
+        }
+        .section-dark .faq-item {
+            background-color: #334155; /* slate-700 */
+            border-color: #475569; /* slate-600 */
+        }
+        .section-dark .faq-item summary {
+            color: #FFFFFF;
+        }
+        .section-dark .faq-item div {
+            color: #cbd5e1;
+        }
+        .section-dark #profile-content h3 {
+            color: #FFFFFF;
+        }
+        .section-dark #profile-content p {
+            color: #cbd5e1;
+        }
+
         /* Header */
         #main-header {
             transition: background-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
@@ -124,31 +164,6 @@
             transform: translateY(-5px);
             box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.2);
         }
-        
-        /* Buttons */
-        .btn {
-            @apply inline-flex items-center justify-center gap-3 font-bold py-3 px-8 rounded-full transition-all duration-300 ease-in-out shadow-lg;
-            transform-style: preserve-3d;
-        }
-        .btn-accent {
-            background: var(--color-accent);
-            color: white;
-            box-shadow: 0 10px 30px -10px var(--color-accent);
-        }
-        .btn-accent:hover {
-            transform: scale(1.05) translateY(-3px);
-            filter: brightness(1.1);
-        }
-        .btn-secondary {
-            background: var(--color-secondary);
-            color: white;
-            box-shadow: 0 10px 30px -10px var(--color-secondary);
-        }
-         .btn-secondary:hover {
-            transform: scale(1.05) translateY(-3px);
-            filter: brightness(1.1);
-        }
-
 
         /* Solutions Tabs */
         .tab-button {
@@ -216,6 +231,18 @@
         .package-card.recommended:hover {
             transform: translateY(-12px) scale(1.08);
         }
+        .package-cta {
+            transition: all 0.3s ease;
+        }
+        .package-card:hover .package-cta span {
+            letter-spacing: 0.5px;
+        }
+        .package-cta i {
+            transition: transform 0.3s ease;
+        }
+        .package-card:hover .package-cta i {
+            transform: translateX(4px);
+        }
 
         /* FAQ */
         .faq-item details > summary {
@@ -232,6 +259,17 @@
         }
         
         /* Deliverables Carousel */
+        .deliverables-swiper .swiper-slide {
+            cursor: pointer;
+        }
+        .swiper-pagination-bullet {
+            background-color: var(--color-primary) !important;
+            opacity: 0.5 !important;
+        }
+        .swiper-pagination-bullet-active {
+            background-color: var(--color-accent) !important;
+            opacity: 1 !important;
+        }
         .swiper-button-next, .swiper-button-prev {
             color: var(--color-accent) !important;
             background-color: rgba(255,255,255,0.8);
@@ -244,14 +282,57 @@
             font-size: 18px !important;
             font-weight: 800;
         }
+        .section-dark .swiper-button-next, .section-dark .swiper-button-prev {
+            background-color: rgba(0,0,0,0.2);
+            color: white !important;
+        }
+        .section-dark .swiper-pagination-bullet {
+            background-color: white !important;
+        }
+         .section-dark .swiper-pagination-bullet-active {
+            background-color: var(--color-accent) !important;
+        }
 
-        /* Modal System - FIX */
+        /* --- New Contact Cards --- */
+        .contact-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        .contact-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Modal Package Contact Links */
+        .modal-contact-card {
+            @apply flex items-center gap-4 p-4 rounded-xl text-left transition-all duration-300;
+        }
+        .modal-contact-card.whatsapp {
+            @apply bg-green-500 text-white;
+        }
+        .modal-contact-card.whatsapp:hover {
+            @apply bg-green-600 shadow-lg scale-105;
+        }
+        .modal-contact-card.email {
+            @apply bg-slate-700 text-white;
+        }
+        .modal-contact-card.email:hover {
+            @apply bg-slate-800 shadow-lg scale-105;
+        }
+
+
+        /* Modal System */
         .modal-overlay {
             position: fixed;
             top: 0; right: 0; bottom: 0; left: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -269,7 +350,7 @@
             padding: 2rem;
             border-radius: 1rem;
             width: 100%;
-            max-width: 28rem;
+            max-width: 32rem; /* Increased width */
             margin: 1rem;
             text-align: center;
             box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -294,6 +375,13 @@
         .modal-close-btn:hover {
             color: #1e293b; /* slate-800 */
         }
+        
+        /* Portfolio Modal Swiper */
+        #lightbox-modal .swiper-button-next,
+        #lightbox-modal .swiper-button-prev {
+            color: white !important;
+            background-color: rgba(0,0,0,0.3);
+        }
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -308,8 +396,7 @@
                 <a href="#pacotes" class="nav-link font-medium">Investimento</a>
                 <a href="#faq" class="nav-link font-medium">FAQ</a>
             </div>
-            <a href="#contato" class="hidden md:inline-flex btn btn-accent">Iniciar Projeto</a>
-            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none z-50">
+            <button id="mobile-menu-button" class="md:hidden text-white focus-outline-none z-50">
                 <i id="menu-icon" class="ph-bold ph-list text-3xl"></i>
             </button>
         </nav>
@@ -373,14 +460,14 @@
             </section>
 
             <!-- 3. Soluções Section -->
-            <section id="solucoes" class="py-20 md:py-28 bg-slate-50">
+            <section id="solucoes" class="py-20 md:py-28 section-dark">
                 <div class="container mx-auto px-6">
                     <div class="text-center mb-16 max-w-3xl mx-auto">
                         <h2 class="section-title text-3xl md:text-4xl font-extrabold">Engenharia Integrada: A Solução Definitiva</h2>
                         <p class="section-subtitle mt-4 text-lg">Nossa metodologia garante que cada detalhe do seu projeto funcione em perfeita harmonia.</p>
                     </div>
                     <div class="max-w-5xl mx-auto">
-                        <div id="tabs-buttons" class="flex justify-center border-b border-slate-200 mb-8 space-x-4 md:space-x-8"></div>
+                        <div id="tabs-buttons" class="flex justify-center border-b border-slate-700 mb-8 space-x-4 md:space-x-8"></div>
                         <div id="tabs-content" class="min-h-[300px]"></div>
                     </div>
                 </div>
@@ -403,7 +490,7 @@
             </section>
             
             <!-- 5. Perfil Section -->
-            <section id="perfil" class="py-20 md:py-28 bg-slate-50">
+            <section id="perfil" class="py-20 md:py-28 section-dark">
                 <div class="container mx-auto px-6">
                     <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-12 items-center">
                         <div id="profile-image-container" class="md:col-span-1 flex justify-center"></div>
@@ -427,7 +514,7 @@
             </section>
 
             <!-- 7. Deliverables Carousel Section -->
-            <section id="entregaveis" class="py-20 md:py-28 bg-slate-50">
+            <section id="entregaveis" class="py-20 md:py-28 section-dark">
                  <div class="container mx-auto px-6">
                     <div class="text-center mb-16 max-w-3xl mx-auto">
                         <h2 class="section-title text-3xl md:text-4xl font-extrabold">O Que Você Recebe</h2>
@@ -437,6 +524,7 @@
                         <div class="swiper-wrapper" id="deliverables-carousel"></div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
+                        <div class="swiper-pagination mt-8 !relative"></div>
                     </div>
                 </div>
             </section>
@@ -453,7 +541,7 @@
             </section>
 
             <!-- 9. Testimonials Section -->
-            <section id="depoimentos" class="py-20 md:py-28 bg-slate-50">
+            <section id="depoimentos" class="py-20 md:py-28 section-dark">
                  <div class="container mx-auto px-6">
                     <div class="text-center mb-16 max-w-3xl mx-auto">
                          <h2 class="section-title text-3xl md:text-4xl font-extrabold">A Confiança de Nossos Clientes</h2>
@@ -464,7 +552,7 @@
 
 
             <!-- 10. Pacotes Section -->
-            <section id="pacotes" class="py-20 md:py-28">
+            <section id="pacotes" class="py-20 md:py-28 bg-slate-50">
                 <div class="container mx-auto px-6">
                     <div class="text-center mb-16 max-w-3xl mx-auto">
                         <h2 class="section-title text-3xl md:text-4xl font-extrabold">Planos de Investimento</h2>
@@ -475,7 +563,7 @@
             </section>
             
              <!-- 11. FAQ Section -->
-            <section id="faq" class="py-20 md:py-28 bg-slate-50">
+            <section id="faq" class="py-20 md:py-28 section-dark">
                 <div class="container mx-auto px-6">
                     <div class="text-center mb-16 max-w-3xl mx-auto">
                         <h2 class="section-title text-3xl md:text-4xl font-extrabold">Perguntas Frequentes</h2>
@@ -487,18 +575,28 @@
 
             <!-- 12. Contato Section -->
             <section id="contato" class="py-20 md:py-28 text-white" style="background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);">
-                <div class="container mx-auto px-6 text-center max-w-3xl">
+                <div class="container mx-auto px-6 text-center max-w-4xl">
                     <h2 class="text-4xl md:text-5xl font-extrabold" style="font-family: var(--font-heading);">Pronto para Construir com Segurança e Precisão?</h2>
-                    <p class="mt-6 text-lg text-slate-300">Dê o próximo passo para transformar seu projeto em realidade. Ao aceitar a proposta, nossa equipe entrará em contato para formalizar o início dos trabalhos.</p>
-                    <div class="mt-12 flex flex-col sm:flex-row justify-center items-center gap-6">
-                        <button id="accept-proposal-btn" class="btn btn-accent w-full sm:w-auto" data-modal-target="confirmation-modal">
-                            <i class="ph-bold ph-check-circle text-2xl"></i>
-                            <span>Assinar e Aceitar Proposta</span>
-                        </button>
-                         <button id="download-pdf-btn" class="btn btn-secondary bg-white/20 hover:bg-white/30 w-full sm:w-auto">
-                            <i class="ph-bold ph-file-pdf text-2xl"></i>
-                            <span>Baixar Versão em PDF</span>
-                        </button>
+                    <p class="mt-6 text-lg text-slate-300">Dê o próximo passo para transformar seu projeto em realidade. Entre em contato para formalizar o início dos trabalhos.</p>
+                    <div class="mt-16 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <a id="whatsapp-link" href="#" target="_blank" class="contact-card block p-8 text-left">
+                            <div class="flex items-start gap-4">
+                                <i class="ph-bold ph-whatsapp-logo text-4xl text-green-400"></i>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-white">Conversar por WhatsApp</h3>
+                                    <p class="mt-2 text-slate-300">Inicie uma conversa para alinharmos os detalhes finais do seu projeto.</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a id="email-link" href="#" class="contact-card block p-8 text-left">
+                            <div class="flex items-start gap-4">
+                                <i class="ph-bold ph-envelope text-4xl text-cyan-400"></i>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-white">Enviar um E-mail</h3>
+                                    <p class="mt-2 text-slate-300">Prefere formalizar por e-mail? Envie sua mensagem diretamente para nós.</p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </section>
@@ -513,42 +611,49 @@
     </footer>
     
     <div id="modal-container">
-        <!-- Confirmation Modal -->
-        <div id="confirmation-modal" class="modal-overlay">
-            <div class="modal-content">
-                <button class="modal-close-btn"><i class="ph-bold ph-x"></i></button>
-                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <i class="ph-bold ph-check text-4xl text-green-600"></i>
-                </div>
-                <h2 class="text-2xl font-bold mb-4 text-gray-800">Proposta Aceita!</h2>
-                <p class="text-slate-600 mb-8">Agradecemos a sua confiança. Entraremos em contato em breve para dar início ao seu projeto.</p>
-            </div>
-        </div>
-    
         <!-- Package Selection Modal -->
         <div id="package-modal" class="modal-overlay">
             <div class="modal-content">
                  <button class="modal-close-btn"><i class="ph-bold ph-x"></i></button>
-                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="ph-bold ph-package text-4xl text-blue-600"></i>
                 </div>
-                <h2 class="text-2xl font-bold mb-4 text-gray-800">Plano Selecionado</h2>
-                <p class="text-slate-600 mb-2">Você demonstrou interesse no:</p>
-                <p id="package-modal-name" class="font-bold text-lg text-slate-800 mb-8"></p>
-                <p class="text-slate-600">Nossa equipe entrará em contato em breve para formalizar os próximos passos. Obrigado!</p>
+                <h2 class="text-2xl font-bold mb-2 text-gray-800">Detalhes do Pacote</h2>
+                <p id="package-modal-name" class="font-bold text-lg text-slate-800 mb-4"></p>
+                
+                <div class="text-left bg-slate-50 p-4 rounded-lg mb-6 max-h-48 overflow-y-auto border">
+                    <p class="font-semibold text-slate-600 mb-2">Itens inclusos:</p>
+                    <ul id="package-modal-features" class="space-y-2"></ul>
+                </div>
+
+                <p class="text-slate-600 mb-6">Gostou? Entre em contato para formalizarmos:</p>
+                <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <a id="package-whatsapp-link" href="#" target="_blank" class="modal-contact-card whatsapp">
+                        <i class="ph-bold ph-whatsapp-logo text-3xl"></i>
+                        <div>
+                            <span class="font-bold">WhatsApp</span>
+                            <span class="text-sm block">Iniciar conversa</span>
+                        </div>
+                    </a>
+                    <a id="package-email-link" href="#" class="modal-contact-card email">
+                        <i class="ph-bold ph-envelope text-3xl"></i>
+                        <div>
+                            <span class="font-bold">E-mail</span>
+                            <span class="text-sm block">Enviar mensagem</span>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     
-        <!-- Portfolio Modal (Lightbox) -->
-        <div id="portfolio-modal" class="modal-overlay">
-            <div class="modal-content !p-2 !max-w-4xl">
-                <button class="modal-close-btn !text-white !top-4 !right-4 z-10 bg-black/30 rounded-full p-1"><i class="ph-bold ph-x text-2xl"></i></button>
-                <div class="relative">
-                     <img id="portfolio-modal-img" src="" alt="Imagem do Projeto" class="w-full h-auto max-h-[80vh] object-contain rounded-lg">
-                     <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/70 to-transparent rounded-b-lg">
-                        <h3 id="portfolio-modal-title" class="text-2xl font-bold text-white"></h3>
-                        <p id="portfolio-modal-category" class="text-md text-slate-300 uppercase tracking-wider"></p>
-                     </div>
+        <!-- Portfolio & Deliverables Modal (Lightbox with Swiper) -->
+        <div id="lightbox-modal" class="modal-overlay">
+            <div class="modal-content !p-0 !max-w-6xl bg-transparent shadow-none">
+                <button class="modal-close-btn !text-white !top-2 !right-2 z-20 bg-black/30 rounded-full p-2"><i class="ph-bold ph-x text-2xl"></i></button>
+                <div class="swiper lightbox-swiper w-full h-full">
+                    <div class="swiper-wrapper" id="lightbox-slides"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
                 </div>
             </div>
         </div>
@@ -557,15 +662,19 @@
 
 <script type="module">
 document.addEventListener('DOMContentLoaded', async () => {
-    const githubRawBaseUrl = 'https://raw.githubusercontent.com/alixonc/proposta-comercial/main/';
+    // --- CONFIGURAÇÕES ---
+    const GITHUB_RAW_BASE_URL = 'https://raw.githubusercontent.com/alixonc/proposta-comercial/main/';
+    // SEUS DADOS DE CONTATO ATUALIZADOS
+    const WHATSAPP_NUMBER = '5575998014491'; 
+    const EMAIL_ADDRESS = 'alison.karvalho@gmail.com';
+
+    let portfolioSwiperInstance = null;
+    let deliverablesData = [];
 
     // --- UTILITY FUNCTIONS ---
     const resolveImageUrl = (path) => {
-        if (!path || path.startsWith('http')) {
-            return path;
-        }
-        const cleanPath = path.startsWith('/') ? path.substring(1) : path;
-        return `${githubRawBaseUrl}${cleanPath}`;
+        if (!path || path.startsWith('http')) return path;
+        return `${GITHUB_RAW_BASE_URL}${path.startsWith('/') ? path.substring(1) : path}`;
     };
 
     const fetchData = async (url) => {
@@ -580,19 +689,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const [content, portfolioData, carouselData] = await Promise.all([
-        fetchData('https://raw.githubusercontent.com/alixonc/proposta-comercial/main/_data/site_content.json'),
-        fetchData('https://raw.githubusercontent.com/alixonc/proposta-comercial/main/_data/portfolio.json'),
-        fetchData('https://raw.githubusercontent.com/alixonc/proposta-comercial/main/_data/carousel.json')
+        fetchData(`${GITHUB_RAW_BASE_URL}_data/site_content.json`),
+        fetchData(`${GITHUB_RAW_BASE_URL}_data/portfolio.json`),
+        fetchData(`${GITHUB_RAW_BASE_URL}_data/carousel.json`)
     ]);
 
     if (!content) {
         document.body.innerHTML = "<div class='h-screen w-screen flex items-center justify-center text-white bg-red-500'><h1>Erro ao carregar o conteúdo da proposta. Por favor, recarregue a página.</h1></div>";
         return;
     }
+    
+    // Process data once
+    deliverablesData = [
+        { image: "imagens/detalhamento-sapatas.jpg", title: "Detalhamento de Sapatas", category: "Estrutural" },
+        { image: "imagens/entregavel-vigas.jpg", title: "Detalhamento de Vigas", category: "Estrutural" },
+        ...(carouselData?.slides || [])
+    ].map(slide => ({ ...slide, image: resolveImageUrl(slide.image) }));
 
     const setText = (selector, text) => {
         const el = document.querySelector(selector);
-        if (el && text) el.textContent = text;
+        if (el && text !== undefined) el.textContent = text;
     };
     const setHtml = (selector, html) => {
         const el = document.querySelector(selector);
@@ -607,9 +723,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     const initHeader = () => {
         const header = document.getElementById('main-header');
-        window.addEventListener('scroll', () => {
-            header.classList.toggle('scrolled', window.scrollY > 50);
-        });
+        window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 50));
         
         setText('#logo-container', content.header.logo_text);
         setText('#footer-company-name', content.header.logo_text);
@@ -617,11 +731,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuIcon = document.getElementById('menu-icon');
-        mobileMenu.innerHTML = document.getElementById('nav-links').innerHTML.replace(/space-x-8/g, 'flex flex-col gap-6 text-xl') + `<a href="#contato" class="btn btn-accent mt-4">Iniciar Projeto</a>`;
+        // Mobile menu does not need the button, as it's not present anymore.
+        mobileMenu.innerHTML = document.getElementById('nav-links').innerHTML.replace(/space-x-8/g, 'flex flex-col gap-6 text-xl');
         
         const toggleMenu = () => {
-            const isHidden = mobileMenu.classList.toggle('hidden');
-            menuIcon.className = isHidden ? 'ph-bold ph-list text-3xl' : 'ph-bold ph-x text-3xl';
+            mobileMenu.classList.toggle('hidden');
+            menuIcon.className = menuIcon.classList.contains('ph-list') ? 'ph-bold ph-x text-3xl' : 'ph-bold ph-list text-3xl';
         };
 
         menuButton.addEventListener('click', toggleMenu);
@@ -635,12 +750,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const params = new URLSearchParams(window.location.search);
         const clientName = params.get('cliente') || "Prezado(a) Cliente";
         const issueDate = new Date();
-        const expiryDate = new Date();
-        expiryDate.setDate(issueDate.getDate() + (content.proposal_details.validity_days || 15));
+        const expiryDate = new Date(issueDate.setDate(issueDate.getDate() + (content.proposal_details.validity_days || 15)));
 
         setText('#client-name', clientName);
         setText('#footer-client-name', clientName);
-        setText('#proposal-date', issueDate.toLocaleDateString('pt-BR'));
+        setText('#proposal-date', new Date().toLocaleDateString('pt-BR'));
         setText('#proposal-validity-title', content.proposal_details.validity_text);
         setText('#proposal-validity', expiryDate.toLocaleDateString('pt-BR'));
     };
@@ -649,43 +763,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!content.solutions) return;
         const solutions = Object.entries(content.solutions);
         
-        render('#tabs-buttons', solutions, ([key, s]) => `
-            <button class="tab-button font-semibold text-lg py-2 px-1" data-tab="${key}">${s.title}</button>
-        `);
-        
+        render('#tabs-buttons', solutions, ([key, s]) => `<button class="tab-button font-semibold text-lg py-2 px-1" data-tab="${key}">${s.title}</button>`);
         render('#tabs-content', solutions, ([key, s]) => `
             <div id="tab-content-${key}" class="tab-content">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                     <div>
-                        <h3 class="text-3xl font-bold text-[var(--color-primary)]">${s.title}</h3>
-                        <p class="mt-4 text-slate-700 leading-relaxed">${s.description}</p>
+                        <h3 class="text-3xl font-bold">${s.title}</h3>
+                        <p class="mt-4 leading-relaxed">${s.description}</p>
                         <ul class="mt-6 space-y-3">${s.deliverables.map(d => `<li class="flex items-start"><i class="ph-fill ph-check-circle text-xl mr-3 mt-0.5 text-[var(--color-accent)]"></i><span>${d}</span></li>`).join('')}</ul>
                     </div>
-                    <div class="hidden md:block">
-                        <img src="https://placehold.co/500x400/0A2463/FFFFFF?text=${s.title}" class="rounded-xl shadow-lg">
-                    </div>
+                    <div class="hidden md:block"><img src="https://placehold.co/500x400/F8FAFC/1E293B?text=${encodeURIComponent(s.title)}" class="rounded-xl shadow-lg"></div>
                 </div>
-            </div>
-        `);
+            </div>`);
 
         const tabButtons = document.querySelectorAll('.tab-button');
         const tabContents = document.querySelectorAll('.tab-content');
-
         const switchTab = (tabKey) => {
             tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabKey));
-            tabContents.forEach(content => content.classList.toggle('active', content.id === `tab-content-${tabKey}`));
+            tabContents.forEach(contentEl => contentEl.classList.toggle('active', contentEl.id === `tab-content-${tabKey}`));
         };
-
-        document.querySelector('#tabs-buttons').addEventListener('click', e => {
-            if (e.target.matches('.tab-button')) {
-                switchTab(e.target.dataset.tab);
-            }
-        });
-        
-        // Activate first tab
-        if(solutions.length > 0) {
-            switchTab(solutions[0][0]);
-        }
+        document.querySelector('#tabs-buttons').addEventListener('click', e => e.target.matches('.tab-button') && switchTab(e.target.dataset.tab));
+        if (solutions.length > 0) switchTab(solutions[0][0]);
     };
     
     const initPortfolio = () => {
@@ -696,48 +794,28 @@ document.addEventListener('DOMContentLoaded', async () => {
                 ? portfolioData.items 
                 : portfolioData.items.filter(item => item.category === filter);
             
-            render('#portfolio-grid', filteredItems, item => `
+            render('#portfolio-grid', filteredItems, (item, index) => `
                 <div class="group portfolio-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" 
-                     data-modal-target="portfolio-modal"
-                     data-img-src="${resolveImageUrl(item.image)}"
-                     data-title="${item.title}"
-                     data-category="${item.category}">
-                    <div class="overflow-hidden pointer-events-none">
-                        <img src="${resolveImageUrl(item.image)}" alt="${item.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
-                    </div>
-                    <div class="p-6 pointer-events-none">
+                     data-index="${index}" data-filter="${filter}">
+                    <div class="overflow-hidden"><img src="${resolveImageUrl(item.image)}" alt="${item.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy"></div>
+                    <div class="p-6">
                         <span class="text-sm font-semibold uppercase tracking-wider text-slate-500">${item.category}</span>
                         <h3 class="text-xl font-bold text-slate-800 mt-2">${item.title}</h3>
                     </div>
                 </div>`);
         };
-
-        const portfolioFilters = document.querySelector('#portfolio-filters');
-        if (portfolioFilters) {
-            portfolioFilters.addEventListener('click', e => {
-                if (e.target.matches('.filter-btn') && !e.target.classList.contains('active')) {
-                    const currentActive = portfolioFilters.querySelector('.filter-btn.active');
-                    if (currentActive) {
-                        currentActive.classList.remove('active', 'bg-[var(--color-accent)]', 'text-white');
-                        currentActive.classList.add('bg-slate-200', 'text-slate-700');
-                    }
-                    
-                    e.target.classList.remove('bg-slate-200', 'text-slate-700');
-                    e.target.classList.add('active', 'bg-[var(--color-accent)]', 'text-white');
-                    renderPortfolio(e.target.dataset.filter);
-                }
-            });
-        }
         
-        // Initial render
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        filterButtons.forEach(btn => {
-            btn.classList.add('py-2', 'px-5', 'rounded-full', 'font-semibold', 'transition-colors');
-            if (btn.dataset.filter === 'all') {
-                btn.classList.add('active', 'bg-[var(--color-accent)]', 'text-white');
-            } else {
-                btn.classList.add('bg-slate-200', 'text-slate-700');
+        document.querySelector('#portfolio-filters').addEventListener('click', e => {
+            if (e.target.matches('.filter-btn') && !e.target.classList.contains('active')) {
+                document.querySelector('#portfolio-filters .filter-btn.active')?.classList.remove('active', 'bg-[var(--color-accent)]', 'text-white');
+                e.target.classList.add('active', 'bg-[var(--color-accent)]', 'text-white');
+                renderPortfolio(e.target.dataset.filter);
             }
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.add('py-2', 'px-5', 'rounded-full', 'font-semibold', 'transition-colors', 'bg-slate-200', 'text-slate-700');
+            if (btn.dataset.filter === 'all') btn.classList.add('active', 'bg-[var(--color-accent)]', 'text-white');
         });
 
         renderPortfolio();
@@ -746,13 +824,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const initProfile = () => {
         if (!content.sobre) return;
         const { name, bio, photo } = content.sobre;
-        setHtml('#profile-image-container', `
-            <img src="${resolveImageUrl(photo)}" alt="${name}" class="rounded-full w-48 h-48 md:w-64 md:h-64 object-cover shadow-2xl">
-        `);
-        setHtml('#profile-content', `
-            <h3 class="text-2xl font-bold text-slate-800 mt-4 md:mt-0">${name}</h3>
-            <p class="mt-4 text-slate-600 leading-relaxed">${bio}</p>
-        `);
+        setHtml('#profile-image-container', `<img src="${resolveImageUrl(photo)}" alt="${name}" class="rounded-full w-48 h-48 md:w-64 md:h-64 object-cover shadow-2xl">`);
+        setHtml('#profile-content', `<h3 class="text-2xl font-bold mt-4 md:mt-0">${name}</h3><p class="mt-4 leading-relaxed">${bio}</p>`);
     };
 
     const initTimeline = () => {
@@ -766,10 +839,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             </div>`);
         
-        // Animate on scroll
         gsap.registerPlugin(ScrollTrigger);
-        const items = document.querySelectorAll('.timeline-item');
-        items.forEach(item => {
+        document.querySelectorAll('.timeline-item').forEach(item => {
             gsap.from(item.querySelector('.timeline-content'), {
                 scrollTrigger: {
                     trigger: item,
@@ -777,30 +848,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                     toggleClass: {targets: item, className: "in-view"},
                     once: true
                 },
-                opacity: 0,
-                x: -30,
-                duration: 0.6
+                opacity: 0, x: -30, duration: 0.6
             });
         });
     };
     
     const initDeliverablesCarousel = () => {
-        if (!carouselData || !carouselData.slides) return;
-        
-        const localSlides = [
-            { image: "imagens/detalhamento-sapatas.jpg", title: "Detalhamento de Sapatas", category: "Estrutural" },
-            { image: "imagens/entregavel-vigas.jpg", title: "Detalhamento de Vigas", category: "Estrutural" }
-        ];
-
-        const allSlides = [...localSlides, ...carouselData.slides];
-
-        render('#deliverables-carousel', allSlides.map(slide => ({...slide, image: resolveImageUrl(slide.image)})), slide => `
-            <div class="swiper-slide">
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden text-center">
-                    <img src="${slide.image}" alt="${slide.title}" class="w-full h-80 object-contain bg-slate-100 p-4" loading="lazy">
-                    <div class="p-4">
+        render('#deliverables-carousel', deliverablesData, (slide, index) => `
+            <div class="swiper-slide" data-index="${index}">
+                <div class="bg-slate-800 rounded-lg shadow-lg overflow-hidden text-center">
+                    <img src="${slide.image}" alt="${slide.title}" class="w-full h-80 object-contain p-4" loading="lazy">
+                    <div class="p-4 text-white">
                         <h4 class="font-bold text-lg">${slide.title}</h4>
-                        <p class="text-sm text-slate-500">${slide.category}</p>
+                        <p class="text-sm text-slate-400">${slide.category}</p>
                     </div>
                 </div>
             </div>
@@ -810,128 +870,126 @@ document.addEventListener('DOMContentLoaded', async () => {
             loop: true,
             slidesPerView: 1,
             spaceBetween: 30,
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            breakpoints: {
-                768: { slidesPerView: 2 },
-                1024: { slidesPerView: 3 },
-            }
+            autoplay: { delay: 5000, disableOnInteraction: false },
+            pagination: { el: '.swiper-pagination', clickable: true },
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+            breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
         });
     };
     
-    const initGuarantees = () => {
-        if (!content.guarantees) return;
-        render('#guarantees-container', content.guarantees, g => `
-            <div class="text-center p-6">
-                <i class="ph-bold ph-${g.icon} text-5xl text-[var(--color-accent)] inline-block"></i>
-                <h3 class="text-xl font-bold mt-4">${g.title}</h3>
-                <p class="mt-2 text-slate-600">${g.description}</p>
-            </div>
-        `);
-    };
+    const initGuarantees = () => render('#guarantees-container', content.guarantees, g => `<div class="text-center p-6"><i class="ph-bold ph-${g.icon} text-5xl text-[var(--color-accent)] inline-block"></i><h3 class="text-xl font-bold mt-4">${g.title}</h3><p class="mt-2 text-slate-600">${g.description}</p></div>`);
+    const initTestimonials = () => render('#testimonials-container', content.testimonials, t => `<div class="bg-slate-800 p-8 rounded-xl shadow-lg"><i class="ph-fill ph-quotes text-4xl text-[var(--color-accent)]"></i><p class="text-lg italic text-slate-300 mt-4">"${t.text}"</p><p class="font-bold text-right mt-6 text-slate-200">${t.author}</p></div>`);
 
-    const initTestimonials = () => {
-        if (!content.testimonials) return;
-        render('#testimonials-container', content.testimonials, t => `
-            <div class="bg-white p-8 rounded-xl shadow-lg">
-                <i class="ph-fill ph-quotes text-4xl text-[var(--color-accent)]"></i>
-                <p class="text-lg italic text-slate-700 mt-4">"${t.text}"</p>
-                <p class="font-bold text-right mt-6 text-slate-800">${t.author}</p>
+    const initPackages = () => render('#packages-container', content.packages, pkg => `
+        <div class="package-card relative p-8 flex flex-col cursor-pointer" data-modal-target="package-modal" data-package-name="${pkg.name}">
+            ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[var(--color-accent)] text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Recomendado</div>' : ''}
+            <div class="flex-grow">
+                <h3 class="text-2xl font-bold text-[var(--color-primary)]">${pkg.name}</h3>
+                <p class="mt-2 text-slate-500 min-h-[3rem]">${pkg.description}</p>
+                <p class="text-4xl font-extrabold my-6 text-[var(--color-primary)]">R$ ${pkg.price}</p>
+                <ul class="space-y-3 text-slate-700 text-left">${pkg.features.map(f => `<li class="flex items-start"><i class="ph-fill ph-check-circle text-green-500 text-xl mr-2 mt-0.5"></i><span>${f}</span></li>`).join('')}</ul>
             </div>
-        `);
-    };
+            <div class="package-cta mt-8 pt-6 border-t border-slate-200 text-center">
+                <span class="font-bold text-lg ${pkg.recommended ? 'text-[var(--color-accent)]' : 'text-[var(--color-primary)]'}">
+                    Selecionar Plano <i class="ph-bold ph-arrow-right align-middle"></i>
+                </span>
+            </div>
+        </div>`);
 
-    const initPackages = () => {
-        if (!content.packages) return;
-        render('#packages-container', content.packages, pkg => `
-            <div class="package-card relative p-8 flex flex-col ${pkg.recommended ? 'recommended' : ''}">
-                ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[var(--color-accent)] text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Recomendado</div>' : ''}
-                <div class="flex-grow">
-                    <h3 class="text-2xl font-bold package-name text-[var(--color-primary)]">${pkg.name}</h3>
-                    <p class="mt-2 text-slate-500 min-h-[3rem]">${pkg.description}</p>
-                    <p class="text-4xl font-extrabold my-6 text-[var(--color-primary)]">R$ ${pkg.price}</p>
-                    <ul class="space-y-3 text-slate-700 text-left">${pkg.features.map(f => `<li class="flex items-start"><i class="ph-fill ph-check-circle text-green-500 text-xl mr-2 mt-0.5"></i><span>${f}</span></li>`).join('')}</ul>
-                </div>
-                <button class="w-full mt-8 btn ${pkg.recommended ? 'btn-accent' : 'btn-secondary'}"
-                        data-modal-target="package-modal"
-                        data-package-name="${pkg.name}">
-                    Selecionar Plano
-                </button>
-            </div>
-        `);
-    };
+    const initFaq = () => render('#faq-container', content.faq, item => `
+        <div class="faq-item">
+            <details>
+                <summary class="p-5 flex justify-between items-center cursor-pointer font-semibold text-lg">${item.question}<i class="ph-bold ph-plus faq-icon text-2xl font-light text-[var(--color-accent)]"></i></summary>
+                <div class="px-5 pb-5">${item.answer}</div>
+            </details>
+        </div>`);
 
-    const initFaq = () => {
-        if (!content.faq) return;
-        render('#faq-container', content.faq, item => `
-            <div class="faq-item bg-white rounded-lg shadow-sm border border-slate-200">
-                <details>
-                    <summary class="p-5 flex justify-between items-center cursor-pointer font-semibold text-lg text-[var(--color-primary)]">
-                        ${item.question}
-                        <i class="ph-bold ph-plus faq-icon text-2xl font-light text-[var(--color-accent)]"></i>
-                    </summary>
-                    <div class="px-5 pb-5 text-slate-600">${item.answer}</div>
-                </details>
-            </div>
-        `);
+    const initContactLinks = () => {
+        const clientName = document.getElementById('client-name').textContent;
+        const whatsappLink = document.getElementById('whatsapp-link');
+        const emailLink = document.getElementById('email-link');
+
+        const whatsappMessage = encodeURIComponent(`Olá, AC Engenharia. Gostaria de aprovar a proposta para "${clientName}".`);
+        whatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+
+        const emailSubject = encodeURIComponent(`Aprovação da Proposta - ${clientName}`);
+        emailLink.href = `mailto:${EMAIL_ADDRESS}?subject=${emailSubject}`;
     };
     
     const initModals = () => {
-        const openModal = (modal) => {
-            if (modal) modal.classList.add('active');
-        };
+        const lightboxModal = document.getElementById('lightbox-modal');
 
-        const closeModal = () => {
-            const activeModal = document.querySelector('.modal-overlay.active');
-            if (activeModal) activeModal.classList.remove('active');
+        const openModal = (modal) => modal?.classList.add('active');
+        const closeModal = () => document.querySelector('.modal-overlay.active')?.classList.remove('active');
+
+        const createLightboxSwiper = (slides, initialSlide) => {
+            render('#lightbox-slides', slides, slide => `
+                <div class="swiper-slide flex items-center justify-center">
+                    <div class="relative">
+                        <img src="${slide.image}" alt="${slide.title}" class="w-auto h-auto max-w-[90vw] max-h-[85vh] object-contain rounded-lg">
+                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent rounded-b-lg">
+                           <h3 class="text-2xl font-bold text-white">${slide.title}</h3>
+                           <p class="text-md text-slate-300 uppercase tracking-wider">${slide.category}</p>
+                        </div>
+                    </div>
+                </div>`);
+
+            if (portfolioSwiperInstance) portfolioSwiperInstance.destroy(true, true);
+            
+            portfolioSwiperInstance = new Swiper('.lightbox-swiper', {
+                initialSlide,
+                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+            });
+            openModal(lightboxModal);
         };
 
         document.body.addEventListener('click', e => {
-            const modalTrigger = e.target.closest('[data-modal-target]');
-            if (modalTrigger) {
-                const modalId = modalTrigger.dataset.modalTarget;
-                const modal = document.getElementById(modalId);
-                
-                if (modalId === 'portfolio-modal') {
-                    const portfolioImg = document.getElementById('portfolio-modal-img');
-                    const portfolioTitle = document.getElementById('portfolio-modal-title');
-                    const portfolioCategory = document.getElementById('portfolio-modal-category');
-                    if (portfolioImg) portfolioImg.src = modalTrigger.dataset.imgSrc;
-                    if (portfolioTitle) portfolioTitle.textContent = modalTrigger.dataset.title;
-                    if (portfolioCategory) portfolioCategory.textContent = modalTrigger.dataset.category;
+            const packageModalTrigger = e.target.closest('[data-modal-target="package-modal"]');
+            if (packageModalTrigger) {
+                const packageName = packageModalTrigger.dataset.packageName;
+                setText('#package-modal-name', packageName);
+
+                // Find the selected package to display its features
+                const selectedPackage = content.packages.find(p => p.name === packageName);
+                if (selectedPackage && selectedPackage.features) {
+                    render('#package-modal-features', selectedPackage.features, feature => `
+                        <li class="flex items-start text-sm text-slate-700">
+                            <i class="ph-fill ph-check-circle text-green-500 text-lg mr-2 mt-0.5"></i>
+                            <span>${feature}</span>
+                        </li>
+                    `);
                 }
                 
-                if (modalId === 'package-modal') {
-                    const packageName = document.getElementById('package-modal-name');
-                    if (packageName) packageName.textContent = modalTrigger.dataset.packageName;
-                }
-                
-                openModal(modal);
+                const whatsappMsg = encodeURIComponent(`Olá! Tenho interesse no ${packageName} que vi na proposta.`);
+                document.getElementById('package-whatsapp-link').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMsg}`;
+
+                const emailSub = encodeURIComponent(`Interesse no ${packageName}`);
+                const emailBody = encodeURIComponent(`Olá, gostaria de mais informações sobre o ${packageName}.`);
+                document.getElementById('package-email-link').href = `mailto:${EMAIL_ADDRESS}?subject=${emailSub}&body=${emailBody}`;
+
+                openModal(document.getElementById('package-modal'));
             }
 
-            if (e.target.closest('.modal-close-btn')) {
-                closeModal();
+            const portfolioTrigger = e.target.closest('#portfolio-grid .portfolio-card');
+            if (portfolioTrigger) {
+                const { index, filter } = portfolioTrigger.dataset;
+                const filteredItems = (filter === 'all' ? portfolioData.items : portfolioData.items.filter(item => item.category === filter))
+                                      .map(item => ({ ...item, image: resolveImageUrl(item.image) }));
+                const clickedIndex = filteredItems.findIndex(item => resolveImageUrl(item.image) === resolveImageUrl(portfolioData.items[index].image));
+                createLightboxSwiper(filteredItems, clickedIndex);
             }
+
+            const deliverablesTrigger = e.target.closest('.deliverables-swiper .swiper-slide');
+            if(deliverablesTrigger) {
+                const realIndex = deliverablesTrigger.dataset.swiperSlideIndex;
+                createLightboxSwiper(deliverablesData, parseInt(realIndex, 10));
+            }
+
+            if (e.target.closest('.modal-close-btn')) closeModal();
         });
 
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
-            modal.addEventListener('click', e => {
-                if (e.target === modal) closeModal();
-            });
-        });
-        
-        document.addEventListener('keydown', e => {
-            if (e.key === "Escape") closeModal();
-        });
-        
-        const downloadPdfBtn = document.getElementById('download-pdf-btn');
-        if(downloadPdfBtn) {
-            downloadPdfBtn.addEventListener('click', () => {
-                alert("Em uma aplicação real, esta ação iniciaria o download de um PDF com a proposta personalizada.");
-            });
-        }
+        document.querySelectorAll('.modal-overlay').forEach(modal => modal.addEventListener('click', e => (e.target === modal) && closeModal()));
+        document.addEventListener('keydown', e => (e.key === "Escape") && closeModal());
     };
 
     // --- RUN ALL INITIALIZERS ---
@@ -946,6 +1004,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initTestimonials();
     initPackages();
     initFaq();
+    initContactLinks();
     initModals();
 });
 </script>
