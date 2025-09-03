@@ -1,1 +1,23 @@
+{
+  "items": [
+    {
+      "icon": "currency-dollar",
+      "criteria": "Custo Final",
+      "without_professional": "Até 30% acima do orçado",
+      "with_professional": "Orçamento otimizado e previsível"
+    },
+    {
+      "icon": "timer",
+      "criteria": "Prazo de Entrega",
+      "without_professional": "Atrasos constantes por retrabalho",
+      "with_professional": "Cronograma cumprido com precisão"
+    },
+    {
+      "icon": "shield-warning",
+      "criteria": "Segurança Estrutural",
+      "without_professional": "Riscos ocultos e patologias futuras",
+      "with_professional": "Máxima segurança e conformidade"
+    }
+  ]
+}
 
