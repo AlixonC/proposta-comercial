@@ -6,30 +6,28 @@
   },
   "hero": {
     "title": "Construindo Sonhos com Segurança e Precisão",
-    "subtitle": "Garantimos que seu maior investimento seja também o seu porto seguro, projetado para durar gerações."
+    "subtitle": "Garantimos que seu maior investimento seja também o seu porto seguro, projetado para durar gerações.",
+    "background_image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop"
   },
   "problemas": [
     {
-      "emoji": "💸",
+      "icon": "currency-dollar",
       "title": "O Orçamento que Sangra",
-      "color": "red",
-      "description": "Cada incompatibilidade descoberta na obra vira um remendo caro. É o desperdício de material, o pagamento de mão de obra extra e a certeza de que o custo final será muito maior que o planejado."
+      "description": "Cada incompatibilidade descoberta na obra vira um remendo caro. É o desperdício de material, o pagamento de mão de obra extra e o custo final maior que o planejado."
     },
     {
-      "emoji": "⏳",
+      "icon": "timer",
       "title": "O Cronograma Destruído",
-      "color": "yellow",
       "description": "A obra que se arrasta, os prazos estourados e a frustração de ver o sonho ser adiado. O retrabalho não consome apenas dinheiro, ele rouba seu tempo e sua paz."
     },
     {
-      "emoji": "🤯",
+      "icon": "lightning",
       "title": "O Estresse que Não Acaba",
-      "color": "orange",
-      "description": "Conflitos com pedreiros, decisões tomadas sob pressão e a constante preocupação com a segurança da estrutura. Seu sonho não pode se transformar em um pesadelo."
+      "description": "Conflitos com pedreiros, decisões tomadas sob pressão e a constante preocupação com a segurança. Seu sonho não pode se transformar em um pesadelo."
     }
   ],
   "sobre": {
-    "title": "Quem Você Está Contratando?",
+    "title": "Engenharia de Confiança",
     "name": "Alison Carvalho, Engenheiro Civil",
     "bio": "Com vasta experiência no mercado, minha missão é transformar seus sonhos em realidade através de um trabalho pautado pela excelência, transparência e dedicação total ao seu projeto. Minha autoridade é construída em cada projeto entregue com sucesso e na satisfação de cada cliente.",
     "photo": "imagens/foto-perfil.jpg"
@@ -71,10 +69,10 @@
     }
   ],
   "solutions": {
-    "arquitetonico": { "key": "arquitetonico", "title": "Projeto Arquitetônico", "emoji": "🏠", "description": "Criamos espaços que refletem sua personalidade e atendem às suas necessidades, garantindo o máximo de conforto, iluminação e ventilação natural.", "deliverables": ["Plantas baixas humanizadas", "Cortes e fachadas detalhadas", "Layout de pontos elétricos e hidráulicos", "Modelo 3D para visualização"] },
-    "estrutural": { "key": "estrutural", "title": "Projeto Estrutural", "emoji": "🏗️", "description": "Garantimos a segurança e a longevidade da sua construção, otimizando o uso de materiais para que você economize sem abrir mão da qualidade.", "deliverables": ["Plantas de formas", "Detalhamento de pilares, vigas, lajes e fundações", "Lista de materiais (aço e concreto)"] },
-    "hidrossanitario": { "key": "hidrossanitario", "title": "Projeto Hidrossanitário", "emoji": "💧", "description": "Planejamos sistemas eficientes de água e esgoto para garantir o funcionamento perfeito da sua casa, evitando entupimentos e vazamentos futuros.", "deliverables": ["Plantas de distribuição de água fria e quente", "Isométricos para fácil execução", "Detalhamento de caixas e esgoto", "Lista de materiais"] },
-    "eletrico": { "key": "eletrico", "title": "Projeto Elétrico", "emoji": "⚡", "description": "Dimensionamos uma instalação elétrica segura e eficiente, prevendo o uso de todos os seus equipamentos para evitar sobrecargas ou falta de tomadas.", "deliverables": ["Plantas de pontos de iluminação e tomadas", "Diagramas dos quadros de distribuição", "Detalhamento de eletrodutos e fiação", "Lista de materiais"] }
+    "arquitetonico": { "key": "arquitetonico", "title": "Projeto Arquitetônico", "icon": "house-line", "description": "Criamos espaços que refletem sua personalidade e atendem às suas necessidades, garantindo o máximo de conforto, iluminação e ventilação natural.", "deliverables": ["Plantas baixas humanizadas", "Cortes e fachadas detalhadas", "Layout de pontos elétricos e hidráulicos", "Modelo 3D para visualização"] },
+    "estrutural": { "key": "estrutural", "title": "Projeto Estrutural", "icon": "buildings", "description": "Garantimos a segurança e a longevidade da sua construção, otimizando o uso de materiais para que você economize sem abrir mão da qualidade.", "deliverables": ["Plantas de formas", "Detalhamento de pilares, vigas, lajes e fundações", "Lista de materiais (aço e concreto)"] },
+    "hidrossanitario": { "key": "hidrossanitario", "title": "Projeto Hidrossanitário", "icon": "drop", "description": "Planejamos sistemas eficientes de água e esgoto para garantir o funcionamento perfeito da sua casa, evitando entupimentos e vazamentos futuros.", "deliverables": ["Plantas de distribuição de água fria e quente", "Isométricos para fácil execução", "Detalhamento de caixas e esgoto", "Lista de materiais"] },
+    "eletrico": { "key": "eletrico", "title": "Projeto Elétrico", "icon": "plugs", "description": "Dimensionamos uma instalação elétrica segura e eficiente, prevendo o uso de todos os seus equipamentos para evitar sobrecargas ou falta de tomadas.", "deliverables": ["Plantas de pontos de iluminação e tomadas", "Diagramas dos quadros de distribuição", "Detalhamento de eletrodutos e fiação", "Lista de materiais"] }
   },
   "timeline": [
     { "title": "Briefing e Análise", "description": "Entendemos suas necessidades, desejos e orçamento para criar a base do projeto." },
@@ -83,9 +81,9 @@
     { "title": "Entrega e Suporte", "description": "Entregamos todos os projetos e permanecemos disponíveis para esclarecer dúvidas." }
   ],
   "guarantees": [
-    { "title": "Garantia de Compatibilidade", "description": "Asseguramos que todos os projetos (arquitetônico, estrutural, elétrico e hidráulico) são 100% compatíveis, eliminando surpresas e retrabalho na obra.", "icon": "✅" },
-    { "title": "Compromisso com Prazos", "description": "Respeitamos o cronograma acordado. A sua obra não pode esperar, e nós levamos isso a sério, garantindo a entrega pontual de todas as etapas.", "icon": "⏰" },
-    { "title": "Suporte Técnico Contínuo", "description": "Após a entrega, permanecemos à sua disposição e da sua equipe de construção para esclarecer qualquer dúvida, garantindo uma execução perfeita.", "icon": "🛠️" }
+    { "icon": "shield-check", "title": "Garantia de Compatibilidade", "description": "Asseguramos que todos os projetos são 100% compatíveis, eliminando surpresas e retrabalho na obra." },
+    { "icon": "clock", "title": "Compromisso com Prazos", "description": "Respeitamos o cronograma acordado. A sua obra não pode esperar, e nós levamos isso a sério." },
+    { "icon": "users-three", "title": "Suporte Técnico Contínuo", "description": "Após a entrega, permanecemos à sua disposição e da sua equipe para esclarecer qualquer dúvida." }
   ],
   "testimonials": [
     { "text": "Estávamos com problemas de compatibilização entre a arquitetura e a estrutura. O Alison resolveu tudo de forma brilhante, nos poupando tempo e dinheiro na obra. O profissionalismo superou as expectativas!", "author": "- Família Silva, Residência Jequitibá" },
@@ -98,4 +96,3 @@
     { "question": "O que acontece se eu precisar fazer alterações no projeto?", "answer": "Qualquer alteração solicitada que modifique o escopo original será tratada como um aditivo ao contrato, com novo orçamento e ajuste de prazo. Nosso objetivo é garantir que o projeto final atenda perfeitamente às suas expectativas." }
   ]
 }
-
