@@ -166,9 +166,22 @@
         }
 
         /* Solutions Tabs */
+        .tabs-container {
+            overflow-x: auto;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .tabs-container::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+        }
+        #tabs-buttons {
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
         .tab-button {
             transition: all 0.3s ease;
             border-bottom: 2px solid transparent;
+            flex-shrink: 0;
         }
         .tab-button.active {
             color: var(--color-accent);
@@ -382,6 +395,14 @@
             color: white !important;
             background-color: rgba(0,0,0,0.3);
         }
+        
+        /* Mobile menu link fix */
+        #mobile-menu a.nav-link {
+            color: white;
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            text-align: center;
+        }
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -467,8 +488,10 @@
                         <p class="section-subtitle mt-4 text-lg">Nossa metodologia garante que cada detalhe do seu projeto funcione em perfeita harmonia.</p>
                     </div>
                     <div class="max-w-5xl mx-auto">
-                        <div id="tabs-buttons" class="flex justify-center border-b border-slate-700 mb-8 space-x-4 md:space-x-8"></div>
-                        <div id="tabs-content" class="min-h-[300px]"></div>
+                        <div class="tabs-container">
+                            <div id="tabs-buttons" class="flex justify-start md:justify-center border-b border-slate-700 space-x-4 md:space-x-8 px-6 md:px-0"></div>
+                        </div>
+                        <div id="tabs-content" class="min-h-[300px] mt-8"></div>
                     </div>
                 </div>
             </section>
@@ -731,8 +754,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuIcon = document.getElementById('menu-icon');
-        // Mobile menu does not need the button, as it's not present anymore.
-        mobileMenu.innerHTML = document.getElementById('nav-links').innerHTML.replace(/space-x-8/g, 'flex flex-col gap-6 text-xl');
+        
+        mobileMenu.innerHTML = document.getElementById('nav-links').innerHTML;
         
         const toggleMenu = () => {
             mobileMenu.classList.toggle('hidden');
@@ -763,7 +786,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!content.solutions) return;
         const solutions = Object.entries(content.solutions);
         
-        render('#tabs-buttons', solutions, ([key, s]) => `<button class="tab-button font-semibold text-lg py-2 px-1" data-tab="${key}">${s.title}</button>`);
+        render('#tabs-buttons', solutions, ([key, s]) => `<button class="tab-button font-semibold text-lg py-2 px-4" data-tab="${key}">${s.title}</button>`);
         render('#tabs-content', solutions, ([key, s]) => `
             <div id="tab-content-${key}" class="tab-content">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
