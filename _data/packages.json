@@ -1,1 +1,39 @@
+{
+  "items": [
+    {
+      "name": "Pacote Essencial",
+      "description": "O ponto de partida seguro para sua construção.",
+      "price": "4.500,00",
+      "features": [
+        "Projeto Arquitetônico",
+        "Projeto Estrutural"
+      ],
+      "recommended": false
+    },
+    {
+      "name": "Pacote Integrado",
+      "description": "A solução completa para uma obra sem dor de cabeça.",
+      "price": "8.000,00",
+      "features": [
+        "Todos os itens do Pacote Essencial",
+        "Projeto Hidrossanitário",
+        "Projeto Elétrico",
+        "Análise de Compatibilização 3D"
+      ],
+      "recommended": true
+    },
+    {
+      "name": "Pacote Premium",
+      "description": "A experiência definitiva em personalização e acompanhamento.",
+      "price": "12.500,00",
+      "features": [
+        "Todos os itens do Pacote Integrado",
+        "Projeto de Luminotecnia",
+        "Detalhamento de Interiores",
+        "Visitas Técnicas de Acompanhamento"
+      ],
+      "recommended": false
+    }
+  ]
+}
 
