@@ -48,7 +48,8 @@
             content: ''; 
             position: absolute; 
             bottom: 0; 
-            left: 0; 
+            left: 50%;
+            transform: translateX(-50%);
             width: 0; 
             height: 2px; 
             background-color: var(--teal-700);
@@ -95,10 +96,10 @@
         .faq-icon { transition: transform 0.3s; }
         .faq-item.open .faq-icon { transform: rotate(45deg); }
         
-        .interactive-card { transition: transform 0.3s, box-shadow 0.3s; }
+        .interactive-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .interactive-card:hover { 
-            transform: translateY(-8px); 
-            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1); 
+            transform: translateY(-8px) scale(1.03); 
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15); 
         }
 
         .swiper-button-next, .swiper-button-prev { 
@@ -159,6 +160,7 @@
                 <a href="#portfolio" class="nav-link">Portfólio</a>
                 <a href="#sobre" class="nav-link">Sobre</a>
                 <a href="#processo" class="nav-link">Processo</a>
+                <a href="#garantias" class="nav-link">Garantias</a>
                 <a href="#pacotes" class="nav-link">Pacotes</a>
                 <a href="#faq" class="nav-link">FAQ</a>
             </div>
@@ -246,27 +248,30 @@
                 </div>
             </div>
         </section>
-
-        <section id="entregaveis" class="py-24 bg-slate-800 text-white">
+        
+        <section id="garantias" class="py-24 bg-slate-800 text-white">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold text-teal-400" data-aos="fade-up">O que Você Recebe</h2>
+               <h2 class="text-3xl md:text-4xl font-bold text-teal-400" data-aos="fade-up">Sua Tranquilidade é a Nossa Prioridade</h2>
+               <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-300" data-aos="fade-up" data-aos-delay="100">
+                   Construir é um grande investimento. Por isso, oferecemos garantias sólidas para que você tenha total segurança do início ao fim do processo.
+               </p>
+               <div id="garantia-cards" class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+           </div>
+       </section>
+
+        <section id="entregaveis" class="py-24 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800" data-aos="fade-up">O que Você Recebe</h2>
                 <div class="swiper entregaveis-swiper max-w-4xl mx-auto mt-12" data-aos="fade-up" data-aos-delay="200">
                     <div class="swiper-wrapper" id="carousel-slides-container"></div>
                     <div class="swiper-pagination !relative mt-8"></div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev !text-teal-700 !bg-white/70"></div>
+                    <div class="swiper-button-next !text-teal-700 !bg-white/70"></div>
                 </div>
             </div>
         </section>
-        
-        <section id="garantia" class="py-24">
-             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-16" data-aos="fade-up">Seu Investimento Seguro</h2>
-                <div id="garantia-cards" class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left"></div>
-            </div>
-        </section>
 
-        <section id="depoimentos" class="py-24 bg-white">
+        <section id="depoimentos" class="py-24">
              <div class="container mx-auto px-6">
                 <div class="text-center mb-16" data-aos="fade-up">
                     <h2 class="text-3xl md:text-4xl font-bold">O Que Nossos Clientes Dizem</h2>
@@ -275,7 +280,7 @@
             </div>
         </section>
 
-        <section id="pacotes" class="py-24">
+        <section id="pacotes" class="py-24 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16" data-aos="fade-up">
                     <h2 class="text-3xl md:text-4xl font-bold">Compare e Escolha o Plano Ideal</h2>
@@ -284,7 +289,7 @@
             </div>
         </section>
 
-        <section id="faq" class="py-24 bg-white">
+        <section id="faq" class="py-24">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16" data-aos="fade-up">
                     <h2 class="text-3xl md:text-4xl font-bold">Perguntas Frequentes</h2>
@@ -335,23 +340,37 @@
         </a>
     </div>
 
-
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             AOS.init({ duration: 800, once: true, offset: 100 });
 
-            // Header Scroll Effect
+            // Header Scroll & Active Link Effect
             const header = document.getElementById('main-header');
+            const sections = document.querySelectorAll('main section');
+            const navLinks = document.querySelectorAll('#nav-links a');
+            
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            });
+                // Header style change
+                if (window.scrollY > 50) header.classList.add('scrolled');
+                else header.classList.remove('scrolled');
 
+                // Active nav link
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 150) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
 
             async function fetchData(url) {
                 try {
@@ -369,7 +388,6 @@
 
             if (!content) { console.error("Falha ao carregar o conteúdo principal do site."); return; }
 
-            // Render Functions
             const render = (elId, data, template) => {
                 const el = document.getElementById(elId);
                 if (el && data) el.innerHTML = Array.isArray(data) ? data.map(template).join('') : template(data);
@@ -377,7 +395,6 @@
             const setText = (elId, text) => { document.getElementById(elId) && text ? document.getElementById(elId).textContent = text : null; };
             const setSrc = (elId, src) => { document.getElementById(elId) && src ? document.getElementById(elId).src = src : null; };
 
-            // Populate Content
             const logoContainer = document.getElementById('logo-container');
             if(content.header.logo_type === 'image' && content.header.logo_image) {
                 logoContainer.innerHTML = `<img src="${content.header.logo_image}" alt="Logo" class="h-10">`;
@@ -404,7 +421,7 @@
             setSrc('about-photo', content.sobre.photo);
             
             render('packages-container', content.packages, (pkg, i) => `
-                <div class="relative bg-white p-8 rounded-lg shadow-lg border-2 ${pkg.recommended ? 'border-teal-500' : 'border-transparent'} transition-all flex flex-col" data-aos="fade-up" data-aos-delay="${i*100}">
+                <div class="relative bg-white p-8 rounded-lg shadow-lg border-2 ${pkg.recommended ? 'border-teal-500' : 'border-transparent'} transition-all flex flex-col interactive-card" data-aos="fade-up" data-aos-delay="${i*100}">
                     ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-teal-600 text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Recomendado</div>' : ''}
                     <div class="flex-grow">
                         <h3 class="text-2xl font-bold package-name">${pkg.name}</h3>
@@ -412,18 +429,22 @@
                         <p class="text-4xl font-extrabold my-6">R$ ${pkg.price}</p>
                         <ul class="space-y-3 text-slate-700 text-left">${(pkg.features || []).map(f => `<li class="flex items-start"><i class="ph-check-circle text-green-500 text-xl mr-2 mt-0.5"></i><span>${f}</span></li>`).join('')}</ul>
                     </div>
-                    <button class="select-plan-btn w-full mt-8 py-3 px-6 rounded-lg font-semibold transition-colors ${pkg.recommended ? 'bg-teal-600 text-white hover:bg-teal-700' : 'bg-slate-200 text-slate-800 hover:bg-teal-100'} cursor-pointer">Selecionar Plano</button>
+                    <button class="select-plan-btn w-full mt-8 py-3 px-6 rounded-full font-semibold transition-colors ${pkg.recommended ? 'bg-teal-600 text-white hover:bg-teal-700' : 'bg-slate-200 text-slate-800 hover:bg-teal-100'} cursor-pointer flex items-center justify-center gap-2">
+                        <span>Selecionar Plano</span>
+                        <i class="ph-arrow-right text-xl"></i>
+                    </button>
                 </div>`);
 
+            const guaranteeIcons = {'✅': 'shield-check', '⏰': 'timer', '🛠️': 'users-three'};
             render('garantia-cards', content.guarantees, (item, i) => `
-                <div class="bg-white p-8 rounded-lg shadow-md flex flex-col items-center text-center interactive-card" data-aos="fade-up" data-aos-delay="${i*100}">
-                    <span class="text-6xl mb-4">${item.icon}</span>
-                    <h3 class="font-bold text-xl text-teal-800">${item.title}</h3>
-                    <p class="mt-2 text-slate-600">${item.description}</p>
+                <div class="bg-slate-700/50 p-8 rounded-lg interactive-card" data-aos="fade-up" data-aos-delay="${i*100}">
+                    <i class="ph-${guaranteeIcons[item.icon] || 'check-circle'} text-5xl text-teal-400 mb-5 inline-block"></i>
+                    <h3 class="font-bold text-xl text-white">${item.title}</h3>
+                    <p class="mt-3 text-slate-300">${item.description}</p>
                 </div>`);
 
             render('depoimentos-grid', content.testimonials, (item, i) => `
-                <div class="bg-teal-50/50 p-8 rounded-lg interactive-card" data-aos="fade-up" data-aos-delay="${i * 100}">
+                <div class="bg-white p-8 rounded-lg interactive-card" data-aos="fade-up" data-aos-delay="${i * 100}">
                     <i class="ph-quotes-fill text-4xl text-teal-200"></i>
                     <p class="text-slate-600 italic mt-4">"${item.text}"</p>
                     <p class="font-bold text-slate-800 mt-6">${item.author}</p>
@@ -452,8 +473,7 @@
             document.querySelectorAll('.faq-header').forEach(h => h.addEventListener('click', () => {
                 const item = h.parentElement;
                 item.classList.toggle('open');
-                const content = h.nextElementSibling;
-                content.classList.toggle('hidden');
+                h.nextElementSibling.classList.toggle('hidden');
             }));
             
             const tabsContainer = document.getElementById('tabs-container');
@@ -491,10 +511,10 @@
             if (carouselData?.slides) {
                 render('carousel-slides-container', carouselData.slides, slide => `
                     <div class="swiper-slide p-2">
-                        <div class="bg-white rounded-lg p-4 shadow-lg flex flex-col items-center text-slate-800 w-full">
+                        <div class="bg-slate-800 rounded-lg p-4 shadow-lg flex flex-col items-center text-white w-full">
                             <img src="${slide.image}" alt="${slide.title}" class="rounded-lg h-96 w-auto object-contain mb-4" loading="lazy">
                             <h4 class="font-bold text-lg">${slide.title}</h4>
-                            <p class="text-sm text-slate-600">${slide.category}</p>
+                            <p class="text-sm text-slate-300">${slide.category}</p>
                         </div>
                     </div>`);
                 new Swiper('.entregaveis-swiper', { loop: true, grabCursor: true, pagination: { el: '.swiper-pagination', clickable: true }, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, autoplay: { delay: 5000, disableOnInteraction: false } });
@@ -513,7 +533,6 @@
                 menuIcon.className = 'ph-list text-3xl';
             }));
 
-            // Contact Modal Logic
             const modal = document.getElementById('contact-modal');
             const closeModalBtn = document.getElementById('close-modal');
             const selectedPackageNameEl = document.getElementById('selected-package-name');
@@ -526,14 +545,12 @@
                     const packageName = card.querySelector('.package-name').textContent;
                     
                     selectedPackageNameEl.textContent = packageName;
-
                     const whatsappMessage = `Olá, tenho interesse no ${packageName}. Gostaria de mais informações.`;
                     const emailSubject = `Interesse no ${packageName}`;
                     const emailBody = `Olá, gostaria de mais informações sobre o ${packageName}.`;
 
                     whatsappLink.href = `https://wa.me/5575998014491?text=${encodeURIComponent(whatsappMessage)}`;
                     emailLink.href = `mailto:alison.karvalho@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-
                     modal.classList.add('visible');
                 });
             });
@@ -545,3 +562,4 @@
     </script>
 </body>
 </html>
+
