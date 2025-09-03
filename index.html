@@ -289,11 +289,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const motion = window.motion;
-            document.querySelectorAll('.motion-div').forEach(el => {
-                motion.inView(el, () => {
-                    motion.animate(el, { opacity: 1, y: [30, 0] }, { duration: 0.8, ease: "easeOut" });
-                }, { once: true, margin: "-100px" });
-            });
+            if (motion) {
+                document.querySelectorAll('.motion-div').forEach(el => {
+                    motion.inView(el, () => {
+                        motion.animate(el, { opacity: 1, y: [30, 0] }, { duration: 0.8, ease: "easeOut" });
+                    }, { once: true, margin: "-100px" });
+                });
+            }
 
             const header = document.getElementById('main-header');
             const sections = document.querySelectorAll('main section');
@@ -320,10 +322,17 @@
 
             async function fetchData(url) {
                 try {
-                    const r = await fetch(`${url}?v=${new Date().getTime()}`);
-                    if (!r.ok) { console.error(`Error: ${r.statusText}`); return null; }
+                    // Corrected the path to be relative to the root
+                    const r = await fetch(new URL(url, window.location.href));
+                    if (!r.ok) { 
+                        console.error(`Error fetching ${url}: ${r.statusText}`); 
+                        return null; 
+                    }
                     return await r.json();
-                } catch (e) { console.error(`Fetch failed for ${url}:`, e); return null; }
+                } catch (e) { 
+                    console.error(`Fetch failed for ${url}:`, e); 
+                    return null; 
+                }
             }
 
             const [content, portfolioData, carouselData] = await Promise.all([
@@ -332,7 +341,10 @@
                 fetchData('_data/carousel.json')
             ]);
 
-            if (!content) { console.error("Falha ao carregar o conteúdo principal do site."); return; }
+            if (!content) { 
+                console.error("Falha ao carregar o conteúdo principal do site."); 
+                return; 
+            }
 
             const render = (elId, data, template) => {
                 const el = document.getElementById(elId);
