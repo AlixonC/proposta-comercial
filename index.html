@@ -243,6 +243,23 @@
             font-size: 18px !important;
             font-weight: 800;
         }
+
+        /* Modal System */
+        .modal-overlay { 
+            @apply fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[100] opacity-0 pointer-events-none transition-opacity duration-300;
+        }
+        .modal-overlay.active {
+            @apply opacity-100 pointer-events-auto;
+        }
+        .modal-content {
+            @apply bg-white p-8 rounded-2xl w-full max-w-md m-4 text-center shadow-2xl scale-95 transition-transform duration-300 relative;
+        }
+        .modal-overlay.active .modal-content {
+            @apply scale-100;
+        }
+        .modal-close-btn {
+            @apply absolute top-4 right-4 text-2xl text-slate-400 hover:text-slate-800 transition-colors z-10;
+        }
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -440,7 +457,7 @@
                     <h2 class="text-4xl md:text-5xl font-extrabold" style="font-family: var(--font-heading);">Pronto para Construir com Segurança e Precisão?</h2>
                     <p class="mt-6 text-lg text-slate-300">Dê o próximo passo para transformar seu projeto em realidade. Ao aceitar a proposta, nossa equipe entrará em contato para formalizar o início dos trabalhos.</p>
                     <div class="mt-12 flex flex-col sm:flex-row justify-center items-center gap-6">
-                        <button id="accept-proposal-btn" class="btn btn-accent w-full sm:w-auto">
+                        <button id="accept-proposal-btn" class="btn btn-accent w-full sm:w-auto" data-modal-target="confirmation-modal">
                             <i class="ph-bold ph-check-circle text-2xl"></i>
                             <span>Assinar e Aceitar Proposta</span>
                         </button>
@@ -461,15 +478,45 @@
         </div>
     </footer>
     
-    <!-- Confirmation Modal -->
-    <div id="confirmation-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[100] opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white p-8 rounded-2xl w-full max-w-md m-4 text-center shadow-2xl scale-95 transition-transform duration-300">
-            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i class="ph-bold ph-check text-4xl text-green-600"></i>
+    <div id="modal-container">
+        <!-- Confirmation Modal -->
+        <div id="confirmation-modal" class="modal-overlay">
+            <div class="modal-content">
+                <button class="modal-close-btn"><i class="ph-bold ph-x"></i></button>
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="ph-bold ph-check text-4xl text-green-600"></i>
+                </div>
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Proposta Aceita!</h2>
+                <p class="text-slate-600 mb-8">Agradecemos a sua confiança. Entraremos em contato em breve para dar início ao seu projeto.</p>
             </div>
-            <h2 class="text-2xl font-bold mb-4 text-gray-800">Proposta Aceita!</h2>
-            <p class="text-slate-600 mb-8">Agradecemos a sua confiança. Entraremos em contato em breve para dar início ao seu projeto.</p>
-            <button id="close-modal" class="w-full mt-2 py-3 px-6 rounded-lg font-semibold transition-colors bg-slate-200 text-slate-800 hover:bg-slate-300">Fechar</button>
+        </div>
+    
+        <!-- Package Selection Modal -->
+        <div id="package-modal" class="modal-overlay">
+            <div class="modal-content">
+                 <button class="modal-close-btn"><i class="ph-bold ph-x"></i></button>
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="ph-bold ph-package text-4xl text-blue-600"></i>
+                </div>
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Plano Selecionado</h2>
+                <p class="text-slate-600 mb-2">Você demonstrou interesse no:</p>
+                <p id="package-modal-name" class="font-bold text-lg text-slate-800 mb-8"></p>
+                <p class="text-slate-600">Nossa equipe entrará em contato em breve para formalizar os próximos passos. Obrigado!</p>
+            </div>
+        </div>
+    
+        <!-- Portfolio Modal (Lightbox) -->
+        <div id="portfolio-modal" class="modal-overlay">
+            <div class="modal-content !p-2 !max-w-4xl">
+                <button class="modal-close-btn !text-white !top-4 !right-4 z-10 bg-black/30 rounded-full p-1"><i class="ph-bold ph-x text-2xl"></i></button>
+                <div class="relative">
+                     <img id="portfolio-modal-img" src="" alt="Imagem do Projeto" class="w-full h-auto max-h-[80vh] object-contain rounded-lg">
+                     <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/70 to-transparent rounded-b-lg">
+                        <h3 id="portfolio-modal-title" class="text-2xl font-bold text-white"></h3>
+                        <p id="portfolio-modal-category" class="text-md text-slate-300 uppercase tracking-wider"></p>
+                     </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -605,26 +652,37 @@ document.addEventListener('DOMContentLoaded', async () => {
                 : portfolioData.items.filter(item => item.category === filter);
             
             render('#portfolio-grid', filteredItems, item => `
-                <div class="group portfolio-card bg-white rounded-lg shadow-md overflow-hidden" data-category="${item.category}">
-                    <div class="overflow-hidden">
+                <div class="group portfolio-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" 
+                     data-modal-target="portfolio-modal"
+                     data-img-src="${item.image}"
+                     data-title="${item.title}"
+                     data-category="${item.category}">
+                    <div class="overflow-hidden pointer-events-none">
                         <img src="${item.image}" alt="${item.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
                     </div>
-                    <div class="p-6">
+                    <div class="p-6 pointer-events-none">
                         <span class="text-sm font-semibold uppercase tracking-wider text-slate-500">${item.category}</span>
                         <h3 class="text-xl font-bold text-slate-800 mt-2">${item.title}</h3>
                     </div>
                 </div>`);
         };
 
-        document.querySelector('#portfolio-filters').addEventListener('click', e => {
-            if (e.target.matches('.filter-btn')) {
-                document.querySelector('.filter-btn.active').classList.remove('active', 'bg-accent', 'text-white');
-                 document.querySelector('.filter-btn.active').classList.add('bg-slate-200', 'text-slate-700');
-                
-                e.target.classList.add('active');
-                renderPortfolio(e.target.dataset.filter);
-            }
-        });
+        const portfolioFilters = document.querySelector('#portfolio-filters');
+        if (portfolioFilters) {
+            portfolioFilters.addEventListener('click', e => {
+                if (e.target.matches('.filter-btn') && !e.target.classList.contains('active')) {
+                    const currentActive = portfolioFilters.querySelector('.filter-btn.active');
+                    if (currentActive) {
+                        currentActive.classList.remove('active', 'bg-[var(--color-accent)]', 'text-white');
+                        currentActive.classList.add('bg-slate-200', 'text-slate-700');
+                    }
+                    
+                    e.target.classList.remove('bg-slate-200', 'text-slate-700');
+                    e.target.classList.add('active', 'bg-[var(--color-accent)]', 'text-white');
+                    renderPortfolio(e.target.dataset.filter);
+                }
+            });
+        }
         
         // Initial render
         const filterButtons = document.querySelectorAll('.filter-btn');
@@ -750,7 +808,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <p class="text-4xl font-extrabold my-6 text-[var(--color-primary)]">R$ ${pkg.price}</p>
                     <ul class="space-y-3 text-slate-700 text-left">${pkg.features.map(f => `<li class="flex items-start"><i class="ph-fill ph-check-circle text-green-500 text-xl mr-2 mt-0.5"></i><span>${f}</span></li>`).join('')}</ul>
                 </div>
-                <button class="w-full mt-8 btn ${pkg.recommended ? 'btn-accent' : 'btn-secondary'}">Selecionar Plano</button>
+                <button class="w-full mt-8 btn ${pkg.recommended ? 'btn-accent' : 'btn-secondary'}"
+                        data-modal-target="package-modal"
+                        data-package-name="${pkg.name}">
+                    Selecionar Plano
+                </button>
             </div>
         `);
     };
@@ -770,25 +832,60 @@ document.addEventListener('DOMContentLoaded', async () => {
         `);
     };
     
-    const initModal = () => {
-        const modal = document.getElementById('confirmation-modal');
-        const modalContent = modal.querySelector('div');
-        
-        const openModal = () => {
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-            modalContent.classList.remove('scale-95');
-        };
-        
-        const closeModal = () => {
-            modal.classList.add('opacity-0', 'pointer-events-none');
-            modalContent.classList.add('scale-95');
+    const initModals = () => {
+        const openModal = (modal) => {
+            if (modal) modal.classList.add('active');
         };
 
-        document.getElementById('accept-proposal-btn').addEventListener('click', openModal);
-        document.getElementById('close-modal').addEventListener('click', closeModal);
-        document.getElementById('download-pdf-btn').addEventListener('click', () => {
-            alert("Em uma aplicação real, esta ação iniciaria o download de um PDF com a proposta personalizada.");
+        const closeModal = () => {
+            const activeModal = document.querySelector('.modal-overlay.active');
+            if (activeModal) activeModal.classList.remove('active');
+        };
+
+        document.body.addEventListener('click', e => {
+            const modalTrigger = e.target.closest('[data-modal-target]');
+            if (modalTrigger) {
+                const modalId = modalTrigger.dataset.modalTarget;
+                const modal = document.getElementById(modalId);
+                
+                if (modalId === 'portfolio-modal') {
+                    const portfolioImg = document.getElementById('portfolio-modal-img');
+                    const portfolioTitle = document.getElementById('portfolio-modal-title');
+                    const portfolioCategory = document.getElementById('portfolio-modal-category');
+                    if (portfolioImg) portfolioImg.src = modalTrigger.dataset.imgSrc;
+                    if (portfolioTitle) portfolioTitle.textContent = modalTrigger.dataset.title;
+                    if (portfolioCategory) portfolioCategory.textContent = modalTrigger.dataset.category;
+                }
+                
+                if (modalId === 'package-modal') {
+                    const packageName = document.getElementById('package-modal-name');
+                    if (packageName) packageName.textContent = modalTrigger.dataset.packageName;
+                }
+                
+                openModal(modal);
+            }
+
+            if (e.target.closest('.modal-close-btn')) {
+                closeModal();
+            }
         });
+
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', e => {
+                if (e.target === modal) closeModal();
+            });
+        });
+        
+        document.addEventListener('keydown', e => {
+            if (e.key === "Escape") closeModal();
+        });
+        
+        const downloadPdfBtn = document.getElementById('download-pdf-btn');
+        if(downloadPdfBtn) {
+            downloadPdfBtn.addEventListener('click', () => {
+                alert("Em uma aplicação real, esta ação iniciaria o download de um PDF com a proposta personalizada.");
+            });
+        }
     };
 
     // --- RUN ALL INITIALIZERS ---
@@ -803,9 +900,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     initTestimonials();
     initPackages();
     initFaq();
-    initModal();
+    initModals();
 });
 </script>
 
 </body>
 </html>
+
