@@ -322,8 +322,7 @@
 
             async function fetchData(url) {
                 try {
-                    // Corrected the path to be relative to the root
-                    const r = await fetch(new URL(url, window.location.href));
+                    const r = await fetch(url);
                     if (!r.ok) { 
                         console.error(`Error fetching ${url}: ${r.statusText}`); 
                         return null; 
@@ -336,9 +335,9 @@
             }
 
             const [content, portfolioData, carouselData] = await Promise.all([
-                fetchData('_data/site_content.json'),
-                fetchData('_data/portfolio.json'),
-                fetchData('_data/carousel.json')
+                fetchData('./_data/site_content.json'),
+                fetchData('./_data/portfolio.json'),
+                fetchData('./_data/carousel.json')
             ]);
 
             if (!content) { 
