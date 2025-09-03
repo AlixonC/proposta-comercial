@@ -3,27 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Soluções de Engenharia | Alison Carvalho</title>
+    <title>Proposta Comercial | AC Engenharia</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://unpkg.com/phosphor-icons"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="bg-[var(--primary-blue)]">
 
     <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div id="logo-container" class="text-2xl font-bold text-white"></div>
             <div class="hidden md:flex items-center space-x-8" id="nav-links">
+                <a href="#roi" class="nav-link">Valor</a>
                 <a href="#solucoes" class="nav-link">Soluções</a>
                 <a href="#portfolio" class="nav-link">Portfólio</a>
-                <a href="#sobre" class="nav-link">Sobre</a>
-                <a href="#processo" class="nav-link">Processo</a>
-                <a href="#pacotes" class="nav-link">Pacotes</a>
+                <a href="#pacotes" class="nav-link">Investimento</a>
                 <a href="#faq" class="nav-link">FAQ</a>
             </div>
             <a href="#contato" class="hidden md:inline-block cta-button font-medium py-2 px-6">Contato</a>
@@ -34,145 +32,115 @@
         <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-[var(--primary-blue)]/95 backdrop-blur-sm flex flex-col justify-center items-center gap-6 z-40"></div>
     </header>
 
-    <main>
-        <section id="hero" class="relative text-white pt-40 pb-24 text-center flex items-center justify-center min-h-[70vh] md:min-h-[80vh]">
+    <main class="text-white">
+        <section id="hero" class="relative text-white pt-40 pb-24 text-center flex items-center justify-center min-h-[90vh] overflow-hidden">
             <div class="absolute inset-0 bg-black/60 z-10"></div>
-            <div id="hero-bg" class="absolute inset-0 bg-cover bg-center"></div>
+            <div id="hero-bg" class="absolute inset-0 bg-cover bg-center bg-fixed"></div>
             <div class="container mx-auto px-6 z-20">
                 <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold leading-tight" data-aos="fade-up"></h1>
                 <p id="hero-subtitle" class="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-slate-300" data-aos="fade-up" data-aos-delay="100"></p>
-                <div class="mt-10">
-                    <a href="#pacotes" class="cta-button font-bold py-4 px-10" data-aos="fade-up" data-aos-delay="200">Ver Nossos Planos</a>
+                
+                <div id="proposal-card" class="glass-card mt-12 max-w-4xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-left" data-aos="fade-up" data-aos-delay="200">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Cliente</h3>
+                        <p id="client-name" class="text-xl font-semibold mt-1 text-white">Carregando...</p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Data de Emissão</h3>
+                        <p id="proposal-date" class="text-xl font-semibold mt-1 text-white"></p>
+                    </div>
+                    <div id="proposal-validity-container">
+                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider"></h3>
+                        <p id="proposal-validity" class="text-xl font-semibold mt-1 text-white"></p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="problema" class="py-24 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16 max-w-3xl mx-auto">
-                    <h2 class="section-title" data-aos="fade-up">Evite os Erros Mais Caros da Construção</h2>
-                    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Um projeto desintegrado gera custos inesperados e atrasos. Nós eliminamos esses riscos com planejamento e compatibilização.</p>
+        <div class="bg-white text-gray-800 rounded-t-[40px] md:rounded-t-[60px] -mt-10 relative z-30 pt-1">
+            <section id="roi" class="py-24">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-16 max-w-3xl mx-auto">
+                        <h2 class="section-title" data-aos="fade-up">O Valor da Engenharia de Precisão</h2>
+                        <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Um projeto profissional não é um custo, é o maior investimento na segurança e valorização do seu patrimônio.</p>
+                    </div>
+                    <div id="roi-table" class="max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="200"></div>
                 </div>
-                <div id="problema-cards" class="grid md:grid-cols-3 gap-8"></div>
-            </div>
-        </section>
+            </section>
 
-        <section id="solucoes" class="py-24 bg-[var(--light-bg)]">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16 max-w-3xl mx-auto" data-aos="fade-up">
-                    <h2 class="section-title">Engenharia Integrada para Sua Obra</h2>
-                    <p class="section-subtitle">Oferecemos um conjunto completo de soluções para garantir a segurança, economia e eficiência do seu projeto.</p>
-                </div>
-                <div class="max-w-6xl mx-auto" data-aos="fade-up" data-aos-delay="150">
-                    <div class="flex flex-wrap justify-center gap-3 md:gap-4 mb-8" id="tabs-container"></div>
-                    <div id="tabs-content" class="bg-white p-8 sm:p-12 rounded-xl shadow-lg min-h-[320px]"></div>
-                </div>
-            </div>
-        </section>
+            <section id="solucoes" class="py-24 bg-[var(--light-bg)]">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-16 max-w-3xl mx-auto" data-aos="fade-up">
+                        <h2 class="section-title">Escopo de Soluções</h2>
+                        <p class="section-subtitle">Oferecemos um conjunto completo de soluções para garantir a segurança, economia e eficiência do seu projeto.</p>
+                    </div>
+                    <div class="max-w-6xl mx-auto" data-aos="fade-up" data-aos-delay="150">
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8" id="tabs-container"></div>
+                        <div id="tabs-content" class="bg-white p-8 sm:p-12 rounded-xl shadow-lg min-h-[320px]"></div>
+                    </div>
+                </section>
 
-        <section id="portfolio" class="py-24 bg-white">
-             <div class="container mx-auto px-6">
-                <div class="text-center mb-16 max-w-3xl mx-auto" data-aos="fade-up">
-                    <h2 class="section-title">Nossos Projetos</h2>
-                     <p class="section-subtitle">Qualidade e precisão em cada detalhe, do residencial ao comercial.</p>
+            <section id="portfolio" class="py-24 bg-white">
+                 <div class="container mx-auto px-6">
+                    <div class="text-center mb-16 max-w-3xl mx-auto" data-aos="fade-up">
+                        <h2 class="section-title">Portfólio de Projetos</h2>
+                         <p class="section-subtitle">Qualidade e precisão em cada detalhe, do residencial ao comercial.</p>
+                    </div>
+                    <div id="portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
                 </div>
-                <div id="portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-            </div>
-        </section>
+            </section>
+            
+            <section id="pacotes" class="py-24 bg-[var(--light-bg)]">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-16 max-w-3xl mx-auto" data-aos="fade-up">
+                        <h2 class="section-title">Planos de Investimento</h2>
+                        <p class="section-subtitle">Escolha o plano que melhor se adapta às necessidades do seu projeto.</p>
+                    </div>
+                    <div class="grid lg:grid-cols-3 gap-8 items-stretch" id="packages-container"></div>
+                </div>
+            </section>
 
-        <section id="sobre" class="py-24 bg-[var(--light-bg)]">
-            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-                <div class="flex justify-center items-center" data-aos="fade-right">
-                    <img id="about-photo" src="" alt="Foto de Perfil" class="relative w-full max-w-sm rounded-lg object-cover shadow-2xl border-8 border-white">
+            <section id="faq" class="py-24 bg-white">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-16 max-w-3xl mx-auto" data-aos="fade-up">
+                        <h2 class="section-title">Perguntas Frequentes</h2>
+                    </div>
+                    <div id="faq-container" class="max-w-3xl mx-auto space-y-4" data-aos="fade-up" data-aos-delay="150"></div>
                 </div>
-                <div class="text-center md:text-left" data-aos="fade-left">
-                    <h2 id="about-title" class="section-title text-center md:text-left"></h2>
-                    <p id="about-name" class="text-xl font-semibold mt-2 text-[var(--accent-terracotta)]"></p>
-                    <p id="about-bio" class="text-lg text-slate-600 mt-6 leading-relaxed"></p>
-                </div>
-            </div>
-        </section>
-        
-        <section id="processo" class="py-24 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-20 max-w-3xl mx-auto" data-aos="fade-up">
-                    <h2 class="section-title">Nosso Processo de Trabalho</h2>
-                    <p class="section-subtitle">Um fluxo de trabalho claro e transparente, do conceito à entrega final.</p>
-                </div>
-                <div class="relative max-w-3xl mx-auto">
-                    <div class="border-l-2 border-dashed border-slate-300 absolute h-full top-0 left-4"></div>
-                    <div id="timeline-content" class="space-y-16"></div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="garantias" class="py-24 bg-[var(--primary-blue)] text-white">
-            <div class="container mx-auto px-6 text-center">
-               <h2 class="text-3xl md:text-4xl font-bold text-white" data-aos="fade-up">Sua Tranquilidade é a Nossa Prioridade</h2>
-               <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-300" data-aos="fade-up" data-aos-delay="100">
-                   Oferecemos garantias sólidas para que você tenha total segurança do início ao fim do processo.
-               </p>
-               <div id="garantia-cards" class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8"></div>
-           </div>
-       </section>
-        
-        <section id="pacotes" class="py-24 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16 max-w-3xl mx-auto" data-aos="fade-up">
-                    <h2 class="section-title">Planos e Investimentos</h2>
-                    <p class="section-subtitle">Escolha o plano que melhor se adapta às necessidades do seu projeto.</p>
-                </div>
-                <div class="grid lg:grid-cols-3 gap-8 items-stretch" id="packages-container"></div>
-            </div>
-        </section>
+            </section>
 
-        <section id="faq" class="py-24 bg-[var(--light-bg)]">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16 max-w-3xl mx-auto" data-aos="fade-up">
-                    <h2 class="section-title">Perguntas Frequentes</h2>
+             <section id="contato" class="py-24 bg-[var(--light-bg)]">
+                <div class="container mx-auto px-6 text-center max-w-3xl">
+                    <h2 class="section-title" data-aos="fade-up">Aceitar Proposta</h2>
+                    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Ao aceitar, você está investindo na segurança e sucesso do seu projeto. Nossa equipe entrará em contato para formalizar os próximos passos.</p>
+                    <div class="mt-10 flex flex-col md:flex-row justify-center items-center gap-6" data-aos="fade-up" data-aos-delay="200">
+                        <button id="accept-proposal-btn" class="cta-button bg-[var(--accent-emerald)]">
+                            <i class="ph-check-circle text-2xl"></i>
+                            <span>Assinar e Aceitar Proposta</span>
+                        </button>
+                        <button id="download-pdf-btn" class="contact-button bg-slate-600">
+                            <i class="ph-file-pdf text-2xl"></i>
+                            <span>Baixar Versão em PDF</span>
+                        </button>
+                    </div>
                 </div>
-                <div id="faq-container" class="max-w-3xl mx-auto space-y-4" data-aos="fade-up" data-aos-delay="150"></div>
-            </div>
-        </section>
-    </main>
-
-    <footer id="contato" class="bg-slate-800 text-white">
-        <div class="container mx-auto px-6 py-20 text-center" data-aos="fade-up">
-            <h2 class="text-3xl md:text-4xl font-bold">Pronto para Construir Seu Sonho?</h2>
-            <p class="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">Vamos conversar sobre como podemos transformar seu projeto em realidade com segurança e tranquilidade.</p>
-            <div class="mt-10 flex flex-col md:flex-row justify-center items-center gap-6">
-                <a href="https://wa.me/5575998014491" target="_blank" class="contact-button bg-green-500">
-                    <i class="ph-whatsapp-logo text-2xl"></i>
-                    <span>Contato via WhatsApp</span>
-                </a>
-                <a href="mailto:alison.karvalho@gmail.com" class="contact-button bg-slate-600">
-                    <i class="ph-envelope-simple text-2xl"></i>
-                    <span>Enviar um E-mail</span>
-                </a>
-            </div>
+            </section>
         </div>
-    </footer>
+    </main>
     
-    <div id="contact-modal" class="modal-overlay">
+    <div id="confirmation-modal" class="modal-overlay">
         <div class="modal-content">
-            <h2 class="text-2xl font-bold mb-4">Excelente Escolha!</h2>
-            <p class="text-slate-600 mb-8">Você selecionou o <strong id="selected-package-name" class="text-[var(--primary-blue)]"></strong>. Para prosseguir, escolha seu método de contato preferido:</p>
-            <div class="flex flex-col gap-4">
-                 <a id="whatsapp-link" href="#" target="_blank" class="contact-button bg-green-500">
-                    <i class="ph-whatsapp-logo text-xl"></i>
-                    <span>Conversar no WhatsApp</span>
-                </a>
-                <a id="email-link" href="#" class="contact-button bg-slate-600">
-                    <i class="ph-envelope-simple text-xl"></i>
-                    <span>Enviar um E-mail</span>
-                </a>
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="ph-check text-4xl text-green-600"></i>
             </div>
-            <button id="close-modal" class="mt-8 text-sm text-slate-500 hover:text-slate-700 transition-colors">Voltar</button>
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Proposta Aceita!</h2>
+            <p class="text-slate-600 mb-8">Agradecemos a sua confiança. Entraremos em contato em breve para dar início ao seu projeto.</p>
+            <button id="close-modal" class="w-full mt-2 py-3 px-6 rounded-lg font-semibold transition-colors bg-slate-200 text-slate-800 hover:bg-slate-300">Fechar</button>
         </div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
+
