@@ -2,45 +2,281 @@
 <html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Proposta Comercial | AC Engenharia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial | Engenharia de Precisão</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Suisse Intl (similar) & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/phosphor-icons"></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="bg-[var(--primary-blue)]">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Swiper.js for Carousel -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <!-- GSAP for Advanced Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --color-primary: #0A2463;
+            --color-secondary: #1E293B;
+            --color-accent: #059669;
+            --color-highlight: #B45309;
+            --color-neutral-light: #F8FAFC;
+            --color-neutral-dark: #475569;
+            --font-heading: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-primary);
+            color: var(--color-secondary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--color-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--color-accent); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+
+        .section-title {
+            font-family: var(--font-heading);
+            color: var(--color-primary);
+        }
+        .section-subtitle {
+            color: var(--color-neutral-dark);
+        }
+        .content-wrapper {
+            background-color: #FFFFFF;
+            border-radius: 40px 40px 0 0;
+            margin-top: -30px;
+            position: relative;
+            z-index: 20;
+        }
+
+        /* Header */
+        #main-header {
+            transition: background-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+        }
+        #main-header.scrolled {
+            background-color: rgba(10, 36, 99, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .nav-link {
+            position: relative;
+            padding-bottom: 8px;
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: var(--color-accent);
+            transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Hero */
+        .hero-bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: auto;
+            height: auto;
+            min-width: 100%;
+            min-height: 100%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        /* Glassmorphism Card (Advanced) */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Buttons */
+        .btn {
+            @apply inline-flex items-center justify-center gap-3 font-bold py-3 px-8 rounded-full transition-all duration-300 ease-in-out shadow-lg;
+            transform-style: preserve-3d;
+        }
+        .btn-accent {
+            background: var(--color-accent);
+            color: white;
+            box-shadow: 0 10px 30px -10px var(--color-accent);
+        }
+        .btn-accent:hover {
+            transform: scale(1.05) translateY(-3px);
+            filter: brightness(1.1);
+        }
+        .btn-secondary {
+            background: var(--color-secondary);
+            color: white;
+            box-shadow: 0 10px 30px -10px var(--color-secondary);
+        }
+         .btn-secondary:hover {
+            transform: scale(1.05) translateY(-3px);
+            filter: brightness(1.1);
+        }
+
+
+        /* Solutions Tabs */
+        .tab-button {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-button.active {
+            color: var(--color-accent);
+            border-bottom-color: var(--color-accent);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        /* Portfolio */
+        .portfolio-card {
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(30, 41, 59, 0.1);
+        }
+        
+        /* Timeline */
+        .timeline-item {
+            position: relative;
+            padding-left: 40px;
+            padding-bottom: 40px;
+            border-left: 2px solid #e2e8f0;
+        }
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+        }
+        .timeline-marker {
+            position: absolute;
+            top: 0;
+            left: -11px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--color-primary);
+            border-radius: 50%;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .timeline-item.in-view .timeline-marker {
+            background-color: var(--color-accent);
+            transform: scale(1.1);
+        }
+
+        /* Package Cards (Neumorphism Evolved) */
+        .package-card {
+            background: var(--color-neutral-light);
+            border-radius: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #e2e8f0;
+        }
+        .package-card.recommended {
+            border-color: var(--color-accent);
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        .package-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+        }
+        .package-card.recommended:hover {
+            transform: translateY(-12px) scale(1.08);
+        }
+
+        /* FAQ */
+        .faq-item details > summary {
+            list-style: none;
+        }
+        .faq-item details > summary::-webkit-details-marker {
+            display: none;
+        }
+        .faq-item .faq-icon {
+            transition: transform 0.3s;
+        }
+        .faq-item details[open] .faq-icon {
+            transform: rotate(45deg);
+        }
+        
+        /* Deliverables Carousel */
+        .swiper-button-next, .swiper-button-prev {
+            color: var(--color-accent) !important;
+            background-color: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            width: 44px !important;
+            height: 44px !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .swiper-button-next::after, .swiper-button-prev::after {
+            font-size: 18px !important;
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div id="logo-container" class="text-2xl font-bold text-white"></div>
-            <div class="hidden md:flex items-center space-x-8" id="nav-links">
-                <a href="#roi" class="nav-link">Valor</a>
-                <a href="#solucoes" class="nav-link">Soluções</a>
-                <a href="#portfolio" class="nav-link">Portfólio</a>
-                <a href="#pacotes" class="nav-link">Investimento</a>
-                <a href="#faq" class="nav-link">FAQ</a>
+            <div id="logo-container" class="text-2xl font-bold text-white tracking-wide" style="font-family: var(--font-heading);"></div>
+            <div class="hidden md:flex items-center space-x-8 text-white" id="nav-links">
+                <a href="#solucoes" class="nav-link font-medium">Soluções</a>
+                <a href="#portfolio" class="nav-link font-medium">Portfólio</a>
+                <a href="#processo" class="nav-link font-medium">Processo</a>
+                <a href="#pacotes" class="nav-link font-medium">Investimento</a>
+                <a href="#faq" class="nav-link font-medium">FAQ</a>
             </div>
-            <a href="#contato" class="hidden md:inline-block cta-button font-medium py-2 px-6">Contato</a>
+            <a href="#contato" class="hidden md:inline-flex btn btn-accent">Iniciar Projeto</a>
             <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none z-50">
-                <i id="menu-icon" class="ph-list text-3xl"></i>
+                <i id="menu-icon" class="ph-bold ph-list text-3xl"></i>
             </button>
         </nav>
-        <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-[var(--primary-blue)]/95 backdrop-blur-sm flex flex-col justify-center items-center gap-6 z-40"></div>
+         <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-[var(--color-primary)]/95 backdrop-blur-sm flex flex-col justify-center items-center gap-6 z-40"></div>
     </header>
 
-    <main class="text-white">
-        <section id="hero" class="relative text-white pt-40 pb-24 text-center flex items-center justify-center min-h-[90vh] overflow-hidden">
+    <main>
+        <!-- 1. Hero Section -->
+        <section id="hero" class="relative text-white pt-40 pb-24 text-center flex items-center justify-center min-h-screen overflow-hidden">
+            <video autoplay muted loop playsinline class="hero-bg-video">
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-architect-working-on-a-city-plan-4235-large.mp4" type="video/mp4">
+            </video>
             <div class="absolute inset-0 bg-black/60 z-10"></div>
-            <div id="hero-bg" class="absolute inset-0 bg-cover bg-center bg-fixed"></div>
             <div class="container mx-auto px-6 z-20">
-                <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold leading-tight" data-aos="fade-up"></h1>
-                <p id="hero-subtitle" class="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-slate-300" data-aos="fade-up" data-aos-delay="100"></p>
+                <h1 id="hero-title" class="text-4xl md:text-6xl font-extrabold leading-tight" style="font-family: var(--font-heading);"></h1>
+                <p id="hero-subtitle" class="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-slate-300"></p>
                 
-                <div id="proposal-card" class="glass-card mt-12 max-w-4xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-left" data-aos="fade-up" data-aos-delay="200">
+                <div id="proposal-card" class="glass-card mt-12 max-w-4xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
                     <div>
                         <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Cliente</h3>
                         <p id="client-name" class="text-xl font-semibold mt-1 text-white">Carregando...</p>
@@ -49,77 +285,167 @@
                         <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Data de Emissão</h3>
                         <p id="proposal-date" class="text-xl font-semibold mt-1 text-white"></p>
                     </div>
-                    <div id="proposal-validity-container">
-                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider"></h3>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider" id="proposal-validity-title"></h3>
                         <p id="proposal-validity" class="text-xl font-semibold mt-1 text-white"></p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <div class="bg-white text-gray-800 rounded-t-[40px] md:rounded-t-[60px] -mt-10 relative z-30 pt-1">
-            <section id="roi" class="py-24">
+        <div class="content-wrapper">
+            <!-- 2. Pesadelos Section -->
+            <section id="pesadelos" class="py-20 md:py-28">
                 <div class="container mx-auto px-6">
                     <div class="text-center mb-16 max-w-3xl mx-auto">
-                        <h2 class="section-title" data-aos="fade-up">O Valor da Engenharia de Precisão</h2>
-                        <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Um projeto profissional não é um custo, é o maior investimento na segurança e valorização do seu patrimônio.</p>
+                        <h2 class="section-title text-3xl md:text-4xl font-extrabold">Os 3 Pesadelos de um Projeto Desintegrado</h2>
+                        <p class="section-subtitle mt-4 text-lg">Evite os erros que transformam o sonho da construção em uma fonte de estresse e prejuízo.</p>
                     </div>
-                    <div id="roi-table" class="max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="200"></div>
+                    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        <div class="bg-red-50 p-8 rounded-2xl border border-red-200">
+                            <i class="ph-bold ph-timer text-4xl text-red-500"></i>
+                            <h3 class="font-bold text-xl mt-4">Atrasos Intermináveis</h3>
+                            <p class="mt-2 text-slate-600">Incompatibilidades entre projetos geram retrabalho constante, paralisando a obra e adiando a entrega das chaves.</p>
+                        </div>
+                        <div class="bg-red-50 p-8 rounded-2xl border border-red-200">
+                            <i class="ph-bold ph-money text-4xl text-red-500"></i>
+                            <h3 class="font-bold text-xl mt-4">Custos Explosivos</h3>
+                            <p class="mt-2 text-slate-600">"Ajustes" no canteiro custam caro. A falta de planejamento leva à compra de materiais errados e desperdício.</p>
+                        </div>
+                         <div class="bg-red-50 p-8 rounded-2xl border border-red-200">
+                            <i class="ph-bold ph-shield-warning text-4xl text-red-500"></i>
+                            <h3 class="font-bold text-xl mt-4">Riscos de Segurança</h3>
+                            <p class="mt-2 text-slate-600">Improvisações comprometem a estrutura e as instalações, colocando em risco seu patrimônio e sua família.</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <section id="solucoes" class="py-24 bg-[var(--light-bg)]">
+            <!-- 3. Soluções Section -->
+            <section id="solucoes" class="py-20 md:py-28 bg-slate-50">
                 <div class="container mx-auto px-6">
-                    <div class="text-center mb-16 max-w-3xl mx-auto" data-aos="fade-up">
-                        <h2 class="section-title">Escopo de Soluções</h2>
-                        <p class="section-subtitle">Oferecemos um conjunto completo de soluções para garantir a segurança, economia e eficiência do seu projeto.</p>
+                    <div class="text-center mb-16 max-w-3xl mx-auto">
+                        <h2 class="section-title text-3xl md:text-4xl font-extrabold">Engenharia Integrada: A Solução Definitiva</h2>
+                        <p class="section-subtitle mt-4 text-lg">Nossa metodologia garante que cada detalhe do seu projeto funcione em perfeita harmonia.</p>
                     </div>
-                    <div class="max-w-6xl mx-auto" data-aos="fade-up" data-aos-delay="150">
-                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8" id="tabs-container"></div>
-                        <div id="tabs-content" class="bg-white p-8 sm:p-12 rounded-xl shadow-lg min-h-[320px]"></div>
+                    <div class="max-w-5xl mx-auto">
+                        <div id="tabs-buttons" class="flex justify-center border-b border-slate-200 mb-8 space-x-4 md:space-x-8"></div>
+                        <div id="tabs-content" class="min-h-[300px]"></div>
                     </div>
-                </section>
+                </div>
+            </section>
 
-            <section id="portfolio" class="py-24 bg-white">
-                 <div class="container mx-auto px-6">
-                    <div class="text-center mb-16 max-w-3xl mx-auto" data-aos="fade-up">
-                        <h2 class="section-title">Portfólio de Projetos</h2>
-                         <p class="section-subtitle">Qualidade e precisão em cada detalhe, do residencial ao comercial.</p>
+            <!-- 4. Portfolio Section -->
+            <section id="portfolio" class="py-20 md:py-28">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-16 max-w-3xl mx-auto">
+                        <h2 class="section-title text-3xl md:text-4xl font-extrabold">Portfólio de Precisão</h2>
+                        <p class="section-subtitle mt-4 text-lg">Qualidade e excelência que você pode ver, do residencial ao comercial.</p>
+                    </div>
+                    <div id="portfolio-filters" class="flex justify-center gap-4 mb-12">
+                         <button class="filter-btn active" data-filter="all">Todos</button>
+                         <button class="filter-btn" data-filter="residencial">Residencial</button>
+                         <button class="filter-btn" data-filter="comercial">Comercial</button>
                     </div>
                     <div id="portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
                 </div>
             </section>
             
-            <section id="pacotes" class="py-24 bg-[var(--light-bg)]">
+            <!-- 5. Perfil Section -->
+            <section id="perfil" class="py-20 md:py-28 bg-slate-50">
                 <div class="container mx-auto px-6">
-                    <div class="text-center mb-16 max-w-3xl mx-auto" data-aos="fade-up">
-                        <h2 class="section-title">Planos de Investimento</h2>
-                        <p class="section-subtitle">Escolha o plano que melhor se adapta às necessidades do seu projeto.</p>
+                    <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-12 items-center">
+                        <div id="profile-image-container" class="md:col-span-1 flex justify-center"></div>
+                        <div class="md:col-span-2">
+                             <h2 class="section-title text-3xl md:text-4xl font-extrabold">Quem Você Está Contratando?</h2>
+                             <div id="profile-content"></div>
+                        </div>
                     </div>
-                    <div class="grid lg:grid-cols-3 gap-8 items-stretch" id="packages-container"></div>
                 </div>
             </section>
 
-            <section id="faq" class="py-24 bg-white">
+            <!-- 6. Processo/Timeline Section -->
+            <section id="processo" class="py-20 md:py-28">
                 <div class="container mx-auto px-6">
-                    <div class="text-center mb-16 max-w-3xl mx-auto" data-aos="fade-up">
-                        <h2 class="section-title">Perguntas Frequentes</h2>
+                    <div class="text-center mb-16 max-w-3xl mx-auto">
+                        <h2 class="section-title text-3xl md:text-4xl font-extrabold">Nosso Processo de Trabalho</h2>
+                        <p class="section-subtitle mt-4 text-lg">Uma jornada transparente e colaborativa, do conceito à entrega final.</p>
                     </div>
-                    <div id="faq-container" class="max-w-3xl mx-auto space-y-4" data-aos="fade-up" data-aos-delay="150"></div>
+                    <div id="timeline-container" class="max-w-2xl mx-auto"></div>
                 </div>
             </section>
 
-             <section id="contato" class="py-24 bg-[var(--light-bg)]">
+            <!-- 7. Deliverables Carousel Section -->
+            <section id="entregaveis" class="py-20 md:py-28 bg-slate-50">
+                 <div class="container mx-auto px-6">
+                    <div class="text-center mb-16 max-w-3xl mx-auto">
+                        <h2 class="section-title text-3xl md:text-4xl font-extrabold">O Que Você Recebe</h2>
+                        <p class="section-subtitle mt-4 text-lg">Documentação técnica clara e detalhada, pronta para uma execução sem erros no canteiro de obras.</p>
+                    </div>
+                    <div class="swiper deliverables-swiper max-w-6xl mx-auto relative">
+                        <div class="swiper-wrapper" id="deliverables-carousel"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 8. Garantias Section -->
+             <section id="garantias" class="py-20 md:py-28">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-16 max-w-3xl mx-auto">
+                        <h2 class="section-title text-3xl md:text-4xl font-extrabold">Nossas Garantias Inegociáveis</h2>
+                         <p class="section-subtitle mt-4 text-lg">Compromissos que asseguram a sua tranquilidade e o sucesso do seu investimento.</p>
+                    </div>
+                    <div id="guarantees-container" class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto"></div>
+                </div>
+            </section>
+
+            <!-- 9. Testimonials Section -->
+            <section id="depoimentos" class="py-20 md:py-28 bg-slate-50">
+                 <div class="container mx-auto px-6">
+                    <div class="text-center mb-16 max-w-3xl mx-auto">
+                         <h2 class="section-title text-3xl md:text-4xl font-extrabold">A Confiança de Nossos Clientes</h2>
+                    </div>
+                    <div id="testimonials-container" class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto"></div>
+                 </div>
+            </section>
+
+
+            <!-- 10. Pacotes Section -->
+            <section id="pacotes" class="py-20 md:py-28">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-16 max-w-3xl mx-auto">
+                        <h2 class="section-title text-3xl md:text-4xl font-extrabold">Planos de Investimento</h2>
+                        <p class="section-subtitle mt-4 text-lg">Escolha o plano que melhor se adapta às necessidades e à complexidade do seu projeto.</p>
+                    </div>
+                    <div class="grid lg:grid-cols-3 gap-8 items-center max-w-6xl mx-auto" id="packages-container"></div>
+                </div>
+            </section>
+            
+             <!-- 11. FAQ Section -->
+            <section id="faq" class="py-20 md:py-28 bg-slate-50">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-16 max-w-3xl mx-auto">
+                        <h2 class="section-title text-3xl md:text-4xl font-extrabold">Perguntas Frequentes</h2>
+                        <p class="section-subtitle mt-4 text-lg">Respostas claras para as dúvidas mais comuns sobre o processo.</p>
+                    </div>
+                    <div id="faq-container" class="max-w-3xl mx-auto space-y-4"></div>
+                </div>
+            </section>
+
+            <!-- 12. Contato Section -->
+            <section id="contato" class="py-20 md:py-28 text-white" style="background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);">
                 <div class="container mx-auto px-6 text-center max-w-3xl">
-                    <h2 class="section-title" data-aos="fade-up">Aceitar Proposta</h2>
-                    <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Ao aceitar, você está investindo na segurança e sucesso do seu projeto. Nossa equipe entrará em contato para formalizar os próximos passos.</p>
-                    <div class="mt-10 flex flex-col md:flex-row justify-center items-center gap-6" data-aos="fade-up" data-aos-delay="200">
-                        <button id="accept-proposal-btn" class="cta-button bg-[var(--accent-emerald)]">
-                            <i class="ph-check-circle text-2xl"></i>
+                    <h2 class="text-4xl md:text-5xl font-extrabold" style="font-family: var(--font-heading);">Pronto para Construir com Segurança e Precisão?</h2>
+                    <p class="mt-6 text-lg text-slate-300">Dê o próximo passo para transformar seu projeto em realidade. Ao aceitar a proposta, nossa equipe entrará em contato para formalizar o início dos trabalhos.</p>
+                    <div class="mt-12 flex flex-col sm:flex-row justify-center items-center gap-6">
+                        <button id="accept-proposal-btn" class="btn btn-accent w-full sm:w-auto">
+                            <i class="ph-bold ph-check-circle text-2xl"></i>
                             <span>Assinar e Aceitar Proposta</span>
                         </button>
-                        <button id="download-pdf-btn" class="contact-button bg-slate-600">
-                            <i class="ph-file-pdf text-2xl"></i>
+                         <button id="download-pdf-btn" class="btn btn-secondary bg-white/20 hover:bg-white/30 w-full sm:w-auto">
+                            <i class="ph-bold ph-file-pdf text-2xl"></i>
                             <span>Baixar Versão em PDF</span>
                         </button>
                     </div>
@@ -127,11 +453,19 @@
             </section>
         </div>
     </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center text-slate-400">
+            <p>&copy; 2025 <span id="footer-company-name"></span>. Todos os direitos reservados.</p>
+            <p class="text-sm mt-2">Proposta gerada para: <span id="footer-client-name" class="font-semibold"></span></p>
+        </div>
+    </footer>
     
-    <div id="confirmation-modal" class="modal-overlay">
-        <div class="modal-content">
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[100] opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white p-8 rounded-2xl w-full max-w-md m-4 text-center shadow-2xl scale-95 transition-transform duration-300">
             <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i class="ph-check text-4xl text-green-600"></i>
+                <i class="ph-bold ph-check text-4xl text-green-600"></i>
             </div>
             <h2 class="text-2xl font-bold mb-4 text-gray-800">Proposta Aceita!</h2>
             <p class="text-slate-600 mb-8">Agradecemos a sua confiança. Entraremos em contato em breve para dar início ao seu projeto.</p>
@@ -139,8 +473,339 @@
         </div>
     </div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js"></script>
+
+<script type="module">
+document.addEventListener('DOMContentLoaded', async () => {
+    // --- DATA FETCHING ---
+    const fetchData = async (url) => {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return await response.json();
+        } catch (e) {
+            console.error(`Fetch failed for ${url}:`, e);
+            return null;
+        }
+    };
+
+    const [content, portfolioData, carouselData] = await Promise.all([
+        fetchData('https://raw.githubusercontent.com/alixonc/proposta-comercial/main/_data/site_content.json'),
+        fetchData('https://raw.githubusercontent.com/alixonc/proposta-comercial/main/_data/portfolio.json'),
+        fetchData('https://raw.githubusercontent.com/alixonc/proposta-comercial/main/_data/carousel.json')
+    ]);
+
+    if (!content) {
+        document.body.innerHTML = "<div class='h-screen w-screen flex items-center justify-center text-white bg-red-500'><h1>Erro ao carregar o conteúdo da proposta. Por favor, recarregue a página.</h1></div>";
+        return;
+    }
+
+    // --- UTILITY FUNCTIONS ---
+    const setText = (selector, text) => {
+        const el = document.querySelector(selector);
+        if (el && text) el.textContent = text;
+    };
+    const setHtml = (selector, html) => {
+        const el = document.querySelector(selector);
+        if (el) el.innerHTML = html;
+    };
+    const render = (selector, data, template) => {
+        const el = document.querySelector(selector);
+        if (el && data) el.innerHTML = Array.isArray(data) ? data.map(template).join('') : template(data);
+    };
+
+    // --- INITIALIZE UI MODULES ---
+    
+    const initHeader = () => {
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+        
+        setText('#logo-container', content.header.logo_text);
+        setText('#footer-company-name', content.header.logo_text);
+
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        mobileMenu.innerHTML = document.getElementById('nav-links').innerHTML.replace(/space-x-8/g, 'flex flex-col gap-6 text-xl') + `<a href="#contato" class="btn btn-accent mt-4">Iniciar Projeto</a>`;
+        
+        const toggleMenu = () => {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuIcon.className = isHidden ? 'ph-bold ph-list text-3xl' : 'ph-bold ph-x text-3xl';
+        };
+
+        menuButton.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', toggleMenu));
+    };
+
+    const initHeroAndProposalCard = () => {
+        setText('#hero-title', content.hero.title);
+        setText('#hero-subtitle', content.hero.subtitle);
+
+        const params = new URLSearchParams(window.location.search);
+        const clientName = params.get('cliente') || "Prezado(a) Cliente";
+        const issueDate = new Date();
+        const expiryDate = new Date();
+        expiryDate.setDate(issueDate.getDate() + (content.proposal_details.validity_days || 15));
+
+        setText('#client-name', clientName);
+        setText('#footer-client-name', clientName);
+        setText('#proposal-date', issueDate.toLocaleDateString('pt-BR'));
+        setText('#proposal-validity-title', content.proposal_details.validity_text);
+        setText('#proposal-validity', expiryDate.toLocaleDateString('pt-BR'));
+    };
+
+    const initSolutionsTabs = () => {
+        if (!content.solutions) return;
+        const solutions = Object.entries(content.solutions);
+        
+        render('#tabs-buttons', solutions, ([key, s]) => `
+            <button class="tab-button font-semibold text-lg py-2 px-1" data-tab="${key}">${s.title}</button>
+        `);
+        
+        render('#tabs-content', solutions, ([key, s]) => `
+            <div id="tab-content-${key}" class="tab-content">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-3xl font-bold text-[var(--color-primary)]">${s.title}</h3>
+                        <p class="mt-4 text-slate-700 leading-relaxed">${s.description}</p>
+                        <ul class="mt-6 space-y-3">${s.deliverables.map(d => `<li class="flex items-start"><i class="ph-fill ph-check-circle text-xl mr-3 mt-0.5 text-[var(--color-accent)]"></i><span>${d}</span></li>`).join('')}</ul>
+                    </div>
+                    <div class="hidden md:block">
+                        <img src="https://placehold.co/500x400/0A2463/FFFFFF?text=${s.title}" class="rounded-xl shadow-lg">
+                    </div>
+                </div>
+            </div>
+        `);
+
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        const switchTab = (tabKey) => {
+            tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabKey));
+            tabContents.forEach(content => content.classList.toggle('active', content.id === `tab-content-${tabKey}`));
+        };
+
+        document.querySelector('#tabs-buttons').addEventListener('click', e => {
+            if (e.target.matches('.tab-button')) {
+                switchTab(e.target.dataset.tab);
+            }
+        });
+        
+        // Activate first tab
+        switchTab(solutions[0][0]);
+    };
+    
+    const initPortfolio = () => {
+        if (!portfolioData || !portfolioData.items) return;
+
+        const renderPortfolio = (filter = 'all') => {
+            const filteredItems = filter === 'all' 
+                ? portfolioData.items 
+                : portfolioData.items.filter(item => item.category === filter);
+            
+            render('#portfolio-grid', filteredItems, item => `
+                <div class="group portfolio-card bg-white rounded-lg shadow-md overflow-hidden" data-category="${item.category}">
+                    <div class="overflow-hidden">
+                        <img src="${item.image}" alt="${item.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-sm font-semibold uppercase tracking-wider text-slate-500">${item.category}</span>
+                        <h3 class="text-xl font-bold text-slate-800 mt-2">${item.title}</h3>
+                    </div>
+                </div>`);
+        };
+
+        document.querySelector('#portfolio-filters').addEventListener('click', e => {
+            if (e.target.matches('.filter-btn')) {
+                document.querySelector('.filter-btn.active').classList.remove('active', 'bg-accent', 'text-white');
+                 document.querySelector('.filter-btn.active').classList.add('bg-slate-200', 'text-slate-700');
+                
+                e.target.classList.add('active');
+                renderPortfolio(e.target.dataset.filter);
+            }
+        });
+        
+        // Initial render
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(btn => {
+            btn.classList.add('py-2', 'px-5', 'rounded-full', 'font-semibold', 'transition-colors');
+            if (btn.dataset.filter === 'all') {
+                btn.classList.add('active', 'bg-[var(--color-accent)]', 'text-white');
+            } else {
+                btn.classList.add('bg-slate-200', 'text-slate-700');
+            }
+        });
+
+        renderPortfolio();
+    };
+    
+    const initProfile = () => {
+        if (!content.sobre) return;
+        const { name, bio, photo } = content.sobre;
+        setHtml('#profile-image-container', `
+            <img src="${photo}" alt="${name}" class="rounded-full w-48 h-48 md:w-64 md:h-64 object-cover shadow-2xl">
+        `);
+        setHtml('#profile-content', `
+            <h3 class="text-2xl font-bold text-slate-800 mt-4 md:mt-0">${name}</h3>
+            <p class="mt-4 text-slate-600 leading-relaxed">${bio}</p>
+        `);
+    };
+
+    const initTimeline = () => {
+        if (!content.timeline) return;
+        render('#timeline-container', content.timeline, item => `
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h3 class="text-xl font-bold text-slate-800">${item.title}</h3>
+                    <p class="mt-2 text-slate-600">${item.description}</p>
+                </div>
+            </div>`);
+        
+        // Animate on scroll
+        gsap.registerPlugin(ScrollTrigger);
+        const items = document.querySelectorAll('.timeline-item');
+        items.forEach(item => {
+            gsap.from(item.querySelector('.timeline-content'), {
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 80%",
+                    toggleClass: {targets: item, className: "in-view"},
+                    once: true
+                },
+                opacity: 0,
+                x: -30,
+                duration: 0.6
+            });
+        });
+    };
+    
+    const initDeliverablesCarousel = () => {
+        if (!carouselData || !carouselData.slides) return;
+        
+        const slides = [
+            { image: "imagens/detalhamento-sapatas.jpg", title: "Detalhamento de Sapatas", category: "Estrutural" },
+            { image: "imagens/entregavel-vigas.jpg", title: "Detalhamento de Vigas", category: "Estrutural" },
+            ...carouselData.slides
+        ];
+
+        render('#deliverables-carousel', slides, slide => `
+            <div class="swiper-slide">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden text-center">
+                    <img src="${slide.image}" alt="${slide.title}" class="w-full h-80 object-contain bg-slate-100 p-4" loading="lazy">
+                    <div class="p-4">
+                        <h4 class="font-bold text-lg">${slide.title}</h4>
+                        <p class="text-sm text-slate-500">${slide.category}</p>
+                    </div>
+                </div>
+            </div>
+        `);
+
+        new Swiper('.deliverables-swiper', {
+            loop: true,
+            slidesPerView: 1,
+            spaceBetween: 30,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+            }
+        });
+    };
+    
+    const initGuarantees = () => {
+        if (!content.guarantees) return;
+        render('#guarantees-container', content.guarantees, g => `
+            <div class="text-center p-6">
+                <i class="ph-bold ph-${g.icon} text-5xl text-[var(--color-accent)] inline-block"></i>
+                <h3 class="text-xl font-bold mt-4">${g.title}</h3>
+                <p class="mt-2 text-slate-600">${g.description}</p>
+            </div>
+        `);
+    };
+
+    const initTestimonials = () => {
+        if (!content.testimonials) return;
+        render('#testimonials-container', content.testimonials, t => `
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <i class="ph-fill ph-quotes text-4xl text-[var(--color-accent)]"></i>
+                <p class="text-lg italic text-slate-700 mt-4">"${t.text}"</p>
+                <p class="font-bold text-right mt-6 text-slate-800">${t.author}</p>
+            </div>
+        `);
+    };
+
+    const initPackages = () => {
+        if (!content.packages) return;
+        render('#packages-container', content.packages, pkg => `
+            <div class="package-card relative p-8 flex flex-col ${pkg.recommended ? 'recommended' : ''}">
+                ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[var(--color-accent)] text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Recomendado</div>' : ''}
+                <div class="flex-grow">
+                    <h3 class="text-2xl font-bold package-name text-[var(--color-primary)]">${pkg.name}</h3>
+                    <p class="mt-2 text-slate-500 min-h-[3rem]">${pkg.description}</p>
+                    <p class="text-4xl font-extrabold my-6 text-[var(--color-primary)]">R$ ${pkg.price}</p>
+                    <ul class="space-y-3 text-slate-700 text-left">${pkg.features.map(f => `<li class="flex items-start"><i class="ph-fill ph-check-circle text-green-500 text-xl mr-2 mt-0.5"></i><span>${f}</span></li>`).join('')}</ul>
+                </div>
+                <button class="w-full mt-8 btn ${pkg.recommended ? 'btn-accent' : 'btn-secondary'}">Selecionar Plano</button>
+            </div>
+        `);
+    };
+
+    const initFaq = () => {
+        if (!content.faq) return;
+        render('#faq-container', content.faq, item => `
+            <div class="faq-item bg-white rounded-lg shadow-sm border border-slate-200">
+                <details>
+                    <summary class="p-5 flex justify-between items-center cursor-pointer font-semibold text-lg text-[var(--color-primary)]">
+                        ${item.question}
+                        <i class="ph-bold ph-plus faq-icon text-2xl font-light text-[var(--color-accent)]"></i>
+                    </summary>
+                    <div class="px-5 pb-5 text-slate-600">${item.answer}</div>
+                </details>
+            </div>
+        `);
+    };
+    
+    const initModal = () => {
+        const modal = document.getElementById('confirmation-modal');
+        const modalContent = modal.querySelector('div');
+        
+        const openModal = () => {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-95');
+        };
+        
+        const closeModal = () => {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContent.classList.add('scale-95');
+        };
+
+        document.getElementById('accept-proposal-btn').addEventListener('click', openModal);
+        document.getElementById('close-modal').addEventListener('click', closeModal);
+        document.getElementById('download-pdf-btn').addEventListener('click', () => {
+            alert("Em uma aplicação real, esta ação iniciaria o download de um PDF com a proposta personalizada.");
+        });
+    };
+
+    // --- RUN ALL INITIALIZERS ---
+    initHeader();
+    initHeroAndProposalCard();
+    initSolutionsTabs();
+    initPortfolio();
+    initProfile();
+    initTimeline();
+    initDeliverablesCarousel();
+    initGuarantees();
+    initTestimonials();
+    initPackages();
+    initFaq();
+    initModal();
+});
+</script>
+
 </body>
 </html>
-
