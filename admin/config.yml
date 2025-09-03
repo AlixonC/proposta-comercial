@@ -15,8 +15,26 @@ collections:
         description: "Edite os principais textos, imagens e seções do site aqui."
         fields:
           - { name: "header", label: "Cabeçalho", widget: "object", fields: [ { name: "logo_type", label: "Tipo de Logo", widget: "select", options: ["text", "image"], default: "text" }, { label: "Texto do Logo", name: "logo_text", widget: "string", required: false }, { label: "Imagem do Logo", name: "logo_image", widget: "image", required: false } ] }
+          
+          - name: "proposal_details"
+            label: "Dados da Proposta (Valores Padrão)"
+            widget: "object"
+            fields:
+              - { label: "Título da Seção", name: "title", widget: "string", default: "Proposta de Soluções de Engenharia" }
+              - { label: "Texto de Validade", name: "validity_text", widget: "string", default: "Validade" }
+              - { label: "Número de Dias de Validade", name: "validity_days", widget: "number", default: 15 }
+
           - { name: "hero", label: "Seção Principal (Topo)", widget: "object", fields: [ { label: "Título", name: "title", widget: "string" }, { label: "Subtítulo", name: "subtitle", widget: "text" }, { label: "Imagem de Fundo", name: "background_image", widget: "image", required: false, hint: "Opcional. Imagem que aparecerá no fundo da seção principal."} ] }
-          - { name: "problemas", label: "Cartões 'Desafios Comuns'", widget: "list", fields: [ { label: "Nome do Ícone (Phosphor Icons)", name: "icon", widget: "string", hint: "Ex: 'currency-dollar', 'timer', 'lightning'. Visite phosphoricons.com para ver os nomes." }, { label: "Título", name: "title", widget: "string" }, { label: "Descrição", name: "description", widget: "text" } ] }
+          
+          - name: "value_comparison"
+            label: "Comparativo de Valor (ROI)"
+            widget: "list"
+            fields:
+              - { label: "Nome do Ícone (Phosphor Icons)", name: "icon", widget: "string", hint: "Ex: 'currency-dollar', 'timer', 'warning'. Visite phosphoricons.com." }
+              - { label: "Critério", name: "criteria", widget: "string" }
+              - { label: "Resultado Sem Profissional", name: "without_professional", widget: "string" }
+              - { label: "Resultado Com Engenharia Integrada", name: "with_professional", widget: "string" }
+
           - name: "solutions"
             label: "Soluções (Abas)"
             widget: "object"
@@ -25,7 +43,6 @@ collections:
                 label: "Projeto Arquitetônico"
                 widget: "object"
                 fields:
-                  - {label: "Chave (não editar)", name: "key", widget: "hidden", default: "arquitetonico"}
                   - {label: "Título", name: "title", widget: "string"}
                   - {label: "Nome do Ícone (Phosphor Icons)", name: "icon", widget: "string", hint: "Ex: 'house-line'"}
                   - {label: "Descrição", name: "description", widget: "text"}
@@ -34,7 +51,6 @@ collections:
                 label: "Projeto Estrutural"
                 widget: "object"
                 fields:
-                  - {label: "Chave (não editar)", name: "key", widget: "hidden", default: "estrutural"}
                   - {label: "Título", name: "title", widget: "string"}
                   - {label: "Nome do Ícone (Phosphor Icons)", name: "icon", widget: "string", hint: "Ex: 'buildings'"}
                   - {label: "Descrição", name: "description", widget: "text"}
@@ -43,7 +59,6 @@ collections:
                 label: "Projeto Hidrossanitário"
                 widget: "object"
                 fields:
-                  - {label: "Chave (não editar)", name: "key", widget: "hidden", default: "hidrossanitario"}
                   - {label: "Título", name: "title", widget: "string"}
                   - {label: "Nome do Ícone (Phosphor Icons)", name: "icon", widget: "string", hint: "Ex: 'drop'"}
                   - {label: "Descrição", name: "description", widget: "text"}
@@ -52,11 +67,11 @@ collections:
                 label: "Projeto Elétrico"
                 widget: "object"
                 fields:
-                  - {label: "Chave (não editar)", name: "key", widget: "hidden", default: "eletrico"}
                   - {label: "Título", name: "title", widget: "string"}
                   - {label: "Nome do Ícone (Phosphor Icons)", name: "icon", widget: "string", hint: "Ex: 'plugs'"}
                   - {label: "Descrição", name: "description", widget: "text"}
                   - {label: "Entregáveis", name: "deliverables", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+          
           - { name: "sobre", label: "Seção Sobre", widget: "object", fields: [ { label: "Título", name: "title", widget: "string" }, { label: "Nome e Cargo", name: "name", widget: "string" }, { label: "Biografia", name: "bio", widget: "text" }, { label: "Foto de Perfil", name: "photo", widget: "image" } ] }
           - { name: "timeline", label: "Processo de Trabalho (Linha do Tempo)", widget: "list", fields: [ {label: "Título da Etapa", name: "title", widget: "string"}, {label: "Descrição da Etapa", name: "description", widget: "text"} ] }
           - { name: "guarantees", label: "Garantias", widget: "list", fields: [ {label: "Nome do Ícone (Phosphor Icons)", name: "icon", widget: "string", hint: "Ex: 'shield-check', 'clock', 'users-three'"}, {label: "Título", name: "title", widget: "string"}, {label: "Descrição", name: "description", widget: "text"} ] }
@@ -80,18 +95,3 @@ collections:
               - {label: "Categoria", name: "category", widget: "select", options: ["residencial", "comercial"]}
               - {label: "Imagem", name: "image", widget: "image"}
 
-  - name: "carousel"
-    label: "Carrossel de Entregáveis"
-    files:
-      - name: "carousel_slides"
-        label: "Slides do Carrossel"
-        file: "_data/carousel.json"
-        description: "Gerencie os slides do carrossel da seção 'O que você recebe'."
-        fields:
-          - name: "slides"
-            label: "Slides"
-            widget: "list"
-            fields:
-              - {label: "Imagem do Slide", name: "image", widget: "image"}
-              - {label: "Título", name: "title", widget: "string"}
-              - {label: "Categoria", name: "category", widget: "string"}
