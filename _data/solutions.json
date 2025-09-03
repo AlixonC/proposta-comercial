@@ -1,1 +1,46 @@
+{
+  "arquitetonico": {
+    "title": "Projeto Arquitetônico",
+    "icon": "house-line",
+    "description": "Criamos espaços que refletem sua personalidade e atendem às suas necessidades, garantindo o máximo de conforto, iluminação e ventilação natural.",
+    "deliverables": [
+      "Plantas baixas humanizadas",
+      "Cortes e fachadas detalhadas",
+      "Layout de pontos elétricos e hidráulicos",
+      "Modelo 3D para visualização"
+    ]
+  },
+  "estrutural": {
+    "title": "Projeto Estrutural",
+    "icon": "buildings",
+    "description": "Garantimos a segurança e a longevidade da sua construção, otimizando o uso de materiais para que você economize sem abrir mão da qualidade.",
+    "deliverables": [
+      "Plantas de formas",
+      "Detalhamento de pilares, vigas, lajes e fundações",
+      "Lista de materiais (aço e concreto)"
+    ]
+  },
+  "hidrossanitario": {
+    "title": "Projeto Hidrossanitário",
+    "icon": "drop",
+    "description": "Planejamos sistemas eficientes de água e esgoto para garantir o funcionamento perfeito da sua casa, evitando entupimentos e vazamentos futuros.",
+    "deliverables": [
+      "Plantas de distribuição de água fria e quente",
+      "Isométricos para fácil execução",
+      "Detalhamento de caixas e esgoto",
+      "Lista de materiais"
+    ]
+  },
+  "eletrico": {
+    "title": "Projeto Elétrico",
+    "icon": "plugs",
+    "description": "Dimensionamos uma instalação elétrica segura e eficiente, prevendo o uso de todos os seus equipamentos para evitar sobrecargas ou falta de tomadas.",
+    "deliverables": [
+      "Plantas de pontos de iluminação e tomadas",
+      "Diagramas dos quadros de distribuição",
+      "Detalhamento de eletrodutos e fiação",
+      "Lista de materiais"
+    ]
+  }
+}
 
