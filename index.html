@@ -299,6 +299,11 @@
             background-color: rgba(0,0,0,0.2);
             color: white !important;
         }
+        .section-dark .deliverables-swiper .swiper-button-next,
+        .section-dark .deliverables-swiper .swiper-button-prev {
+            top: 10rem; /* h-80 is 20rem, so halfway is 10rem */
+            transform: translateY(-50%);
+        }
         .section-dark .swiper-pagination-bullet {
             background-color: white !important;
         }
@@ -789,13 +794,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         render('#tabs-buttons', solutions, ([key, s]) => `<button class="tab-button font-semibold text-lg py-2 px-4" data-tab="${key}">${s.title}</button>`);
         render('#tabs-content', solutions, ([key, s]) => `
             <div id="tab-content-${key}" class="tab-content">
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                    <div class="md:order-2">
                         <h3 class="text-3xl font-bold">${s.title}</h3>
                         <p class="mt-4 leading-relaxed">${s.description}</p>
                         <ul class="mt-6 space-y-3">${s.deliverables.map(d => `<li class="flex items-start"><i class="ph-fill ph-check-circle text-xl mr-3 mt-0.5 text-[var(--color-accent)]"></i><span>${d}</span></li>`).join('')}</ul>
                     </div>
-                    <div class="hidden md:block"><img src="https://placehold.co/500x400/F8FAFC/1E293B?text=${encodeURIComponent(s.title)}" class="rounded-xl shadow-lg"></div>
+                    <div class="mt-8 md:mt-0 md:order-1">
+                        <img src="https://placehold.co/500x400/F8FAFC/1E293B?text=${encodeURIComponent(s.title)}" class="rounded-xl shadow-lg w-full">
+                    </div>
                 </div>
             </div>`);
 
