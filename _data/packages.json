@@ -25,7 +25,7 @@
     {
       "name": "Pacote Premium",
       "description": "A experiência definitiva em personalização e acompanhamento.",
-      "price": "12.500,00",
+      "price": "8000",
       "features": [
         "Todos os itens do Pacote Integrado",
         "Projeto de Luminotecnia",
@@ -36,4 +36,3 @@
     }
   ]
 }
-
