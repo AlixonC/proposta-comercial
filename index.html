@@ -829,9 +829,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             const len = String(valueStr.length).padStart(2, '0');
             return `${id}${len}${valueStr}`;
         };
+        
+        // Trim whitespace from name and city
+        const trimmedName = recipientName.trim();
+        const trimmedCity = recipientCity.trim();
 
-        const sanitizedName = recipientName.normalize("NFD").replace(/[\u0300-\u036f]/g, "").substring(0, 25);
-        const sanitizedCity = recipientCity.normalize("NFD").replace(/[\u0300-\u036f]/g, "").substring(0, 15);
+        const sanitizedName = trimmedName.normalize("NFD").replace(/[\u0300-\u036f]/g, "").substring(0, 25);
+        const sanitizedCity = trimmedCity.normalize("NFD").replace(/[\u0300-\u036f]/g, "").substring(0, 15);
 
         const merchantAccountInfo = formatField('00', 'br.gov.bcb.pix') + formatField('01', pixKey);
         const amountFormatted = amount.toFixed(2);
@@ -1176,3 +1180,4 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 </body>
 </html>
+
