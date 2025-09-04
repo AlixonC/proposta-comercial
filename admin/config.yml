@@ -12,7 +12,6 @@ public_folder: "/imagens" # The src attribute for the uploaded media
 
 # This collection uses the "files" type. It's perfect for managing different sections
 # of the site where each section's content is stored in a single, separate JSON file.
-# ALL file-based collections are now grouped here, which fixes the validation error.
 collections:
   - name: "content"
     label: "Conteúdo do Site"
@@ -20,10 +19,18 @@ collections:
       - label: "1. Configurações Gerais"
         name: "config"
         file: "_data/config.json"
-        description: "Configurações globais como logo e dados da proposta."
+        description: "Configurações globais como logo, dados da proposta e chave PIX."
         fields:
           - { label: "Cabeçalho", name: "header", widget: "object", fields: [ { label: "Texto do Logo", name: "logo_text", widget: "string" } ] }
           - { label: "Dados da Proposta (Padrão)", name: "proposal_details", widget: "object", fields: [ { label: "Texto de Validade", name: "validity_text", widget: "string" }, { label: "Dias de Validade", name: "validity_days", widget: "number" } ] }
+          - label: "Configurações de Pagamento (PIX)"
+            name: "pix_details"
+            widget: "object"
+            description: "Informações para gerar o QR Code PIX. O cliente precisará enviar o comprovante manualmente."
+            fields:
+              - { label: "Sua Chave PIX", name: "pix_key", widget: "string", hint: "Pode ser seu CNPJ, e-mail, telefone ou chave aleatória." }
+              - { label: "Nome do Beneficiário", name: "recipient_name", widget: "string", hint: "Seu nome ou o nome da sua empresa que aparecerá para o cliente." }
+              - { label: "Cidade do Beneficiário", name: "recipient_city", widget: "string", hint: "A cidade onde sua conta está registrada. Ex: SAO PAULO (sem acentos, maiúsculo)." }
       
       - label: "2. Seção Hero (Topo)"
         name: "hero"
@@ -138,7 +145,7 @@ collections:
 
       - label: "9. Garantias"
         name: "guarantees"
-        file: "_data/guaranteis.json"
+        file: "_data/guarantees.json"
         description: "As garantias que você oferece."
         fields:
           - name: "items"
