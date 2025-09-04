@@ -753,23 +753,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     const resolveImageUrl = (path) => {
         if (!path || path.startsWith('http')) return path;
         const cleanPath = path.startsWith('/') ? path.substring(1) : path;
-        return `${GITHUB_RAW_BASE_URL}${cleanPath}`;
+        return ${GITHUB_RAW_BASE_URL}${cleanPath};
     };
 
     const fetchData = async (url) => {
         try {
             const response = await fetch(url);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            if (!response.ok) throw new Error(HTTP error! status: ${response.status});
             return await response.json();
         } catch (e) {
-            console.error(`Fetch failed for ${url}:`, e);
+            console.error(Fetch failed for ${url}:, e);
             return null;
         }
     };
     
     const fetchAllContent = async () => {
         const dataFiles = ['config', 'hero', 'roi', 'solutions', 'sobre', 'timeline', 'entregaveis', 'guarantees', 'testimonials', 'packages', 'faq', 'portfolio'];
-        const fetchPromises = dataFiles.map(file => fetchData(`${GITHUB_RAW_BASE_URL}_data/${file}.json`));
+        const fetchPromises = dataFiles.map(file => fetchData(${GITHUB_RAW_BASE_URL}_data/${file}.json));
         const allData = await Promise.all(fetchPromises);
         
         const [
@@ -823,11 +823,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     // --- PIX QR CODE GENERATION ---
-    const generatePixPayload = (pixKey, recipientName, recipientCity, amount, txid = '***') => {
+    const generatePixPayload = (pixKey, recipientName, recipientCity, amount) => {
+        const txid = '*'; // Static QR Code standard
+        
         const formatField = (id, value) => {
             const valueStr = String(value);
             const len = String(valueStr.length).padStart(2, '0');
-            return `${id}${len}${valueStr}`;
+            return ${id}${len}${valueStr};
         };
         
         // Trim whitespace from name and city
@@ -868,7 +870,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         crc &= 0xFFFF;
         const crc16 = crc.toString(16).toUpperCase().padStart(4, '0');
 
-        return payload + `6304${crc16}`;
+        return payload + 6304${crc16};
     };
 
     // --- INITIALIZE UI MODULES ---
@@ -912,17 +914,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     const initSolutionsTabs = () => {
         if (!content.solutions) return;
         const solutions = Object.entries(content.solutions);
-        render('#tabs-buttons', solutions, ([key, s]) => `<button class="tab-button font-semibold text-lg py-2 px-4" data-tab="${key}">${s.title}</button>`);
+        render('#tabs-buttons', solutions, ([key, s]) => <button class="tab-button font-semibold text-lg py-2 px-4" data-tab="${key}">${s.title}</button>);
         render('#tabs-content', solutions, ([key, s]) => `
             <div id="tab-content-${key}" class="tab-content">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
                     <div class="md:order-2">
                         <h3 class="text-3xl font-bold">${s.title}</h3>
                         <p class="mt-4 leading-relaxed">${s.description}</p>
-                        <ul class="mt-6 space-y-3">${(s.deliverables || []).map(d => `<li class="flex items-start"><i class="ph-fill ph-check-circle text-xl mr-3 mt-0.5 text-[var(--color-accent)]"></i><span>${d}</span></li>`).join('')}</ul>
+                        <ul class="mt-6 space-y-3">${(s.deliverables || []).map(d => <li class="flex items-start"><i class="ph-fill ph-check-circle text-xl mr-3 mt-0.5 text-[var(--color-accent)]"></i><span>${d}</span></li>).join('')}</ul>
                     </div>
                     <div class="mt-8 md:mt-0 md:order-1">
-                        <img src="${resolveImageUrl(s.image) || `https://placehold.co/500x400/F8FAFC/1E293B?text=${encodeURIComponent(s.title)}`}" class="rounded-xl shadow-lg w-full h-auto aspect-[5/4] object-cover">
+                        <img src="${resolveImageUrl(s.image) || https://placehold.co/500x400/F8FAFC/1E293B?text=${encodeURIComponent(s.title)}}" class="rounded-xl shadow-lg w-full h-auto aspect-[5/4] object-cover">
                     </div>
                 </div>
             </div>`);
@@ -930,7 +932,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const tabContents = document.querySelectorAll('.tab-content');
         const switchTab = (tabKey) => {
             tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabKey));
-            tabContents.forEach(contentEl => contentEl.classList.toggle('active', contentEl.id === `tab-content-${tabKey}`));
+            tabContents.forEach(contentEl => contentEl.classList.toggle('active', contentEl.id === tab-content-${tabKey}));
         };
         document.querySelector('#tabs-buttons').addEventListener('click', e => e.target.matches('.tab-button') && switchTab(e.target.dataset.tab));
         if (solutions.length > 0) switchTab(solutions[0][0]);
@@ -968,8 +970,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const initProfile = () => {
         if (!content.sobre) return;
         const { name, bio, photo } = content.sobre;
-        setHtml('#profile-image-container', `<img src="${resolveImageUrl(photo)}" alt="${name}" class="rounded-full w-48 h-48 md:w-64 md:h-64 object-cover shadow-2xl">`);
-        setHtml('#profile-content', `<h3 class="text-2xl font-bold mt-4 md:mt-0">${name}</h3><p class="mt-4 leading-relaxed">${bio}</p>`);
+        setHtml('#profile-image-container', <img src="${resolveImageUrl(photo)}" alt="${name}" class="rounded-full w-48 h-48 md:w-64 md:h-64 object-cover shadow-2xl">);
+        setHtml('#profile-content', <h3 class="text-2xl font-bold mt-4 md:mt-0">${name}</h3><p class="mt-4 leading-relaxed">${bio}</p>);
     };
     const initTimeline = () => {
         if (!content.timeline) return;
@@ -1012,8 +1014,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
         });
     };
-    const initGuarantees = () => render('#guarantees-container', content.guarantees, g => `<div class="text-center p-6"><i class="ph-bold ph-${g.icon} text-5xl text-[var(--color-accent)] inline-block"></i><h3 class="text-xl font-bold mt-4">${g.title}</h3><p class="mt-2 text-slate-600">${g.description}</p></div>`);
-    const initTestimonials = () => render('#testimonials-container', content.testimonials, t => `<div class="bg-slate-800 p-8 rounded-xl shadow-lg"><i class="ph-fill ph-quotes text-4xl text-[var(--color-accent)]"></i><p class="text-lg italic text-slate-300 mt-4">"${t.text}"</p><p class="font-bold text-right mt-6 text-slate-200">${t.author}</p></div>`);
+    const initGuarantees = () => render('#guarantees-container', content.guarantees, g => <div class="text-center p-6"><i class="ph-bold ph-${g.icon} text-5xl text-[var(--color-accent)] inline-block"></i><h3 class="text-xl font-bold mt-4">${g.title}</h3><p class="mt-2 text-slate-600">${g.description}</p></div>);
+    const initTestimonials = () => render('#testimonials-container', content.testimonials, t => <div class="bg-slate-800 p-8 rounded-xl shadow-lg"><i class="ph-fill ph-quotes text-4xl text-[var(--color-accent)]"></i><p class="text-lg italic text-slate-300 mt-4">"${t.text}"</p><p class="font-bold text-right mt-6 text-slate-200">${t.author}</p></div>);
     const initPackages = () => render('#packages-container', content.packages, pkg => `
         <div class="package-card relative p-8 flex flex-col cursor-pointer ${pkg.recommended ? 'recommended' : ''}" data-modal-target="package-modal" data-package-name="${pkg.name}">
             ${pkg.recommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-[var(--color-accent)] text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Recomendado</div>' : ''}
@@ -1021,7 +1023,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <h3 class="text-2xl font-bold text-[var(--color-primary)]">${pkg.name}</h3>
                 <p class="mt-2 text-slate-500 min-h-[3rem]">${pkg.description}</p>
                 <p class="text-4xl font-extrabold my-6 text-[var(--color-primary)]">R$ ${pkg.price}</p>
-                <ul class="space-y-3 text-slate-700 text-left">${(pkg.features || []).map(f => `<li class="flex items-start"><i class="ph-fill ph-check-circle text-green-500 text-xl mr-2 mt-0.5"></i><span>${f}</span></li>`).join('')}</ul>
+                <ul class="space-y-3 text-slate-700 text-left">${(pkg.features || []).map(f => <li class="flex items-start"><i class="ph-fill ph-check-circle text-green-500 text-xl mr-2 mt-0.5"></i><span>${f}</span></li>).join('')}</ul>
             </div>
             <div class="package-cta mt-8 pt-6 border-t border-slate-200 text-center">
                 <span class="font-bold text-lg ${pkg.recommended ? 'text-[var(--color-accent)]' : 'text-[var(--color-primary)]'}">
@@ -1040,10 +1042,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const clientName = document.getElementById('client-name').textContent;
         const whatsappLink = document.getElementById('whatsapp-link');
         const emailLink = document.getElementById('email-link');
-        const whatsappMessage = encodeURIComponent(`Olá, AC Engenharia. Gostaria de aprovar a proposta para "${clientName}".`);
-        whatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
-        const emailSubject = encodeURIComponent(`Aprovação da Proposta - ${clientName}`);
-        emailLink.href = `mailto:${EMAIL_ADDRESS}?subject=${emailSubject}`;
+        const whatsappMessage = encodeURIComponent(Olá, AC Engenharia. Gostaria de aprovar a proposta para "${clientName}".);
+        whatsappLink.href = https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage};
+        const emailSubject = encodeURIComponent(Aprovação da Proposta - ${clientName});
+        emailLink.href = mailto:${EMAIL_ADDRESS}?subject=${emailSubject};
     };
 
     const initModals = () => {
@@ -1079,12 +1081,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 setText('#package-modal-name', packageName);
                 const selectedPackage = content.packages.find(p => p.name === packageName);
                 if (selectedPackage?.features) {
-                    render('#package-modal-features', selectedPackage.features, feature => `<li class="flex items-start text-sm text-slate-700"><i class="ph-fill ph-check-circle text-green-500 text-lg mr-2 mt-0.5"></i><span>${feature}</span></li>`);
+                    render('#package-modal-features', selectedPackage.features, feature => <li class="flex items-start text-sm text-slate-700"><i class="ph-fill ph-check-circle text-green-500 text-lg mr-2 mt-0.5"></i><span>${feature}</span></li>);
                 }
-                const whatsappMsg = encodeURIComponent(`Olá! Tenho interesse no ${packageName} que vi na proposta.`);
-                document.getElementById('package-whatsapp-link').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMsg}`;
-                const emailSub = encodeURIComponent(`Interesse no ${packageName}`);
-                document.getElementById('package-email-link').href = `mailto:${EMAIL_ADDRESS}?subject=${emailSub}`;
+                const whatsappMsg = encodeURIComponent(Olá! Tenho interesse no ${packageName} que vi na proposta.);
+                document.getElementById('package-whatsapp-link').href = https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMsg};
+                const emailSub = encodeURIComponent(Interesse no ${packageName});
+                document.getElementById('package-email-link').href = mailto:${EMAIL_ADDRESS}?subject=${emailSub};
                 openModal(document.getElementById('package-modal'));
             }
 
@@ -1105,17 +1107,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const downPayment = price / 2;
                 
                 setText('#pix-down-payment-value', downPayment.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-                setText('#pix-package-name', `Pacote ${packageName}`);
+                setText('#pix-package-name', Pacote ${packageName});
                 
-                const clientName = (document.getElementById('client-name').textContent || 'Cliente').substring(0,10);
-                const txid = `PROP-${clientName.replace(/[^A-Z0-9]/ig, '')}-${Date.now()}`.substring(0,25);
-
                 const payload = generatePixPayload(
                     pixConfig.pix_key,
                     pixConfig.recipient_name,
                     pixConfig.recipient_city,
-                    downPayment,
-                    txid
+                    downPayment
                 );
 
                 document.getElementById('pix-copy-paste').value = payload;
@@ -1180,4 +1178,3 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 </body>
 </html>
-
