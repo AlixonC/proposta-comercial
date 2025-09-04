@@ -5,5 +5,10 @@
   "proposal_details": {
     "validity_text": "Validade",
     "validity_days": 72
+  },
+  "pix_details": {
+    "pix_key": "75 998014491",
+    "recipient_name": "Alison Santos Carvalho",
+    "recipient_city": "Sítio do quinto"
   }
 }
