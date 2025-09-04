@@ -3,7 +3,7 @@
     {
       "name": "Pacote Essencial",
       "description": "O ponto de partida seguro para sua construção.",
-      "price": "4.500,00",
+      "price": "3000",
       "features": [
         "Projeto Arquitetônico",
         "Projeto Estrutural"
@@ -13,7 +13,7 @@
     {
       "name": "Pacote Integrado",
       "description": "A solução completa para uma obra sem dor de cabeça.",
-      "price": "8.000,00",
+      "price": "5000",
       "features": [
         "Todos os itens do Pacote Essencial",
         "Projeto Hidrossanitário",
